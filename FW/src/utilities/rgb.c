@@ -1,6 +1,6 @@
 #include "rgb.h"
 
-#ifdef HOJA_RGB_PIN
+#ifdef UTIL_RGB_PIN
 // 21 steps is about 0.35 seconds
 // Formula is time period us / 16666us (60hz)
 #define RGB_FADE_STEPS 21
@@ -8,9 +8,9 @@
 uint8_t _rgb_anim_steps = 0;
 bool _rgb_out_dirty = false;
 
-rgb_s _rgb_next[HOJA_RGB_COUNT]     = {0};
-rgb_s _rgb_current[HOJA_RGB_COUNT]  = {0};
-rgb_s _rgb_last[HOJA_RGB_COUNT]     = {0};
+rgb_s _rgb_next[UTIL_RGB_COUNT]     = {0};
+rgb_s _rgb_current[UTIL_RGB_COUNT]  = {0};
+rgb_s _rgb_last[UTIL_RGB_COUNT]     = {0};
 
 static inline uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b) {
     return
@@ -21,7 +21,7 @@ static inline uint32_t urgb_u32(uint8_t r, uint8_t g, uint8_t b) {
 
 void _rgb_update_all()
 {
-    for(uint8_t i = 0; i < HOJA_RGB_COUNT; i++)
+    for(uint8_t i = 0; i < UTIL_RGB_COUNT; i++)
     {
         pio_sm_put_blocking(RGB_PIO, RGB_SM, _rgb_current[i].color);
     }
@@ -64,7 +64,7 @@ void _rgb_animate_step()
     {
         float blender = blend_step * (float) steps;
         // Blend between old and next colors appropriately
-        for(uint8_t i = 0; i < HOJA_RGB_COUNT; i++)
+        for(uint8_t i = 0; i < UTIL_RGB_COUNT; i++)
         {
             _rgb_current[i].color = _rgb_blend(&_rgb_last[i], &_rgb_next[i], blender);
         }
@@ -91,7 +91,7 @@ void _rgb_set_sequential(rgb_s *colors, uint8_t len, uint32_t color)
 // Enable the RGB transition to the next color
 void rgb_set_dirty()
 {
-    #ifdef HOJA_RGB_PIN
+    #ifdef UTIL_RGB_PIN
     _rgb_out_dirty = true;
     #endif
 }
@@ -99,85 +99,19 @@ void rgb_set_dirty()
 // Set all RGBs to one color
 void rgb_set_all(uint32_t color)
 {
-    #ifdef HOJA_RGB_PIN
-    for(uint8_t i = 0; i < HOJA_RGB_COUNT; i++)
+    #ifdef UTIL_RGB_PIN
+    for(uint8_t i = 0; i < UTIL_RGB_COUNT; i++)
     {
         _rgb_next[i].color = color;
     }
     #endif
 }
 
-
-void rgb_load_preset()
-{
-    #ifdef HOJA_RGB_PIN
-    for(uint8_t i = 0; i < RGB_GROUP_MAX; i++)
-    {
-        rgb_set_group(i, global_loaded_settings.rgb_colors[i]);
-    }
-    #endif
-}
-
-void rgb_set_group(rgb_group_t group, uint32_t color)
-{
-    #ifdef HOJA_RGB_PIN
-    switch(group)
-    {
-        default:
-        break;
-
-        case RGB_GROUP_RS:
-            _rgb_set_sequential(&_rgb_next[0], 4, color);
-            break;
-
-        case RGB_GROUP_LS:
-            _rgb_set_sequential(&_rgb_next[4], 4, color);
-            break;
-
-        case RGB_GROUP_DPAD:
-            _rgb_set_sequential(&_rgb_next[8], 4, color);
-            break;
-
-        case RGB_GROUP_MINUS:
-            _rgb_next[12].color = color;
-            break;
-
-        case RGB_GROUP_CAPTURE:
-            _rgb_next[13].color = color;
-            break;
-
-        case RGB_GROUP_HOME:
-            _rgb_next[14].color = color;
-            break;
-
-        case RGB_GROUP_PLUS:
-            _rgb_next[15].color = color;
-            break;
-
-        case RGB_GROUP_Y:
-            _rgb_next[16].color = color;
-            break;
-
-        case RGB_GROUP_X:
-            _rgb_next[17].color = color;
-            break;
-
-        case RGB_GROUP_A:
-            _rgb_next[18].color = color;
-            break;
-
-        case RGB_GROUP_B:
-            _rgb_next[19].color = color;
-            break;
-    }
-    #endif
-}
-
 void rgb_init()
 {
-    #ifdef HOJA_RGB_PIN
+    #ifdef UTIL_RGB_PIN
     uint offset = pio_add_program(RGB_PIO, &ws2812_program);
-    ws2812_program_init(RGB_PIO, RGB_SM, offset, HOJA_RGB_PIN, HOJA_RGBW_EN);
+    ws2812_program_init(RGB_PIO, RGB_SM, offset, UTIL_RGB_PIN, UTIL_RGBW_EN);
     #endif
 }
 
@@ -187,7 +121,7 @@ const uint32_t _rgb_interval = 16666;
 // only performs actions if necessary
 void rgb_task(uint32_t timestamp)
 {
-    #ifdef HOJA_RGB_PIN
+    #ifdef UTIL_RGB_PIN
     if(interval_run(timestamp, _rgb_interval))
     {
         _rgb_animate_step();

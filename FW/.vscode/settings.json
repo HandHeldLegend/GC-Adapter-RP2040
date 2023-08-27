@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "interval.h": "c",
-        "adapter_usb.h": "c"
+        "adapter_usb.h": "c",
+        "adapter_includes.h": "c"
     }
 }

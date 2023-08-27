@@ -24,8 +24,11 @@ void app_rumble_task(uint32_t timestamp)
             {
                 lvl = RUMBLE_MAX;
             }
+
+            /*
             pwm_set_gpio_level(PGPIO_RUMBLE_BRAKE, 0);
             pwm_set_gpio_level(PGPIO_RUMBLE_MAIN, lvl);
+            */
         }
         else
         {
@@ -33,12 +36,14 @@ void app_rumble_task(uint32_t timestamp)
             if (lvl <= 0)
             {
                 lvl = 0;
+                /*
                 pwm_set_gpio_level(PGPIO_RUMBLE_MAIN, 0);
                 pwm_set_gpio_level(PGPIO_RUMBLE_BRAKE, 255);
+                */
             }
             else
             {
-                pwm_set_gpio_level(PGPIO_RUMBLE_MAIN, lvl);
+                //pwm_set_gpio_level(PGPIO_RUMBLE_MAIN, lvl);
             } 
         }
     }

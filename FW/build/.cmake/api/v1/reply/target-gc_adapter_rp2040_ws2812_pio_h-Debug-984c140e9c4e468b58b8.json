@@ -73,7 +73,7 @@
 		{
 			"backtrace" : 0,
 			"isGenerated" : true,
-			"path" : "/include/generated/ws2812.pio.h.rule",
+			"path" : "include/generated/ws2812.pio.h.rule",
 			"sourceGroupIndex" : 1
 		}
 	],

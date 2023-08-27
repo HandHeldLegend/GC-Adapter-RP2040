@@ -436,7 +436,7 @@ uint8_t sw_spi_getaddressdata(uint8_t offset_address, uint8_t address)
 
                 // Gyro Calibration
                 case 0x26 ... 0x3F:
-                    return global_loaded_settings.imu_calibration[address-0x26];
+                    return 0xFF; //global_loaded_settings.imu_calibration[address-0x26];
                     break;
 
                 default:

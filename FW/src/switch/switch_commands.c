@@ -121,7 +121,7 @@ void rumble_translate(const uint8_t *data)
     uint8_t hba = (data[1] & 0xFE)/2;
 
     float ha = (float) hba*amp_range_inc;
-    cb_hoja_rumble_enable((ha>10.0f)?true:false);
+    //cb_hoja_rumble_enable((ha>10.0f)?true:false);
 
     //printf("Amplitude: %.2f\n", ha);
 }
@@ -132,7 +132,7 @@ void info_set_mac()
   _switch_command_buffer[0] = 0x01;
   _switch_command_buffer[1] = 0x00;
   _switch_command_buffer[2] = 0x03;
-  memcpy(&_switch_command_buffer[3], &global_loaded_settings.switch_mac_address, 6*sizeof(uint8_t));
+  memcpy(&_switch_command_buffer[3], &global_loaded_settings.switch_mac_address_p1, 6*sizeof(uint8_t));
 }
 
 // A second part to the initialization,
@@ -176,7 +176,7 @@ void pairing_set(uint8_t phase)
     case 1:
       set_ack(0x81);
       _switch_command_buffer[14] = 1;
-      memcpy(&_switch_command_buffer[15], &global_loaded_settings.switch_mac_address, 6);
+      memcpy(&_switch_command_buffer[15], &global_loaded_settings.switch_mac_address_p1, 6);
       memcpy(&_switch_command_buffer[15+6], pro_controller_string, 24);
       break;
     case 2:
@@ -219,7 +219,7 @@ void command_handler(uint8_t command, const uint8_t *data, uint16_t len)
 
     case SW_CMD_ENABLE_IMU:
       printf("Enable IMU: %d\n", data[11]);
-      imu_set_enabled(data[11]>0);
+
       set_ack(0x80);
       break;
 
@@ -260,7 +260,7 @@ void command_handler(uint8_t command, const uint8_t *data, uint16_t len)
       {
         for(uint16_t i = 0; i < 26; i++)
         {
-          global_loaded_settings.imu_calibration[i] = data[16+i];
+          //global_loaded_settings.imu_calibration[i] = data[16+i];
           printf("0x%x, ", data[16+i]);
           printf("\n");
         }
@@ -383,7 +383,7 @@ void switch_commands_process(sw_input_s *input_data)
       set_battconn();
 
       // END DEBUG
-      imu_switch_buffer_out(&_switch_command_buffer[12]);
+      //imu_switch_buffer_out(&_switch_command_buffer[12]);
 
       // Set input data
       _switch_command_buffer[2] = input_data->right_buttons;

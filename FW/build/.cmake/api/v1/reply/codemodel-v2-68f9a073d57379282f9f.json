@@ -1168,14 +1168,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "gc_adapter_rp2040::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gc_adapter_rp2040-Debug-87527b8d66130b4d2f71.json",
+					"jsonFile" : "target-gc_adapter_rp2040-Debug-09801764392287466920.json",
 					"name" : "gc_adapter_rp2040",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "gc_adapter_rp2040_ws2812_pio_h::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gc_adapter_rp2040_ws2812_pio_h-Debug-8167e79628ef7070ce3c.json",
+					"jsonFile" : "target-gc_adapter_rp2040_ws2812_pio_h-Debug-984c140e9c4e468b58b8.json",
 					"name" : "gc_adapter_rp2040_ws2812_pio_h",
 					"projectIndex" : 0
 				},

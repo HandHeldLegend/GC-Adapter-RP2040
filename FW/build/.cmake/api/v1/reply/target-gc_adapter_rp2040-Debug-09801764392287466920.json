@@ -17,8 +17,7 @@
 			"pico_generate_pio_header",
 			"target_compile_definitions",
 			"pico_add_extra_outputs",
-			"include_directories",
-			"target_include_directories"
+			"include_directories"
 		],
 		"files" : 
 		[
@@ -100,12 +99,6 @@
 				"file" : 0,
 				"line" : 13,
 				"parent" : 0
-			},
-			{
-				"command" : 8,
-				"file" : 2,
-				"line" : 50,
-				"parent" : 6
 			}
 		]
 	},
@@ -353,10 +346,6 @@
 				{
 					"backtrace" : 12,
 					"path" : "C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/include/utilities"
-				},
-				{
-					"backtrace" : 13,
-					"path" : "/include/generated"
 				},
 				{
 					"backtrace" : 2,
@@ -895,10 +884,6 @@
 					"path" : "C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/include/utilities"
 				},
 				{
-					"backtrace" : 13,
-					"path" : "/include/generated"
-				},
-				{
 					"backtrace" : 2,
 					"path" : "C:/Program Files/Raspberry Pi/Pico SDK v1.5.1/pico-sdk/src/common/pico_stdlib/include"
 				},
@@ -1377,10 +1362,6 @@
 				{
 					"backtrace" : 12,
 					"path" : "C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/include/utilities"
-				},
-				{
-					"backtrace" : 13,
-					"path" : "/include/generated"
 				},
 				{
 					"backtrace" : 2,

@@ -14,8 +14,8 @@
 
 extern bool _usb_busy;
 
-bool hoja_usb_start(input_mode_t mode);
-uint8_t dir_to_hat(hat_mode_t hat_type, uint8_t leftRight, uint8_t upDown);
-void hoja_usb_task(uint32_t timestamp, button_data_s *button_data, a_data_s *analog_data);
+bool adapter_usb_start(input_mode_t mode);
+uint8_t dir_to_hat(uint8_t leftRight, uint8_t upDown);
+void adapter_usb_task(uint32_t timestamp, button_data_s *button_data, a_data_s *analog_data);
 
 #endif

@@ -53,8 +53,8 @@ target_compile_definitions(${PROJECT_NAME}
 	#PICO_FLASH_SPI_CLKDIV=8
 	)
 
-file(MAKE_DIRECTORY /include/generated)
-pico_generate_pio_header(${PROJECT_NAME} /pio/ws2812.pio OUTPUT_DIR /include/generated)
+file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/generated)
+pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/ws2812.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 
 #add_custom_command(OUTPUT /generated/cvideo.pio.h
 #	DEPENDS /cvideo.pio
