@@ -1,0 +1,29 @@
+### Footprint positions - created on Mon Aug 14 23:22:58 2023 ###
+### Printed by KiCad version 7.0.6
+## Unit = mm, Angle = deg.
+## Side : top
+# Ref     Val                Package                                   PosX       PosY       Rot  Side
+C10       100n               C_0201_0603Metric                     186.5471  -148.3810    0.0000  top
+J1        USB4105-GF-A-060   GCT_USB4105-GF-A-060                  220.7062  -146.8309   90.0000  top
+J2        GC_1               GameCubeHeader                        189.5864  -142.5442    0.0000  top
+J3        GC_2               GameCubeHeader                        209.6524  -142.5442    0.0000  top
+J4        GC_3               GameCubeHeader                        209.6524  -151.1802  180.0000  top
+J5        GC_4               GameCubeHeader                        189.5864  -151.1802  180.0000  top
+L1        SK6805-EC-15       SK6805-EC-15                          189.5864  -144.0682    0.0000  top
+L2        SK6805-EC-15       SK6805-EC-15                          209.6524  -144.0682    0.0000  top
+L3        SK6805-EC-15       SK6805-EC-15                          209.6194  -149.6892  180.0000  top
+L4        SK6805-EC-15       SK6805-EC-15                          189.5864  -149.6562  180.0000  top
+R1        27                 R_0201_0603Metric                     204.5724  -143.5602  180.0000  top
+R2        27                 R_0201_0603Metric                     204.5724  -144.3222  180.0000  top
+R3        1k                 R_0201_0603Metric                     194.7916  -148.8078  -45.0000  top
+R4        10k                R_0201_0603Metric                     197.1584  -150.9262  -45.0000  top
+R5        5.1k               R_0201_0603Metric                     214.2593  -150.3833  180.0000  top
+R6        5.1k               R_0201_0603Metric                     214.2904  -143.3062    0.0000  top
+R7        1k                 R_0201_0603Metric                     186.4286  -144.9518  180.0000  top
+R8        330                R_0201_0603Metric                     194.0560  -145.2880  180.0000  top
+R9        330                R_0201_0603Metric                     184.6580  -149.6060  180.0000  top
+SW1       1TS026A-1000-0550  1TS026A-1000-0550                     180.1884  -144.5260   90.0000  top
+SW3       1TS026A-1000-0550  1TS026A-1000-0550                     180.1884  -149.0980   90.0000  top
+U1        RP2040             QFN-56-1EP_7x7mm_P0.4mm_EP3.2x3.2mm   199.5334  -146.7945  -45.0000  top
+U2        GD25Q80EEIGR       USON-8-EP(2x3)                        184.6580  -146.3040  -90.0000  top
+## End
