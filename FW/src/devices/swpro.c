@@ -133,10 +133,10 @@ const uint8_t swpro_hid_report_descriptor[] = {
 
 const uint8_t swpro_configuration_descriptor[] = {
     // Configuration number, interface count, string index, total length, attribute, power in mA
-    TUD_CONFIG_DESCRIPTOR(1, 2, 0, 64, TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, 500),
+    TUD_CONFIG_DESCRIPTOR(1, 3, 0, 96, TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, 500),
 
     // Interface
-    9, TUSB_DESC_INTERFACE, 0x00, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x00,
+    9, TUSB_DESC_INTERFACE, 0x00, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x04,
     // HID Descriptor
     9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(sizeof(swpro_hid_report_descriptor)),
     // Endpoint Descriptor
@@ -144,13 +144,22 @@ const uint8_t swpro_configuration_descriptor[] = {
     // Endpoint Descriptor
     7, TUSB_DESC_ENDPOINT, 0x01, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
 
+    // Interface
+    9, TUSB_DESC_INTERFACE, 0x01, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x05,
+    // HID Descriptor
+    9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(sizeof(swpro_hid_report_descriptor)),
+    // Endpoint Descriptor
+    7, TUSB_DESC_ENDPOINT, 0x82, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
+    // Endpoint Descriptor
+    7, TUSB_DESC_ENDPOINT, 0x02, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
+
     // Alternate Interface for WebUSB
     // Interface
-    9, TUSB_DESC_INTERFACE, 0x01, 0x00, 0x02, TUSB_CLASS_VENDOR_SPECIFIC, 0x00, 0x00, 0x00,
+    9, TUSB_DESC_INTERFACE, 0x02, 0x00, 0x02, TUSB_CLASS_VENDOR_SPECIFIC, 0x00, 0x00, 0x06,
     // Endpoint Descriptor
-    7, TUSB_DESC_ENDPOINT, 0x82, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
+    7, TUSB_DESC_ENDPOINT, 0x83, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
     // Endpoint Descriptor
-    7, TUSB_DESC_ENDPOINT, 0x02, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
+    7, TUSB_DESC_ENDPOINT, 0x03, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
 };
 
 /**--------------------------**/

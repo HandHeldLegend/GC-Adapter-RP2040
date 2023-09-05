@@ -8,7 +8,7 @@ enum
   VENDOR_REQUEST_WEBUSB = 1,
   VENDOR_REQUEST_MICROSOFT = 2
 };
-#define ITF_NUM_VENDOR 1
+#define ITF_NUM_VENDOR 2
 
 extern uint8_t const desc_bos[];
 extern uint8_t const desc_ms_os_20[];

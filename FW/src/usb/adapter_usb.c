@@ -27,7 +27,7 @@ void _adapter_usb_set_interval(usb_rate_t rate)
 bool adapter_usb_start(input_mode_t mode)
 {
 
-  //imu_set_enabled(false);
+  // imu_set_enabled(false);
 
   switch (mode)
   {
@@ -178,11 +178,11 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
       {
         if ((buffer[3] > 0) || (buffer[4] > 0))
         {
-          //cb_hoja_rumble_enable(true);
+          // cb_hoja_rumble_enable(true);
         }
         else
         {
-          //cb_hoja_rumble_enable(false);
+          // cb_hoja_rumble_enable(false);
         }
       }
     }
@@ -213,6 +213,15 @@ usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
   return &tud_xinput_driver;
 }
 
+// String Descriptor Index
+enum
+{
+  STRID_LANGID = 0,
+  STRID_MANUFACTURER,
+  STRID_PRODUCT,
+  STRID_SERIAL,
+};
+
 static uint16_t _desc_str[64];
 
 // Invoked when received GET STRING DESCRIPTOR request
@@ -222,18 +231,18 @@ uint16_t const *tud_descriptor_string_cb(uint8_t index, uint16_t langid)
   (void)langid;
 
   uint8_t chr_count;
+  const char *str = global_string_descriptor[index];
 
-  if (index == 0)
+  switch (index)
   {
+  case STRID_LANGID:
     memcpy(&_desc_str[1], global_string_descriptor[0], 2);
     chr_count = 1;
-  }
-  else
-  {
+    break;
+
+  default:
     // Note: the 0xEE index string is a Microsoft OS 1.0 Descriptors.
     // https://docs.microsoft.com/en-us/windows-hardware/drivers/usbcon/microsoft-defined-usb-descriptors
-
-    const char *str = global_string_descriptor[index];
 
     // Cap at max char... WHY?
     chr_count = strlen(str);
@@ -245,6 +254,7 @@ uint16_t const *tud_descriptor_string_cb(uint8_t index, uint16_t langid)
     {
       _desc_str[1 + i] = str[i];
     }
+    break;
   }
 
   // first byte is length (including header), second byte is string type
