@@ -17,16 +17,6 @@ uint32_t _port_inputs[4][4] = {{0}};
 joybus_input_s _port_joybus[4] = {0};
 bool _port_ready[4] = {false};
 
-// This ISR is called when we got a byte of data
-static void _gamecube_isr_handler(void)
-{
-    if (pio_interrupt_get(JOYBUS_PIO, 0))
-    {
-
-        pio_interrupt_clear(JOYBUS_PIO, 0);
-    }
-}
-
 bool _port_rumble[4] = {false, false, false, false};
 
 uint read_count = 0;
@@ -158,13 +148,6 @@ void adapter_comms_task(uint32_t timestamp)
 void adapter_init_test()
 {
     _gamecube_offset = pio_add_program(JOYBUS_PIO, &joybus_program);
-    _adapter_output_irq = PIO1_IRQ_0;
-
-    pio_set_irq0_source_enabled(JOYBUS_PIO, pis_interrupt0, true);
-
-    irq_set_exclusive_handler(_adapter_output_irq, _gamecube_isr_handler);
-
-    irq_set_enabled(_adapter_output_irq, true);
 
     joybus_program_init(JOYBUS_PIO, _gamecube_offset + joybus_offset_joybusout, JOYBUS_PORT_1, _gamecube_c);
     sleep_ms(100);
