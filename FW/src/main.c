@@ -1,5 +1,6 @@
 #include "adapter_includes.h"
 #include "main.h"
+#include "interval.h"
 
 void adapter_hardware_setup()
 {
@@ -14,13 +15,9 @@ void adapter_hardware_setup()
     rgb_init();
 }
 
-
 int main()
 {
-    stdio_init_all();
-
-    printf("GC Adapter Started.\n");
-
+    
     adapter_hardware_setup();
 
     // Handle bootloader stuff
@@ -29,32 +26,38 @@ int main()
         reset_usb_boot(0, 0);
     }
 
+    bool inited = adapter_usb_start(INPUT_MODE_XINPUT);
+    stdio_init_all();
+    //bool inited = stdio_usb_init();
+
     rgb_set_all(COLOR_BLUE.color);
+    if(!inited) rgb_set_all(COLOR_RED.color);
     rgb_set_dirty();
 
-    bool red = false;
-    bool green = false;
-    bool off = false;
-    bool final = false;
+    sleep_ms(1000);
 
-    adapter_usb_start(INPUT_MODE_XINPUT);
+    bool did = false;
+    bool sent = false;
 
     for(;;)
     {
         uint32_t t = time_us_32();
         rgb_task(t);
         tud_task();
-        if (!gpio_get(ADAPTER_BUTTON_1) && !gpio_get(ADAPTER_BUTTON_2))
+        
+        if (!gpio_get(ADAPTER_BUTTON_1))
         {
             reset_usb_boot(0, 0);
-            
         }
 
-        if(tud_xinput_n_ready(0))
+        if(!did)
         {
-            static button_data_s b;
-            static a_data_s a;
-            xinput_hid_report(0, &b, &a);
+            adapter_init_test();
+            did=true;
+        }
+        else
+        {
+            adapter_comms_task(t);
         }
         
     }

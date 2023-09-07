@@ -31,6 +31,7 @@ typedef enum
     INPUT_MODE_SWPRO,
     INPUT_MODE_XINPUT,
     INPUT_MODE_GAMECUBE,
+    INPUT_MODE_CDC,
 } input_mode_t;
 
 typedef enum
@@ -59,57 +60,48 @@ typedef enum
   XI_HAT_CENTER       = 0x00,
 } xi_input_hat_dir_t;
 
-/** @brief This is a struct for containing all of the
- * button input data as bits. This saves space
- * and allows for easier handoff to the various
- * controller cores in the future.
-**/
 typedef struct
 {
     union
     {
         struct
         {
-            // D-Pad
-            uint8_t dpad_up         : 1;
-            uint8_t dpad_down       : 1;
-            uint8_t dpad_left       : 1;
-            uint8_t dpad_right      : 1;
-            // Buttons
-            uint8_t button_a       : 1;
-            uint8_t button_b     : 1;
-            uint8_t button_x     : 1;
-            uint8_t button_y    : 1;
-            // Triggers
-            uint8_t trigger_l       : 1;
-            uint8_t trigger_zl      : 1;
-            uint8_t trigger_r       : 1;
-            uint8_t trigger_zr      : 1;
+            uint8_t stick_left_y;
+            uint8_t stick_left_x;
 
-            // Special Functions
-            uint8_t button_plus     : 1;
-            uint8_t button_minus    : 1;
+            uint8_t dpad_left : 1;
+            uint8_t dpad_right : 1;
+            uint8_t dpad_down : 1;
+            uint8_t dpad_up : 1;
+            uint8_t button_z : 1;
+            uint8_t button_r : 1;
+            uint8_t button_l : 1;
+            uint8_t blank_2 : 1;
 
-            // Stick clicks
-            uint8_t button_stick_left   : 1;
-            uint8_t button_stick_right  : 1;
+            uint8_t button_a : 1;
+            uint8_t button_b : 1;
+            uint8_t button_x : 1;
+            uint8_t button_y : 1;
+            uint8_t button_start : 1;
+            uint8_t blank_1 : 3;
+            
         };
-        uint16_t buttons_all;
+        uint32_t byte_1;
     };
 
     union
     {
         struct
         {
-            // Menu buttons (Not remappable by API)
-            uint8_t button_capture  : 1;
-            uint8_t button_home     : 1;
-            uint8_t button_safemode : 1;
-            uint8_t padding         : 5;
+            
+            uint8_t analog_trigger_r;
+            uint8_t analog_trigger_l;
+            uint8_t stick_right_y;
+            uint8_t stick_right_x;
         };
-        uint8_t buttons_system;
+        uint32_t byte_2;
     };
-} __attribute__ ((packed)) button_data_s;
+} joybus_input_s;
 
 typedef struct
 {

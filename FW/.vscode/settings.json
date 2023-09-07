@@ -2,6 +2,10 @@
     "files.associations": {
         "interval.h": "c",
         "adapter_usb.h": "c",
-        "adapter_includes.h": "c"
+        "adapter_includes.h": "c",
+        "adapter.h": "c",
+        "stdio_usb.h": "c",
+        "serial_cdc.h": "c",
+        "stdio.h": "c"
     }
 }

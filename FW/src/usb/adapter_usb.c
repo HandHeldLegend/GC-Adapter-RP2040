@@ -15,7 +15,7 @@ bool _usb_clear = false;
 // Default 8ms (8000us)
 uint32_t _usb_rate = 0;
 
-typedef void (*usb_cb_t)(button_data_s *, a_data_s *);
+typedef void (*usb_cb_t)(joybus_input_s *);
 
 usb_cb_t _usb_hid_cb = NULL;
 
@@ -26,12 +26,11 @@ void _adapter_usb_set_interval(usb_rate_t rate)
 
 bool adapter_usb_start(input_mode_t mode)
 {
-
-  // imu_set_enabled(false);
-
   switch (mode)
   {
   default:
+    _usb_hid_cb = NULL;
+    break;
   case INPUT_MODE_SWPRO:
     _adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = swpro_hid_report;
@@ -44,6 +43,7 @@ bool adapter_usb_start(input_mode_t mode)
   }
 
   _usb_mode = mode;
+  
   return tusb_init();
 }
 
@@ -53,19 +53,19 @@ static inline bool _adapter_usb_ready()
 {
   if (_usb_mode == INPUT_MODE_XINPUT)
   {
-    return tud_xinput_ready();
+    return tud_xinput_n_ready(0);
   }
   else
     return tud_hid_ready();
 }
 
-void adapter_usb_task(uint32_t timestamp, button_data_s *button_data, a_data_s *analog_data)
+void adapter_usb_task(uint32_t timestamp)
 {
   if (interval_resettable_run(timestamp, _usb_rate, _usb_clear))
   {
-    if (_adapter_usb_ready())
+    if (_adapter_usb_ready() && (_usb_hid_cb != NULL) )
     {
-      _usb_hid_cb(button_data, analog_data);
+      //_usb_hid_cb(joybus_input_s *joybus_data);
     }
   }
   else
@@ -90,8 +90,12 @@ uint8_t const *tud_descriptor_device_cb(void)
   case INPUT_MODE_XINPUT:
     return (uint8_t const *)&xid_device_descriptor;
     break;
+
+  case INPUT_MODE_CDC:
+    return (uint8_t const *)&serial_device_descriptor;
   }
 }
+
 
 // Invoked when received GET CONFIGURATION DESCRIPTOR
 // Application return pointer to descriptor
@@ -109,6 +113,10 @@ uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
 
   case INPUT_MODE_XINPUT:
     return (uint8_t const *)&xid_configuration_descriptor;
+    break;
+
+  case INPUT_MODE_CDC:
+    return (uint8_t const *) &serial_configuration_descriptor;
     break;
   }
 }

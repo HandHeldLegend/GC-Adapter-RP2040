@@ -45,7 +45,7 @@
         "silk_text_thickness": 0.15,
         "silk_text_upright": false,
         "zones": {
-          "min_clearance": 0.0
+          "min_clearance": 0.15
         }
       },
       "diff_pair_dimensions": [
@@ -55,19 +55,7 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [
-        "copper_edge_clearance|215962721|151155162|694ea8d0-1179-4123-9dba-d38f6d2bd7a7|09f0806b-9afb-43c9-9845-90cc7d50f830",
-        "copper_edge_clearance|215964415|142509267|0908e8db-fb3e-4e4f-acc1-442b26e54eee|03253c3d-8a2b-46de-b4c6-68e4397d3a87",
-        "copper_edge_clearance|221118779|142510946|05fc1096-d8b7-4975-aba3-c30ce20f5e19|8e8cd244-157c-484c-9a1c-36ca73ccf3bd",
-        "copper_edge_clearance|221118779|151150946|05fc1096-d8b7-4975-aba3-c30ce20f5e19|4adf4269-4ed3-42c8-9d51-6397c04f800b",
-        "items_not_allowed|178588408|145034000|c1288ff7-2381-4a37-9e41-fb91df968d22|00000000-0000-0000-0000-000000000000",
-        "items_not_allowed|178588408|148590000|c538e72b-3536-48ee-9106-935b87c513c6|00000000-0000-0000-0000-000000000000",
-        "silk_edge_clearance|186055570|142694241|2423044a-39a9-4cf6-97f6-c87db14be648|dd69073d-19f8-44ce-a254-d1472f8c29db",
-        "silk_edge_clearance|186078702|151030241|d525c4bf-7a06-4860-a257-e5a43d9a9fdd|04aba326-aa96-473a-969e-3ef99fb569be",
-        "silk_edge_clearance|197688789|152146000|5939e6db-233e-408f-aa8d-22df7b913669|ea99dc15-7f5a-4475-855f-e4caf9d9538f",
-        "silk_edge_clearance|213209304|151030241|8cb4d1dd-afc8-47c8-817f-7d15b176539d|2f6f8002-3775-4f7f-95c9-dd5b28c6273e",
-        "silk_edge_clearance|213232436|142694241|91532e5d-16d9-4e07-921c-c31d7a7f44a4|3d153786-28d3-4b7a-b1c8-e507d569e3db"
-      ],
+      "drc_exclusions": [],
       "meta": {
         "version": 2
       },
@@ -481,7 +469,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "GCP-2.step",
+      "step": "../Production/3D/PCB.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""

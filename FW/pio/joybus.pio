@@ -1,0 +1,85 @@
+;
+; Copyright (c) Hand Held Legend, LLC 2023
+;
+
+.program joybus
+.side_set 1 optional
+
+; Repeatedly get one word of data from the TX FIFO, stalling when the FIFO is
+; empty. Write the least significant bit to the OUT pin group.
+
+.wrap_target
+
+; First we output data
+PUBLIC joybusdelay:
+    nop [7]
+    nop [7]
+    nop [7]
+    nop [7]
+    nop [6]
+    jmp y-- joybusdelay
+PUBLIC joybusout:
+    ;set pins 1
+    set pindirs 1 side 1
+output:
+    out x, 1        side 1 [4] ;Side-set still takes place when instruction stalls
+    jmp !x do_zero   side 0 [4]; Branch on the bit we shifted out. low pulse
+do_one:
+    nop side 1 [2]
+    jmp !osre output side 1 [5] ; Drive high extended
+    jmp do_end
+do_zero:
+    nop side 0 [1]
+    jmp !osre output side 0 [7]
+do_end:
+    nop side 1 [4]
+    nop side 0 [2]
+    set pindirs 0 side 1
+    mov isr, null
+    ;irq nowait 0
+    ;jmp output
+bitloop:
+    wait 0 pin, 0 [7]
+    ; Get the level and put it into ISR
+    in pins, 1
+    wait 1 pin, 0 ; Wait for line HIGH
+    jmp bitloop
+.wrap
+
+% c-sdk {
+
+// Joybus program hogs all four state machines simultaneously 
+static inline void joybus_program_init(PIO pio, uint offset, uint pin, pio_sm_config *configs) {
+
+    // Must run 12800000hz
+    float div = clock_get_hz(clk_sys) / (4000000);
+
+    for(uint i = 0; i < 4; i++)
+    {
+        configs[i] = joybus_program_get_default_config(offset);
+        gpio_init(pin+i);
+
+        // Set this pin's GPIO function (connect PIO to the pad)
+        pio_gpio_init(pio, pin+i);
+        pio_sm_set_consecutive_pindirs(pio, i, pin+i, 1, true);
+
+        sm_config_set_in_pins(&configs[i], pin+i);
+        sm_config_set_out_pins(&configs[i], pin+i, 1);
+        sm_config_set_jmp_pin(&configs[i], pin+i);
+        sm_config_set_set_pins(&configs[i], pin+i, 1);
+
+        sm_config_set_clkdiv(&configs[i], div);
+
+        // Set sideset pin
+        sm_config_set_sideset_pins(&configs[i], pin+i);
+        sm_config_set_in_shift(&configs[i], false, true, 32);
+        sm_config_set_out_shift(&configs[i], false, true, 8);
+
+        // Load our configuration, and jump to the start of the program
+        pio_sm_init(pio, i, offset, &configs[i]);
+
+        // Set the state machine running
+        pio_sm_set_enabled(pio, i, true);
+    } 
+}
+%}

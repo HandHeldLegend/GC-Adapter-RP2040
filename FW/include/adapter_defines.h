@@ -5,15 +5,19 @@
 
 extern const char* global_string_descriptor[];
 
-#define RGB_PIO pio0
+#define RGB_PIO pio1
 #define RGB_SM 0
 
-#define GAMEPAD_PIO pio1
-#define GAMEPAD_SM 0
+#define JOYBUS_PIO pio0
 
 #define UTIL_RGB_PIN   10
 #define UTIL_RGB_COUNT 4
 #define UTIL_RGBW_EN 0
+
+#define JOYBUS_PORT_1 22
+#define JOYBUS_PORT_2 23
+#define JOYBUS_PORT_3 24
+#define JOYBUS_PORT_4 25
 
 #define ADAPTER_MANUFACTURER "HHL"
 #define ADAPTER_PRODUCT "GC Pocket+"

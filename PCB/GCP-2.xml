@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <export version="E">
   <design>
-    <source>C:\Users\Mitch\GitRepos\GCP-2-RP2040\PCB\GCP-2.kicad_sch</source>
-    <date>8/14/2023 11:24:43 PM</date>
+    <source>C:\Users\Mitch\GitRepos\GC-Adapter-RP2040\PCB\GCP-2.kicad_sch</source>
+    <date>9/6/2023 10:27:56 PM</date>
     <tool>Eeschema 7.0.6</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
@@ -36,7 +36,7 @@
       <tstamps>cc8d2962-86b4-478c-a521-1c5deb40a1d4</tstamps>
     </comp>
     <comp ref="C2">
-      <value>2.2uF</value>
+      <value>6.8uF</value>
       <footprint>Capacitor_SMD:C_0603_1608Metric</footprint>
       <libsource lib="Device" part="C" description="Unpolarized capacitor"/>
       <property name="Sheetname" value=""/>
@@ -394,6 +394,17 @@
       <sheetpath names="/" tstamps="/"/>
       <tstamps>8e1290a8-dbdc-4c3b-94e8-995e5ec6bd5a</tstamps>
     </comp>
+    <comp ref="R14">
+      <value>10k</value>
+      <footprint>Resistor_SMD:R_0201_0603Metric</footprint>
+      <libsource lib="Device" part="R_Small" description="Resistor, small symbol"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="GCP-2.kicad_sch"/>
+      <property name="ki_description" value="Resistor, small symbol"/>
+      <property name="ki_keywords" value="R resistor"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c4b6dcee-70a8-4f25-8404-35d03ee1eae1</tstamps>
+    </comp>
     <comp ref="SW1">
       <value>1TS026A-1000-0550</value>
       <footprint>hhl:1TS026A-1000-0550</footprint>
@@ -526,20 +537,18 @@
       <tstamps>b8604935-f4b5-469f-aeda-780d6f8e5391</tstamps>
     </comp>
     <comp ref="U3">
-      <value>3.3v Fixed</value>
-      <footprint>hhl:HTSOP-J8</footprint>
-      <datasheet>https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/linear_regulator/bdxxha5wefj-e.pdf</datasheet>
+      <value>XC6222</value>
+      <footprint>hhl:SOT-89-5</footprint>
+      <datasheet>https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/642/XC6222.pdf</datasheet>
       <fields>
-        <field name="LCSC">C3746355</field>
-        <field name="MPN">BD33HA5WEFJ</field>
+        <field name="MPN">XC6222B331PR-G</field>
       </fields>
-      <libsource lib="hhl" part="BD33HA5WEFJ" description=""/>
-      <property name="MPN" value="BD33HA5WEFJ"/>
-      <property name="LCSC" value="C3746355"/>
+      <libsource lib="hhl" part="XC6222B331PR-G" description=""/>
+      <property name="MPN" value="XC6222B331PR-G"/>
       <property name="Sheetname" value=""/>
       <property name="Sheetfile" value="GCP-2.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamps>355f4519-66aa-474d-a654-ca60faef5363</tstamps>
+      <tstamps>12400643-c80d-4b85-a7af-fad636b2116e</tstamps>
     </comp>
     <comp ref="Y1">
       <value>Crystal_GND3</value>
@@ -770,27 +779,6 @@
         <pin num="4" name="4" type="input"/>
       </pins>
     </libpart>
-    <libpart lib="hhl" part="BD33HA5WEFJ">
-      <docs>https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/linear_regulator/bdxxha5wefj-e.pdf</docs>
-      <fields>
-        <field name="Reference">U</field>
-        <field name="Value">3.3v Fixed</field>
-        <field name="Footprint">hhl:HTSOP-J8</field>
-        <field name="Datasheet">https://fscdn.rohm.com/en/products/databook/datasheet/ic/power/linear_regulator/bdxxha5wefj-e.pdf</field>
-        <field name="MPN">BD33HA5WEFJ</field>
-        <field name="LCSC">C3746355</field>
-      </fields>
-      <pins>
-        <pin num="1" name="Vo" type="input"/>
-        <pin num="2" name="Vo_s" type="input"/>
-        <pin num="3" name="GND" type="input"/>
-        <pin num="4" name="NC" type="input"/>
-        <pin num="5" name="EN" type="input"/>
-        <pin num="6" name="NC" type="input"/>
-        <pin num="7" name="NC" type="input"/>
-        <pin num="8" name="VCC" type="input"/>
-      </pins>
-    </libpart>
     <libpart lib="hhl" part="CUS08F30">
       <description>Diode</description>
       <footprints>
@@ -871,6 +859,23 @@
         <pin num="S4" name="SHELL_GND" type="power_in"/>
       </pins>
     </libpart>
+    <libpart lib="hhl" part="XC6222B331PR-G">
+      <docs>https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/642/XC6222.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">XC6222</field>
+        <field name="Footprint">hhl:SOT-89-5</field>
+        <field name="Datasheet">https://mm.digikey.com/Volume0/opasdata/d220001/medias/docus/642/XC6222.pdf</field>
+        <field name="MPN">XC6222B331PR-G</field>
+      </fields>
+      <pins>
+        <pin num="1" name="CE" type="power_out"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="NC" type="no_connect"/>
+        <pin num="4" name="Vin" type="input"/>
+        <pin num="5" name="Vout" type="input"/>
+      </pins>
+    </libpart>
   </libparts>
   <libraries>
     <library logical="Connector">
@@ -926,14 +931,13 @@
       <node ref="U1" pin="48" pinfunction="USB_VDD" pintype="power_in"/>
       <node ref="U1" pin="49" pinfunction="IOVDD" pintype="passive"/>
       <node ref="U2" pin="8" pinfunction="VCC" pintype="input"/>
-      <node ref="U3" pin="1" pinfunction="Vo" pintype="input"/>
-      <node ref="U3" pin="2" pinfunction="Vo_s" pintype="input"/>
+      <node ref="U3" pin="5" pinfunction="Vout" pintype="input"/>
     </net>
     <net code="3" name="+5V">
-      <node ref="J2" pin="3" pinfunction="5V" pintype="input"/>
-      <node ref="J3" pin="3" pinfunction="5V" pintype="input"/>
-      <node ref="J4" pin="3" pinfunction="5V" pintype="input"/>
-      <node ref="J5" pin="3" pinfunction="5V" pintype="input"/>
+      <node ref="F1" pin="2" pintype="passive"/>
+      <node ref="J1" pin="A4_B9" pinfunction="VBUS" pintype="power_in"/>
+      <node ref="J1" pin="B4_A9" pinfunction="VBUS" pintype="power_in"/>
+      <node ref="TP5" pin="1" pinfunction="1" pintype="passive"/>
     </net>
     <net code="4" name="BTN_1">
       <node ref="SW1" pin="3" pinfunction="3" pintype="input"/>
@@ -1018,69 +1022,64 @@
       <node ref="U1" pin="19" pinfunction="TESTEN" pintype="input"/>
       <node ref="U1" pin="57" pinfunction="GND" pintype="power_in"/>
       <node ref="U2" pin="4" pinfunction="VSS" pintype="input"/>
-      <node ref="U3" pin="3" pinfunction="GND" pintype="input"/>
-      <node ref="U3" pin="4" pinfunction="NC" pintype="input"/>
-      <node ref="U3" pin="6" pinfunction="NC" pintype="input"/>
-      <node ref="U3" pin="7" pinfunction="NC" pintype="input"/>
+      <node ref="U3" pin="2" pinfunction="GND" pintype="power_in"/>
       <node ref="Y1" pin="2" pinfunction="2" pintype="passive"/>
     </net>
     <net code="13" name="Net-(D1-A)">
       <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
       <node ref="F1" pin="1" pintype="passive"/>
     </net>
-    <net code="14" name="Net-(D1-K)">
-      <node ref="C3" pin="2" pintype="passive"/>
-      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
-      <node ref="U3" pin="5" pinfunction="EN" pintype="input"/>
-      <node ref="U3" pin="8" pinfunction="VCC" pintype="input"/>
-    </net>
-    <net code="15" name="Net-(J1-CC1)">
+    <net code="14" name="Net-(J1-CC1)">
       <node ref="J1" pin="A5" pinfunction="CC1" pintype="bidirectional"/>
       <node ref="R5" pin="2" pintype="passive"/>
     </net>
-    <net code="16" name="Net-(J1-CC2)">
+    <net code="15" name="Net-(J1-CC2)">
       <node ref="J1" pin="B5" pinfunction="CC2" pintype="bidirectional"/>
       <node ref="R6" pin="1" pintype="passive"/>
     </net>
-    <net code="17" name="Net-(L1-DIN)">
+    <net code="16" name="Net-(L1-DIN)">
       <node ref="L1" pin="1" pinfunction="DIN" pintype="input"/>
       <node ref="R8" pin="2" pintype="passive"/>
     </net>
-    <net code="18" name="Net-(L1-DOUT)">
+    <net code="17" name="Net-(L1-DOUT)">
       <node ref="L1" pin="3" pinfunction="DOUT" pintype="output"/>
       <node ref="L2" pin="1" pinfunction="DIN" pintype="input"/>
     </net>
-    <net code="19" name="Net-(L2-DOUT)">
+    <net code="18" name="Net-(L2-DOUT)">
       <node ref="L2" pin="3" pinfunction="DOUT" pintype="output"/>
       <node ref="L3" pin="1" pinfunction="DIN" pintype="input"/>
     </net>
-    <net code="20" name="Net-(L3-DOUT)">
+    <net code="19" name="Net-(L3-DOUT)">
       <node ref="L3" pin="3" pinfunction="DOUT" pintype="output"/>
       <node ref="L4" pin="1" pinfunction="DIN" pintype="input"/>
     </net>
-    <net code="21" name="Net-(L4-DOUT)">
+    <net code="20" name="Net-(L4-DOUT)">
       <node ref="L4" pin="3" pinfunction="DOUT" pintype="output"/>
       <node ref="R9" pin="1" pintype="passive"/>
     </net>
-    <net code="22" name="Net-(R3-Pad1)">
+    <net code="21" name="Net-(R3-Pad1)">
       <node ref="R3" pin="1" pintype="passive"/>
       <node ref="Y1" pin="3" pinfunction="3" pintype="passive"/>
     </net>
-    <net code="23" name="Net-(U1-RUN)">
+    <net code="22" name="Net-(U1-RUN)">
       <node ref="R4" pin="2" pintype="passive"/>
       <node ref="U1" pin="26" pinfunction="RUN" pintype="input"/>
     </net>
-    <net code="24" name="Net-(U1-USB_DM)">
+    <net code="23" name="Net-(U1-USB_DM)">
       <node ref="R2" pin="2" pintype="passive"/>
       <node ref="U1" pin="46" pinfunction="USB_DM" pintype="bidirectional"/>
     </net>
-    <net code="25" name="Net-(U1-USB_DP)">
+    <net code="24" name="Net-(U1-USB_DP)">
       <node ref="R1" pin="2" pintype="passive"/>
       <node ref="U1" pin="47" pinfunction="USB_DP" pintype="bidirectional"/>
     </net>
-    <net code="26" name="Net-(U2-{slash}CS)">
+    <net code="25" name="Net-(U2-{slash}CS)">
       <node ref="R7" pin="2" pintype="passive"/>
       <node ref="U2" pin="1" pinfunction="/CS" pintype="input"/>
+    </net>
+    <net code="26" name="Net-(U3-CE)">
+      <node ref="R14" pin="1" pintype="passive"/>
+      <node ref="U3" pin="1" pinfunction="CE" pintype="power_out"/>
     </net>
     <net code="27" name="RGB">
       <node ref="R8" pin="1" pintype="passive"/>
@@ -1113,10 +1112,14 @@
       <node ref="U1" pin="56" pinfunction="QSPI_SS" pintype="bidirectional"/>
     </net>
     <net code="34" name="VCC">
-      <node ref="F1" pin="2" pintype="passive"/>
-      <node ref="J1" pin="A4_B9" pinfunction="VBUS" pintype="power_in"/>
-      <node ref="J1" pin="B4_A9" pinfunction="VBUS" pintype="power_in"/>
-      <node ref="TP5" pin="1" pinfunction="1" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="5V" pintype="input"/>
+      <node ref="J3" pin="3" pinfunction="5V" pintype="input"/>
+      <node ref="J4" pin="3" pinfunction="5V" pintype="input"/>
+      <node ref="J5" pin="3" pinfunction="5V" pintype="input"/>
+      <node ref="R14" pin="2" pintype="passive"/>
+      <node ref="U3" pin="4" pinfunction="Vin" pintype="input"/>
     </net>
     <net code="35" name="XTAL_IN">
       <node ref="U1" pin="20" pinfunction="XIN" pintype="input"/>
@@ -1221,6 +1224,9 @@
     </net>
     <net code="68" name="unconnected-(U1-SWD-Pad25)">
       <node ref="U1" pin="25" pinfunction="SWD" pintype="bidirectional"/>
+    </net>
+    <net code="69" name="unconnected-(U3-NC-Pad3)">
+      <node ref="U3" pin="3" pinfunction="NC" pintype="no_connect"/>
     </net>
   </nets>
 </export>

@@ -1,5 +1,6 @@
 C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/build/CMakeFiles/gc_adapter_rp2040.dir
 C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/build/CMakeFiles/gc_adapter_rp2040_ws2812_pio_h.dir
+C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/build/CMakeFiles/gc_adapter_rp2040_joybus_pio_h.dir
 C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/build/CMakeFiles/edit_cache.dir
 C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/build/CMakeFiles/rebuild_cache.dir
 C:/Users/Mitch/GitRepos/GC-Adapter-RP2040/FW/build/pico-sdk/CMakeFiles/edit_cache.dir

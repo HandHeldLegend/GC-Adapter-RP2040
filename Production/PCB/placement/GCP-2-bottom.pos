@@ -1,24 +1,25 @@
-### Footprint positions - created on Mon Aug 14 23:22:58 2023 ###
+### Footprint positions - created on Wed Sep  6 22:26:44 2023 ###
 ### Printed by KiCad version 7.0.6
 ## Unit = mm, Angle = deg.
 ## Side : bottom
 # Ref     Val                Package                                              PosX       PosY       Rot  Side
 C1        47uF_6.3v          CP_EIA-3216-18_Kemet-A                           193.6504  -145.3382  -135.0000  bottom
-C2        2.2uF              C_0603_1608Metric                                201.5230  -149.5477  -135.0000  bottom
-C3        2.2uF              C_0603_1608Metric                                211.1838  -148.3609  180.0000  bottom
+C2        6.8uF              C_0603_1608Metric                                201.5230  -149.5477  -135.0000  bottom
+C3        2.2uF              C_0603_1608Metric                                212.6165  -144.3929  180.0000  bottom
 C4        100n               C_0402_1005Metric                                197.4313  -144.3624  -45.0000  bottom
 C5        100n               C_0402_1005Metric                                198.9553  -142.8384  -45.0000  bottom
 C6        1u                 C_0402_1005Metric                                202.4162  -144.3658  -135.0000  bottom
 C7        100n               C_0402_1005Metric                                198.1933  -143.6004  135.0000  bottom
 C8        100n               C_0402_1005Metric                                201.6542  -143.6038   45.0000  bottom
 C9        100n               C_0402_1005Metric                                197.5458  -150.5868   45.0000  bottom
-D1        CUS08F30           D_SOD-323_HandSoldering                          211.0685  -145.5208   90.0000  bottom
-F1        Fuse               Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder   213.9087  -147.4387  -90.0000  bottom
+D1        CUS08F30           D_SOD-323_HandSoldering                          212.0900  -147.3908  -90.0000  bottom
+F1        Fuse               Fuse_1206_3216Metric_Pad1.42x1.75mm_HandSolder   214.1728  -147.5740   90.0000  bottom
 R10       1k                 R_0201_0603Metric                                191.5887  -148.6941  180.0000  bottom
 R11       1k                 R_0201_0603Metric                                205.0734  -143.8893  180.0000  bottom
 R12       1k                 R_0201_0603Metric                                204.3645  -150.0456  180.0000  bottom
 R13       1k                 R_0201_0603Metric                                194.7750  -150.3198    0.0000  bottom
+R14       10k                R_0201_0603Metric                                204.5621  -148.2551   45.0000  bottom
 SW2       1TS026A-1000-0550  1TS026A-1000-0550                                180.8480  -146.8120    0.0000  bottom
-U3        3.3v_Fixed         HTSOP-J8                                         204.4004  -149.2249   90.0000  bottom
+U3        XC6222             SOT-89-5                                         208.2588  -146.7945    0.0000  bottom
 Y1        Crystal_GND3       Resonator_SMD_Murata_CSTxExxV-3Pin_3.0x1.1mm     196.1904  -148.6402  135.0000  bottom
 ## End

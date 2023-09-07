@@ -8,6 +8,7 @@ include($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
 
 project(gc_adapter_rp2040 C CXX ASM)
 
+
 pico_sdk_init()
 
 include_directories(
@@ -26,10 +27,11 @@ add_executable(${PROJECT_NAME}
 
   src/usb/desc_bos.c 
   src/usb/adapter_usb.c 
+
+  src/adapter.c
   src/adapter_defines.c 
   src/adapter_rumble.c 
   src/adapter_settings.c 
-  
 
   src/usb/xinput_device.c 
 
@@ -41,30 +43,21 @@ add_executable(${PROJECT_NAME}
   src/devices/gamecube.c 
   src/devices/swpro.c 
   src/devices/webusb.c 
-  src/devices/xinput.c 
+  src/devices/xinput.c
+  src/devices/serial_cdc.c
 )
 
-target_compile_definitions(${PROJECT_NAME}
-	PRIVATE
-	PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
-	PICO_DEFAULT_UART_TX_PIN=12
-	PICO_DEFAULT_UART_RX_PIN=13
-	#PICO_DEFAULT_BOOT_STAGE2=boot2_generic_03h
-	#PICO_FLASH_SPI_CLKDIV=8
-	)
+
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/ws2812.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/include/generated)
-
-#add_custom_command(OUTPUT /generated/cvideo.pio.h
-#	DEPENDS /cvideo.pio
-#	COMMAND Pioasm /cvideo.pio /generated/cvideo.pio.h
-#	)
+pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/joybus.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 
 # Pull in pico libraries that we need
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
   pico_stdlib
+  pico_stdio_usb
   pico_bootrom
   pico_multicore
   pico_platform
@@ -83,10 +76,20 @@ target_link_libraries(${PROJECT_NAME}
 
   tinyusb_device
   tinyusb_board
+
 )
 
+target_compile_definitions(${PROJECT_NAME}
+	PRIVATE
+	PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
+	PICO_DEFAULT_UART_TX_PIN=12
+	PICO_DEFAULT_UART_RX_PIN=13
+	#PICO_DEFAULT_BOOT_STAGE2=boot2_generic_03h
+	#PICO_FLASH_SPI_CLKDIV=8
+	)
+
 pico_enable_stdio_usb(${PROJECT_NAME} 0)
-pico_enable_stdio_uart(${PROJECT_NAME} 1)
+pico_enable_stdio_uart(${PROJECT_NAME} 0)
 
 pico_add_extra_outputs(${PROJECT_NAME})
 

@@ -9,6 +9,7 @@
 #include <string.h>
 
 #include "pico/stdlib.h"
+#include "pico/stdio_usb.h"
 #include "pico/bootrom.h"
 #include "pico/multicore.h"
 #include "pico/rand.h"
@@ -26,12 +27,14 @@
 #include "hardware/watchdog.h"
 
 #include "adapter_types.h"
+#include "adapter.h"
 #include "adapter_settings.h"
 #include "adapter_usb.h"
 #include "adapter_defines.h"
 
 
 #include "ws2812.pio.h"
+#include "joybus.pio.h"
 #include "rgb.h"
 
 #include "bsp/board.h"
@@ -43,6 +46,7 @@
 #include "gcinput.h"
 #include "xinput.h"
 #include "swpro.h"
+#include "serial_cdc.h"
 
 #include "webusb.h"
 
