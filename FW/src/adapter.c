@@ -126,10 +126,10 @@ void adapter_comms_task(uint32_t timestamp)
             _port_rumble[3] = false;
         }
 
-        if(_port_ready[0])  xinput_hid_report(0, &_port_joybus[0]);
-        if(_port_ready[1])  xinput_hid_report(1, &_port_joybus[1]);
-        if(_port_ready[2])  xinput_hid_report(2, &_port_joybus[2]);
-        if(_port_ready[3])  xinput_hid_report(3, &_port_joybus[3]);
+        if(_port_ready[0])  swpro_hid_report(0, &_port_joybus[0]);
+        if(_port_ready[1])  swpro_hid_report(1, &_port_joybus[1]);
+        if(_port_ready[2])  swpro_hid_report(2, &_port_joybus[2]);
+        if(_port_ready[3])  swpro_hid_report(3, &_port_joybus[3]);
 
         _port_ready[0] = 0;
         _port_ready[1] = 0;
@@ -138,15 +138,16 @@ void adapter_comms_task(uint32_t timestamp)
     }
     else
     {
-        _port_ready[0] = tud_xinput_n_ready(0);
-        _port_ready[1] = tud_xinput_n_ready(1);
-        _port_ready[2] = tud_xinput_n_ready(2);
-        _port_ready[3] = tud_xinput_n_ready(3);
+        _port_ready[0] = tud_hid_n_ready(0);
+        _port_ready[1] = tud_hid_n_ready(1);
+        _port_ready[2] = tud_hid_n_ready(2);
+        _port_ready[3] = tud_hid_n_ready(3);
     }
 }
 
-void adapter_init_test()
+void adapter_init(input_mode_t mode)
 {
+
     _gamecube_offset = pio_add_program(JOYBUS_PIO, &joybus_program);
 
     joybus_program_init(JOYBUS_PIO, _gamecube_offset + joybus_offset_joybusout, JOYBUS_PORT_1, _gamecube_c);

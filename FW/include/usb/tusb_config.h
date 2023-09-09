@@ -95,11 +95,11 @@
 #endif
 
 //------------- CLASS -------------//
-#define CFG_TUD_HID               8
+#define CFG_TUD_HID               4
 #define CFG_TUD_CDC               2
 #define CFG_TUD_MSC               0
 #define CFG_TUD_MIDI              0
-#define CFG_TUD_VENDOR            4
+#define CFG_TUD_VENDOR            2
 
 // HID buffer size Should be sufficient to hold ID (if any) + Data
 #define CFG_TUD_HID_EP_BUFSIZE    64

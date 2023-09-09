@@ -4,6 +4,6 @@
 
 
 void adapter_comms_task(uint32_t timestamp);
-void adapter_init_test();
+void adapter_init(input_mode_t mode);
 
 #endif

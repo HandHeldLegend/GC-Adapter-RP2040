@@ -8,8 +8,10 @@ void _generate_mac()
   printf("Generated MAC: ");
   for(uint8_t i = 0; i < 6; i++)
   {
-    global_loaded_settings.switch_mac_address_p1[i] = get_rand_32() & 0xFF;
-    printf("%X : ", global_loaded_settings.switch_mac_address_p1[i]);
+    global_loaded_settings.switch_mac_address[0][i] = get_rand_32() & 0xFF;
+    global_loaded_settings.switch_mac_address[1][i] = get_rand_32() & 0xFF;
+    global_loaded_settings.switch_mac_address[2][i] = get_rand_32() & 0xFF;
+    global_loaded_settings.switch_mac_address[3][i] = get_rand_32() & 0xFF;
   }
   printf("\n");
 }

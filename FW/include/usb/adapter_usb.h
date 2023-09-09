@@ -12,7 +12,8 @@
 #include "adapter_includes.h"
 #include "interval.h"
 
-extern bool _usb_busy;
+bool adapter_usb_ready(uint8_t port);
+void adapter_usb_report(uint8_t port, joybus_input_s *input);
 
 bool adapter_usb_start(input_mode_t mode);
 uint8_t dir_to_hat(uint8_t leftRight, uint8_t upDown);

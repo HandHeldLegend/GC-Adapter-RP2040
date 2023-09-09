@@ -134,9 +134,9 @@ const uint8_t swpro_hid_report_descriptor[] = {
 
 const uint8_t swpro_configuration_descriptor[] = {
     // Configuration number, interface count, string index, total length, attribute, power in mA
-    TUD_CONFIG_DESCRIPTOR(1, 3, 0, 96, TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, 500),
+    TUD_CONFIG_DESCRIPTOR(1, 5, 0, 160, TUSB_DESC_CONFIG_ATT_REMOTE_WAKEUP, 500),
 
-    // Interface
+    // Interface 0
     9, TUSB_DESC_INTERFACE, 0x00, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x04,
     // HID Descriptor
     9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(sizeof(swpro_hid_report_descriptor)),
@@ -145,7 +145,7 @@ const uint8_t swpro_configuration_descriptor[] = {
     // Endpoint Descriptor
     7, TUSB_DESC_ENDPOINT, 0x01, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
 
-    // Interface
+    // Interface 1
     9, TUSB_DESC_INTERFACE, 0x01, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x05,
     // HID Descriptor
     9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(sizeof(swpro_hid_report_descriptor)),
@@ -154,13 +154,31 @@ const uint8_t swpro_configuration_descriptor[] = {
     // Endpoint Descriptor
     7, TUSB_DESC_ENDPOINT, 0x02, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
 
+    // Interface 2
+    9, TUSB_DESC_INTERFACE, 0x02, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x06,
+    // HID Descriptor
+    9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(sizeof(swpro_hid_report_descriptor)),
+    // Endpoint Descriptor
+    7, TUSB_DESC_ENDPOINT, 0x83, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
+    // Endpoint Descriptor
+    7, TUSB_DESC_ENDPOINT, 0x03, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
+
+    // Interface 3
+    9, TUSB_DESC_INTERFACE, 0x03, 0x00, 0x02, TUSB_CLASS_HID, 0x00, 0x00, 0x07,
+    // HID Descriptor
+    9, HID_DESC_TYPE_HID, U16_TO_U8S_LE(0x0111), 0, 1, HID_DESC_TYPE_REPORT, U16_TO_U8S_LE(sizeof(swpro_hid_report_descriptor)),
+    // Endpoint Descriptor
+    7, TUSB_DESC_ENDPOINT, 0x84, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
+    // Endpoint Descriptor
+    7, TUSB_DESC_ENDPOINT, 0x04, TUSB_XFER_INTERRUPT, U16_TO_U8S_LE(64), 8,
+
     // Alternate Interface for WebUSB
     // Interface
-    9, TUSB_DESC_INTERFACE, 0x02, 0x00, 0x02, TUSB_CLASS_VENDOR_SPECIFIC, 0x00, 0x00, 0x06,
+    9, TUSB_DESC_INTERFACE, 0x04, 0x00, 0x02, TUSB_CLASS_VENDOR_SPECIFIC, 0x00, 0x00, 0x08,
     // Endpoint Descriptor
-    7, TUSB_DESC_ENDPOINT, 0x83, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
+    7, TUSB_DESC_ENDPOINT, 0x85, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
     // Endpoint Descriptor
-    7, TUSB_DESC_ENDPOINT, 0x03, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
+    7, TUSB_DESC_ENDPOINT, 0x05, TUSB_XFER_BULK, U16_TO_U8S_LE(64), 0,
 };
 
 /**--------------------------**/
@@ -171,39 +189,39 @@ bool blank_sent = false;
 
 uint32_t _timeout = 0;
 
-void swpro_hid_report(joybus_input_s *joybus_data)
+void swpro_hid_report(uint8_t port, joybus_input_s *joybus_data)
 {
-  static sw_input_s data = {0};
+  static sw_input_s data[4] = {0};
 
-  data.d_down = joybus_data->dpad_down;
-  data.d_right = joybus_data->dpad_right;
-  data.d_left = joybus_data->dpad_left;
-  data.d_up = joybus_data->dpad_up;
+  data[port].d_down = joybus_data->dpad_down;
+  data[port].d_right = joybus_data->dpad_right;
+  data[port].d_left = joybus_data->dpad_left;
+  data[port].d_up = joybus_data->dpad_up;
 
-  data.b_y = joybus_data->button_y;
-  data.b_x = joybus_data->button_x;
-  data.b_a = joybus_data->button_a;
-  data.b_b = joybus_data->button_b;
+  data[port].b_y = joybus_data->button_y;
+  data[port].b_x = joybus_data->button_x;
+  data[port].b_a = joybus_data->button_a;
+  data[port].b_b = joybus_data->button_b;
 
-  //data.b_minus = joybus_data->button_minus;
-  data.b_plus = joybus_data->button_start;
-  //data.b_home = joybus_data->button_home;
-  //data.b_capture = joybus_data->button_capture;
+  //data[port].b_minus = joybus_data->button_minus;
+  data[port].b_plus = joybus_data->button_start;
+  //data[port].b_home = joybus_data->button_home;
+  //data[port].b_capture = joybus_data->button_capture;
 
-  //data.sb_right = joybus_data->button_stick_right;
-  //data.sb_left = joybus_data->button_stick_left;
+  //data[port].sb_right = joybus_data->button_stick_right;
+  //data[port].sb_left = joybus_data->button_stick_left;
 
-  data.t_r = joybus_data->button_z;
-  //data.t_l = joybus_data->trigger_l;
-  data.t_zl = joybus_data->analog_trigger_l>40 ? 1 : 0;
-  data.t_zr = joybus_data->analog_trigger_r>40 ? 1 : 0;
+  data[port].t_r = joybus_data->button_z;
+  //data[port].t_l = joybus_data->trigger_l;
+  data[port].t_zl = joybus_data->analog_trigger_l>40 ? 1 : 0;
+  data[port].t_zr = joybus_data->analog_trigger_r>40 ? 1 : 0;
 
-  data.ls_x = joybus_data->stick_left_x<<4;
-  data.ls_y = joybus_data->stick_left_y<<4;
-  data.rs_x = joybus_data->stick_right_x<<4;
-  data.rs_y = joybus_data->stick_right_y<<4;
+  data[port].ls_x = joybus_data->stick_left_x<<4;
+  data[port].ls_y = joybus_data->stick_left_y<<4;
+  data[port].rs_x = joybus_data->stick_right_x<<4;
+  data[port].rs_y = joybus_data->stick_right_y<<4;
 
-  switch_commands_process(&data);
+  switch_commands_process(port, &data[port]);
 }
 
 const tusb_desc_webusb_url_t desc_url =

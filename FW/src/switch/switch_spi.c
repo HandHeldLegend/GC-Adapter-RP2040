@@ -6,11 +6,11 @@
  * @param[in] address The actual memory address to read from the segment.
  * @param[in] length The amount of bytes to pull from SPI emulated
  */
-void sw_spi_readfromaddress(uint8_t offset_address, uint8_t address, uint8_t length)
+void sw_spi_readfromaddress(uint8_t port, uint8_t offset_address, uint8_t address, uint8_t length)
 {
 
   uint8_t read_info[5] = {address, offset_address, 0x00, 0x00, length};
-  switch_commands_bulkset(14, read_info, 5);
+  switch_commands_bulkset(port, 14, read_info, 5);
 
   uint8_t output_spi_data[30] = {};
 
@@ -20,7 +20,7 @@ void sw_spi_readfromaddress(uint8_t offset_address, uint8_t address, uint8_t len
   }
 
   // Do a bulk set for the input report
-  switch_commands_bulkset(SPI_READ_OUTPUT_IDX, output_spi_data, length);
+  switch_commands_bulkset(port, SPI_READ_OUTPUT_IDX, output_spi_data, length);
 }
 
 /**

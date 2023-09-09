@@ -43,7 +43,7 @@
  */
 
 /* Internal functions for handling SPI read calls and the correct responses */
-void sw_spi_readfromaddress(uint8_t offset_address, uint8_t address, uint8_t length);
+void sw_spi_readfromaddress(uint8_t port, uint8_t offset_address, uint8_t address, uint8_t length);
 
 void sw_spi_writetoaddress(uint32_t address, uint8_t length);
 

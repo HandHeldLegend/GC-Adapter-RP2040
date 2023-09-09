@@ -26,15 +26,16 @@ int main()
         reset_usb_boot(0, 0);
     }
 
-    bool inited = adapter_usb_start(INPUT_MODE_XINPUT);
+    input_mode_t mode = INPUT_MODE_SWPRO;
+
+    adapter_usb_start(mode);
     stdio_init_all();
-    //bool inited = stdio_usb_init();
 
     rgb_set_all(COLOR_BLUE.color);
-    if(!inited) rgb_set_all(COLOR_RED.color);
     rgb_set_dirty();
 
     sleep_ms(1000);
+    adapter_init(mode);
 
     bool did = false;
     bool sent = false;
@@ -50,15 +51,7 @@ int main()
             reset_usb_boot(0, 0);
         }
 
-        if(!did)
-        {
-            adapter_init_test();
-            did=true;
-        }
-        else
-        {
-            adapter_comms_task(t);
-        }
+        adapter_comms_task(t);
         
     }
 

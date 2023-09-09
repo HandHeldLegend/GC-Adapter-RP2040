@@ -23,8 +23,8 @@ extern const char* global_string_descriptor[];
 #define ADAPTER_PRODUCT "GC Pocket+"
 
 #define ADAPTER_FIRMWARE_VERSION 0x0000
-#define ADAPTER_SETTINGS_VERSION 0x0000
-#define ADAPTER_WEBUSB_URL "https://handheldlegend.com"
+#define ADAPTER_SETTINGS_VERSION 0x0001
+#define ADAPTER_WEBUSB_URL "handheldlegend.com"
 
 
 #endif

@@ -9,12 +9,7 @@ typedef struct
     // keep settings between updates
     uint16_t    settings_version;
     input_mode_t input_mode;
-    uint8_t     switch_mac_address_p1[6];
-    uint8_t     switch_mac_address_p2[6];
-    uint8_t     switch_mac_address_p3[6];
-    uint8_t     switch_mac_address_p4[6];
-
-    gc_sp_mode_t gc_sp_mode;
+    uint8_t     switch_mac_address[4][6];
 
 } adapter_settings_s;
 

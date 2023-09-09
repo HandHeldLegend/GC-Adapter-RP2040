@@ -15,9 +15,11 @@ bool _usb_clear = false;
 // Default 8ms (8000us)
 uint32_t _usb_rate = 0;
 
-typedef void (*usb_cb_t)(joybus_input_s *);
+typedef void (*usb_cb_t)(uint8_t, joybus_input_s *);
+typedef bool (*usb_ready_cb_t)(uint8_t);
 
 usb_cb_t _usb_hid_cb = NULL;
+usb_ready_cb_t _usb_ready_cb = NULL;
 
 void _adapter_usb_set_interval(usb_rate_t rate)
 {
@@ -34,11 +36,13 @@ bool adapter_usb_start(input_mode_t mode)
   case INPUT_MODE_SWPRO:
     _adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = swpro_hid_report;
+    _usb_ready_cb = tud_hid_n_ready;
     break;
 
   case INPUT_MODE_XINPUT:
     _adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = xinput_hid_report;
+    _usb_ready_cb = tud_xinput_n_ready;
     break;
   }
 
@@ -49,29 +53,19 @@ bool adapter_usb_start(input_mode_t mode)
 
 uint8_t buf = 0;
 
-static inline bool _adapter_usb_ready()
+bool adapter_usb_ready(uint8_t port)
 {
-  if (_usb_mode == INPUT_MODE_XINPUT)
-  {
-    return tud_xinput_n_ready(0);
-  }
-  else
-    return tud_hid_ready();
+  return _usb_ready_cb(port);
+}
+
+void adapter_usb_report(uint8_t port, joybus_input_s *input)
+{
+  _usb_hid_cb(port, input);
 }
 
 void adapter_usb_task(uint32_t timestamp)
 {
-  if (interval_resettable_run(timestamp, _usb_rate, _usb_clear))
-  {
-    if (_adapter_usb_ready() && (_usb_hid_cb != NULL) )
-    {
-      //_usb_hid_cb(joybus_input_s *joybus_data);
-    }
-  }
-  else
-  {
-    _usb_clear = false;
-  }
+  
 }
 
 /********* TinyUSB HID callbacks ***************/
@@ -170,11 +164,11 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
     {
       if (buffer[0] == SW_OUT_ID_RUMBLE)
       {
-        rumble_translate(&buffer[2]);
+        rumble_translate(instance, &buffer[2]);
       }
       else
       {
-        switch_commands_future_handle(buffer[0], buffer, bufsize);
+        switch_commands_future_handle(instance, buffer[0], buffer, bufsize);
       }
     }
     break;
@@ -217,7 +211,11 @@ uint8_t const *tud_hid_descriptor_report_cb(uint8_t instance)
 // Sets up custom TinyUSB Device Driver
 usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
 {
-  *driver_count += 1;
+  if(_usb_mode == INPUT_MODE_XINPUT)
+  {
+    *driver_count += 1;
+  }
+  
   return &tud_xinput_driver;
 }
 

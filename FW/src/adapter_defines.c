@@ -9,7 +9,9 @@ const char* global_string_descriptor[] = {
     ADAPTER_MANUFACTURER,              // 1: Manufacturer
     ADAPTER_PRODUCT,        // 2: Product
     "000000",           // 3: Serials, should use chip ID
-    "Gamepad Interface 1", // 4
-    "Gamepad Interface 2", // 5
-    "WebUSB Interface" // 6
+    "Gamepad 1", // 4
+    "Gamepad 2", // 5
+    "Gamepad 3", // 6
+    "Gamepad 4", // 7
+    "WebUSB" // 8
 };
