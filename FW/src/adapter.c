@@ -27,11 +27,12 @@ void _gc_port_data(uint port)
     {
         // For this specific circumstance, we must push
         // manually since our data is set to push auto 32 bits
-        pio_sm_exec_wait_blocking(JOYBUS_PIO, port, pio_encode_push(false, false));
+        pio_sm_exec(JOYBUS_PIO, port, pio_encode_push(false, false));
         _port_probes[port] = pio_sm_get(JOYBUS_PIO, port)>>17;
 
         if (_port_probes[port] == 0x09)
         {
+            _port_probes[port] = 0;
             _port_phases[port] = 1;
         }
     }
@@ -56,6 +57,14 @@ void _gc_port_data(uint port)
         }
         _port_joybus[port].byte_1 = _port_inputs[port][0];
         _port_joybus[port].byte_2 = _port_inputs[port][1];
+    }
+
+    if(!_port_phases[port])
+    {
+        _port_joybus[port].stick_left_x = 128;
+        _port_joybus[port].stick_left_y = 128;
+        _port_joybus[port].stick_right_x = 128;
+        _port_joybus[port].stick_right_y = 128;
     }
 }
 
@@ -113,42 +122,31 @@ void adapter_comms_task(uint32_t timestamp)
         sleep_us(500);
         _gamecube_get_data();
 
-        if(_port_joybus[0].button_z)
-        {
-            _port_rumble[0] = true;
-            _port_rumble[1] = true;
-        }
-        else
-        {
-            _port_rumble[0] = false;
-            _port_rumble[1] = false;
-            _port_rumble[2] = false;
-            _port_rumble[3] = false;
-        }
-
-        if(_port_ready[0])  swpro_hid_report(0, &_port_joybus[0]);
-        if(_port_ready[1])  swpro_hid_report(1, &_port_joybus[1]);
-        if(_port_ready[2])  swpro_hid_report(2, &_port_joybus[2]);
-        if(_port_ready[3])  swpro_hid_report(3, &_port_joybus[3]);
-
-        _port_ready[0] = 0;
-        _port_ready[1] = 0;
-        _port_ready[2] = 0;
-        _port_ready[3] = 0;
+        if(_port_ready[0])  adapter_usb_report(0, &(_port_joybus[0]));
+        if(_port_ready[1])  adapter_usb_report(1, &(_port_joybus[1]));
+        if(_port_ready[2])  adapter_usb_report(2, &(_port_joybus[2]));
+        if(_port_ready[3])  adapter_usb_report(3, &(_port_joybus[3]));
     }
     else
     {
-        _port_ready[0] = tud_hid_n_ready(0);
-        _port_ready[1] = tud_hid_n_ready(1);
-        _port_ready[2] = tud_hid_n_ready(2);
-        _port_ready[3] = tud_hid_n_ready(3);
+        _port_ready[0] = adapter_usb_ready(0);
+        _port_ready[1] = adapter_usb_ready(1);
+        _port_ready[2] = adapter_usb_ready(2);
+        _port_ready[3] = adapter_usb_ready(3);
     }
 }
 
-void adapter_init(input_mode_t mode)
+void adapter_init()
 {
-
     _gamecube_offset = pio_add_program(JOYBUS_PIO, &joybus_program);
+    for(uint i = 0; i < 4; i++)
+    {
+        memset(&_port_joybus[i], 0, sizeof(joybus_input_s));
+        _port_joybus[i].stick_left_x = 128;
+        _port_joybus[i].stick_left_y = 128;
+        _port_joybus[i].stick_right_x = 128;
+        _port_joybus[i].stick_right_y = 128;
+    }
 
     joybus_program_init(JOYBUS_PIO, _gamecube_offset + joybus_offset_joybusout, JOYBUS_PORT_1, _gamecube_c);
     sleep_ms(100);

@@ -30,7 +30,7 @@ bool settings_load()
   {
     printf("Settings version does not match. Resetting... \n");
     settings_reset_to_default();
-    settings_save(false);
+    settings_save();
     return false;
   }
 
@@ -78,6 +78,45 @@ void settings_core1_save_check()
     // Restore interrups
     restore_interrupts(ints);
     multicore_lockout_end_blocking();
+
+    // Indicate change
+    if (_webusb_indicate)
+    {
+      webusb_save_confirm();
+      _webusb_indicate = false;
+    }
+    _save_flag = false;
+  }
+}
+
+void settings_core0_save_check()
+{
+  if (_save_flag)
+  {
+    //multicore_lockout_start_blocking();
+    // Check that we are less than our flash sector size
+    static_assert(sizeof(adapter_settings_s) <= FLASH_SECTOR_SIZE);
+
+    // Store interrupts status and disable
+    uint32_t ints = save_and_disable_interrupts();
+
+    // Calculate storage bank address via index
+    uint32_t memoryAddress = FLASH_TARGET_OFFSET + (FLASH_SECTOR_SIZE);
+
+    // Create blank page data
+    uint8_t page[FLASH_SECTOR_SIZE] = {0x00};
+    // Copy settings into our page buffer
+    memcpy(page, &global_loaded_settings, sizeof(adapter_settings_s));
+
+    // Erase the settings flash sector
+    flash_range_erase(memoryAddress, FLASH_SECTOR_SIZE);
+
+    // Program the flash sector with our page
+    flash_range_program(memoryAddress, page, FLASH_SECTOR_SIZE);
+
+    // Restore interrups
+    restore_interrupts(ints);
+    //multicore_lockout_end_blocking();
 
     // Indicate change
     if (_webusb_indicate)

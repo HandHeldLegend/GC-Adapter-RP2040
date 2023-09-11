@@ -221,7 +221,7 @@ void swpro_hid_report(uint8_t port, joybus_input_s *joybus_data)
   data[port].rs_x = joybus_data->stick_right_x<<4;
   data[port].rs_y = joybus_data->stick_right_y<<4;
 
-  switch_commands_process(port, &data[port]);
+  switch_commands_process(port, &(data[port]));
 }
 
 const tusb_desc_webusb_url_t desc_url =

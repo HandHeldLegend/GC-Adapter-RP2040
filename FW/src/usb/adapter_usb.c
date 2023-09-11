@@ -32,15 +32,16 @@ bool adapter_usb_start(input_mode_t mode)
   {
   default:
     _usb_hid_cb = NULL;
+    _usb_ready_cb = NULL;
     break;
   case INPUT_MODE_SWPRO:
-    _adapter_usb_set_interval(USBRATE_8);
+    //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = swpro_hid_report;
     _usb_ready_cb = tud_hid_n_ready;
     break;
 
   case INPUT_MODE_XINPUT:
-    _adapter_usb_set_interval(USBRATE_8);
+    //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = xinput_hid_report;
     _usb_ready_cb = tud_xinput_n_ready;
     break;
@@ -55,6 +56,7 @@ uint8_t buf = 0;
 
 bool adapter_usb_ready(uint8_t port)
 {
+  if(_usb_ready_cb == NULL) return false;
   return _usb_ready_cb(port);
 }
 

@@ -26,7 +26,7 @@ void generate_ltk()
 
 void clear_report(uint8_t port)
 {
-  memset(_switch_command_buffer[port], 0, sizeof(_switch_command_buffer[port]));
+  memset(_switch_command_buffer[port], 0, 64*sizeof(uint8_t));
 }
 
 void set_report_id(uint8_t port, uint8_t report_id)
@@ -132,7 +132,10 @@ void info_set_mac(uint8_t port)
   _switch_command_buffer[port][0] = 0x01;
   _switch_command_buffer[port][1] = 0x00;
   _switch_command_buffer[port][2] = 0x03;
-  memcpy(&_switch_command_buffer[port][3], &global_loaded_settings.switch_mac_address[port], 6*sizeof(uint8_t));
+  for(uint i = 0; i<6; i++)
+  {
+    _switch_command_buffer[port][3+i] = global_loaded_settings.switch_mac_address[port][i];
+  }
 }
 
 // A second part to the initialization,
@@ -176,7 +179,7 @@ void pairing_set(uint8_t port, uint8_t phase)
     case 1:
       set_ack(port, 0x81);
       _switch_command_buffer[port][14] = 1;
-      memcpy(&_switch_command_buffer[port][15], &global_loaded_settings.switch_mac_address[port], 6);
+      memcpy(&(_switch_command_buffer[port][15]), &(global_loaded_settings.switch_mac_address[port]), 6);
       memcpy(&_switch_command_buffer[port][15+6], pro_controller_string, 24);
       break;
     case 2:
@@ -231,6 +234,11 @@ void command_handler(uint8_t port, uint8_t command, const uint8_t *data, uint16_
     case SW_CMD_SET_INPUTMODE:
       printf("Input mode change: %X\n", data[11]);
       set_ack(port, 0x80);
+      if(port==0 && data[11] == 0x30)
+      {
+        rgb_set_all(COLOR_GREEN.color);
+        rgb_set_dirty();
+      }
       _switch_reporting_mode[port] = data[11];
       break;
 
@@ -370,7 +378,7 @@ void switch_commands_process(uint8_t port, sw_input_s *input_data)
 {
   if (_switch_in_command_got[port])
   {
-    report_handler(port, _switch_in_report_id[port], &(_switch_in_command_buffer[port][0]), _switch_in_command_len[port]);
+    report_handler(port, _switch_in_report_id[port], _switch_in_command_buffer[port], _switch_in_command_len[port]);
     _switch_in_command_got[port] = false;
   }
   else
@@ -394,7 +402,7 @@ void switch_commands_process(uint8_t port, sw_input_s *input_data)
       // Saves cycles :)
       _switch_command_buffer[port][5]   = (input_data->ls_x & 0xFF);
       _switch_command_buffer[port][6]   = (input_data->ls_x & 0xF00) >> 8;
-      //ns_input_report[7] |= (g_stick_data.lsy & 0xF) << 4;
+
       _switch_command_buffer[port][7]   = (input_data->ls_y & 0xFF0) >> 4;
       _switch_command_buffer[port][8]   = (input_data->rs_x & 0xFF);
       _switch_command_buffer[port][9]   = (input_data->rs_x & 0xF00) >> 8;
@@ -413,7 +421,7 @@ void switch_commands_future_handle(uint8_t port, uint8_t report_id, const uint8_
   _switch_in_command_got[port] = true;
   _switch_in_report_id[port] = report_id;
   _switch_in_command_len[port] = len;
-  memcpy(&(_switch_in_command_buffer[port]), data, len);
+  memcpy(_switch_in_command_buffer[port], &data[0], len);
 }
 
 void switch_commands_bulkset(uint8_t port, uint8_t start_idx, uint8_t* data, uint8_t len)

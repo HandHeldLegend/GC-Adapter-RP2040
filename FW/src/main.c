@@ -26,16 +26,21 @@ int main()
         reset_usb_boot(0, 0);
     }
 
+    rgb_set_all(COLOR_RED.color);
+    if (settings_load())
+    {
+        rgb_set_all(COLOR_BLUE.color);
+    }
+
+    settings_core0_save_check();
+
     input_mode_t mode = INPUT_MODE_SWPRO;
 
     adapter_usb_start(mode);
     stdio_init_all();
 
-    rgb_set_all(COLOR_BLUE.color);
+    
     rgb_set_dirty();
-
-    sleep_ms(1000);
-    adapter_init(mode);
 
     bool did = false;
     bool sent = false;
@@ -43,6 +48,7 @@ int main()
     for(;;)
     {
         uint32_t t = time_us_32();
+        settings_core0_save_check();
         rgb_task(t);
         tud_task();
         
@@ -51,8 +57,15 @@ int main()
             reset_usb_boot(0, 0);
         }
 
-        adapter_comms_task(t);
-        
+        if(did)
+        {
+            adapter_comms_task(t);
+        }
+        else
+        {
+            adapter_init();
+            did=true;
+        }
     }
 
 }
