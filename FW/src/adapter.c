@@ -35,6 +35,13 @@ void _gc_port_data(uint port)
             _port_probes[port] = 0;
             _port_phases[port] = 1;
         }
+        else
+        {
+            _port_joybus[port].stick_left_x = 128;
+            _port_joybus[port].stick_left_y = 128;
+            _port_joybus[port].stick_right_x = 128;
+            _port_joybus[port].stick_right_y = 128;
+        }
     }
     else if (_port_phases[port]==1)
     {
@@ -57,14 +64,6 @@ void _gc_port_data(uint port)
         }
         _port_joybus[port].byte_1 = _port_inputs[port][0];
         _port_joybus[port].byte_2 = _port_inputs[port][1];
-    }
-
-    if(!_port_phases[port])
-    {
-        _port_joybus[port].stick_left_x = 128;
-        _port_joybus[port].stick_left_y = 128;
-        _port_joybus[port].stick_right_x = 128;
-        _port_joybus[port].stick_right_y = 128;
     }
 }
 

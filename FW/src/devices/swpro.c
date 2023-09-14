@@ -213,8 +213,8 @@ void swpro_hid_report(uint8_t port, joybus_input_s *joybus_data)
 
   data[port].t_r = joybus_data->button_z;
   //data[port].t_l = joybus_data->trigger_l;
-  data[port].t_zl = joybus_data->analog_trigger_l>40 ? 1 : 0;
-  data[port].t_zr = joybus_data->analog_trigger_r>40 ? 1 : 0;
+  data[port].t_zl = joybus_data->button_l;
+  data[port].t_zr = joybus_data->button_r;
 
   data[port].ls_x = joybus_data->stick_left_x<<4;
   data[port].ls_y = joybus_data->stick_left_y<<4;
