@@ -8,6 +8,8 @@
 
 #include "xinput_device.h"
 
+#define XINPUT_REPORT_MAX 64
+
 const tusb_desc_device_t xid_device_descriptor =
     {
         .bLength = sizeof(tusb_desc_device_t),
@@ -47,7 +49,7 @@ const uint8_t xid_configuration_descriptor[] = {
     0xFF, // bInterfaceClass
     0x5D, // bInterfaceSubClass
     0x01, // bInterfaceProtocol
-    0x04, // iInterface (String Index)
+    0x00, // iInterface (String Index)
 
     0x10,       // bLength
     0x21,       // bDescriptorType (HID)
@@ -58,7 +60,7 @@ const uint8_t xid_configuration_descriptor[] = {
     0x14, 0x03, // wDescriptorLength[0] 788
     0x00,       // bDescriptorType[1] (Unknown 0x00)
     0x03, 0x13, // wDescriptorLength[1] 4867
-    0x01,       // bDescriptorType[2] (Unknown 0x02)
+    0x01,       // bDescriptorType[2] (Unknown 0x01)
     0x00, 0x03, // wDescriptorLength[2] 768
     0x00,       // bDescriptorType[3] (Unknown 0x00)
 
@@ -85,14 +87,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0xFF, // bInterfaceClass
     0x5D, // bInterfaceSubClass
     0x01, // bInterfaceProtocol
-    0x05, // iInterface (String Index)
+    0x00, // iInterface (String Index)
 
     0x10,       // bLength
     0x21,       // bDescriptorType (HID)
     0x10, 0x01, // bcdHID 1.10
     0x01,       // bCountryCode
     0x24,       // bNumDescriptors
-    0x82,       // bDescriptorType[0] (Unknown 0x81)
+    0x82,       // bDescriptorType[0] (Unknown 0x82)
     0x14, 0x03, // wDescriptorLength[0] 788
     0x00,       // bDescriptorType[1] (Unknown 0x00)
     0x03, 0x13, // wDescriptorLength[1] 4867
@@ -123,18 +125,18 @@ const uint8_t xid_configuration_descriptor[] = {
     0xFF, // bInterfaceClass
     0x5D, // bInterfaceSubClass
     0x01, // bInterfaceProtocol
-    0x05, // iInterface (String Index)
+    0x00, // iInterface (String Index)
 
     0x10,       // bLength
     0x21,       // bDescriptorType (HID)
     0x10, 0x01, // bcdHID 1.10
     0x01,       // bCountryCode
     0x24,       // bNumDescriptors
-    0x83,       // bDescriptorType[0] (Unknown 0x81)
+    0x83,       // bDescriptorType[0] (Unknown 0x83)
     0x14, 0x03, // wDescriptorLength[0] 788
     0x00,       // bDescriptorType[1] (Unknown 0x00)
     0x03, 0x13, // wDescriptorLength[1] 4867
-    0x03,       // bDescriptorType[2] (Unknown 0x02)
+    0x03,       // bDescriptorType[2] (Unknown 0x03)
     0x00, 0x03, // wDescriptorLength[2] 768
     0x00,       // bDescriptorType[3] (Unknown 0x00)
 
@@ -161,18 +163,18 @@ const uint8_t xid_configuration_descriptor[] = {
     0xFF, // bInterfaceClass
     0x5D, // bInterfaceSubClass
     0x01, // bInterfaceProtocol
-    0x05, // iInterface (String Index)
+    0x00, // iInterface (String Index)
 
     0x10,       // bLength
     0x21,       // bDescriptorType (HID)
     0x10, 0x01, // bcdHID 1.10
     0x01,       // bCountryCode
     0x24,       // bNumDescriptors
-    0x84,       // bDescriptorType[0] (Unknown 0x81)
+    0x84,       // bDescriptorType[0] (Unknown 0x84)
     0x14, 0x03, // wDescriptorLength[0] 788
     0x00,       // bDescriptorType[1] (Unknown 0x00)
     0x03, 0x13, // wDescriptorLength[1] 4867
-    0x04,       // bDescriptorType[2] (Unknown 0x02)
+    0x04,       // bDescriptorType[2] (Unknown 0x04)
     0x00, 0x03, // wDescriptorLength[2] 768
     0x00,       // bDescriptorType[3] (Unknown 0x00)
 
@@ -197,8 +199,10 @@ const char *xid_string_descriptor[] = {
     "GENERIC",                  // 1: Manufacturer
     "XINPUT CONTROLLER",        // 2: Product
     "1.0"                       // 3: Serials
-    "XInput Port 1",
-    "XInput Port 2",
+    "XINPUT CONTROLLER",
+    "XINPUT CONTROLLER",
+    "XINPUT CONTROLLER",
+    "XINPUT CONTROLLER",
 };
 
 // XINPUT TinyUSB Driver
@@ -210,15 +214,10 @@ typedef struct
 {
   uint8_t itf_num;
   uint8_t ep_in;
-  uint8_t ep_out;        // optional Out endpoint
-  uint8_t itf_protocol;  // Boot mouse or keyboard
+  uint8_t ep_out;       
 
-  uint8_t protocol_mode; // Boot (0) or Report protocol (1)
-  uint8_t idle_rate;     // up to application to handle idle rate
-  uint16_t report_desc_len;
-
-  CFG_TUSB_MEM_ALIGN uint8_t epin_buf[CFG_TUD_VENDOR_EPSIZE];
-  CFG_TUSB_MEM_ALIGN uint8_t epout_buf[CFG_TUD_VENDOR_EPSIZE];
+  CFG_TUSB_MEM_ALIGN uint8_t epin_buf[XINPUT_REPORT_MAX];
+  CFG_TUSB_MEM_ALIGN uint8_t epout_buf[XINPUT_REPORT_MAX];
 
   // TODO save hid descriptor since host can specifically request this after enumeration
   // Note: HID descriptor may be not available from application after enumeration
@@ -255,37 +254,44 @@ uint16_t xinputd_open(uint8_t rhport, tusb_desc_interface_t const * desc_itf, ui
     // Verify our descriptor is the correct class
     TU_VERIFY(TUSB_CLASS_VENDOR_SPECIFIC == desc_itf->bInterfaceClass, 0);
 
-    // len = interface + hid + n*endpoints
+    // len = interface + n*endpoints
     uint16_t const drv_len = (uint16_t) (sizeof(tusb_desc_interface_t) +
                                         desc_itf->bNumEndpoints * sizeof(tusb_desc_endpoint_t)) + 16;
 
     TU_ASSERT(max_len >= drv_len, 0);
 
-    uint8_t const * p_desc = tu_desc_next(desc_itf);
-    uint8_t total_endpoints = 0;
+    // Find available interface
+    xinputd_interface_t * p_xid = NULL;
+    uint8_t xid_id;
 
-    while ((total_endpoints < desc_itf->bNumEndpoints) && (drv_len <= max_len) )
+    for(xid_id=0; xid_id<CFG_TUD_VENDOR; xid_id++)
     {
-        tusb_desc_endpoint_t const * desc_ep = (tusb_desc_endpoint_t const *) p_desc;
-        uint8_t itf_idx = desc_itf->bInterfaceNumber;
-
-        if (TUSB_DESC_ENDPOINT == tu_desc_type(desc_ep) )
+        if(_xinputd_itf[xid_id].ep_in == 0)
         {
-            TU_ASSERT(usbd_edpt_open(rhport, desc_ep));
-
-            if (tu_edpt_dir(desc_ep->bEndpointAddress) == TUSB_DIR_IN)
-            {
-                _xinputd_itf[itf_idx].ep_in = desc_ep->bEndpointAddress;
-            }
-            else
-            {
-                _xinputd_itf[itf_idx].ep_out = desc_ep->bEndpointAddress;
-            }
-            total_endpoints += 1;
+            p_xid = &_xinputd_itf[xid_id];
+            break;
         }
-        p_desc = tu_desc_next(p_desc);
     }
+    TU_ASSERT(p_xid, 0);
 
+    uint8_t const * p_desc = (uint8_t const *) desc_itf;
+    
+    // Endpoint descriptor
+    p_desc = tu_desc_next(p_desc);
+    p_desc = tu_desc_next(p_desc);
+    TU_ASSERT(usbd_open_edpt_pair(rhport, p_desc, desc_itf->bNumEndpoints, TUSB_XFER_INTERRUPT, &p_xid->ep_out, &p_xid->ep_in), 0);
+    p_xid->itf_num = desc_itf->bInterfaceNumber;
+
+    // Prepare for output endpoint
+    if (p_xid->ep_out)
+    {
+        if ( !usbd_edpt_xfer(rhport, p_xid->ep_out, p_xid->epout_buf, sizeof(p_xid->epout_buf)) )
+        {
+        TU_LOG_FAILED();
+        TU_BREAKPOINT();
+        }
+    }
+    
     return drv_len;
 }
 
@@ -298,7 +304,16 @@ bool xinputd_xfer_cb(uint8_t rhport, uint8_t ep_addr, xfer_result_t result, uint
 {
   (void) result;
 
-  uint8_t instance = get_index_by_itfnum(ep_addr);
+  uint8_t instance;
+  xinputd_interface_t * p_xid = _xinputd_itf;
+
+  // Identify which interface to use
+  for (instance = 0; instance < CFG_TUD_VENDOR; instance++)
+  {
+    p_xid = &_xinputd_itf[instance];
+    if ( (ep_addr == p_xid->ep_out) || (ep_addr == p_xid->ep_in) ) break;
+  }
+  TU_ASSERT(instance < CFG_TUD_VENDOR);
 
   // Sent report successfully
   if (ep_addr == _xinputd_itf[instance].ep_in)
@@ -345,10 +360,10 @@ bool tud_xinput_n_report(uint8_t instance, void const * report, uint16_t len)
     // claim endpoint
     TU_VERIFY( usbd_edpt_claim(rhport, ep_addr) );
 
-    len = tu_min16(len, CFG_TUD_HID_EP_BUFSIZE);
+    len = tu_min16(len, XINPUT_REPORT_MAX);
     memcpy(_xinputd_itf[instance].epin_buf, report, len);
-    bool out = usbd_edpt_xfer(rhport, _xinputd_itf[instance].ep_in, _xinputd_itf[instance].epin_buf, len);
-    usbd_edpt_release(0, _xinputd_itf[instance].ep_in);
+    bool out = usbd_edpt_xfer(rhport, ep_addr, _xinputd_itf[instance].epin_buf, len);
+    usbd_edpt_release(0, ep_addr);
 
     tud_xinput_n_getout(instance);
 }
@@ -357,7 +372,7 @@ bool tud_xinput_n_ready(uint8_t instance)
 {
     uint8_t const rhport = 0;
     uint8_t const ep_in = _xinputd_itf[instance].ep_in;
-    return tud_ready() && (ep_in != 0) && !usbd_edpt_busy(rhport, ep_in);
+    return (tud_ready()) && (ep_in != 0) && !usbd_edpt_busy(rhport, ep_in);
 }
 
 const usbd_class_driver_t tud_xinput_driver =

@@ -31,8 +31,8 @@
 // Commands for setting report data
 
 void rumble_translate(uint8_t port, const uint8_t *data);
-void switch_commands_process(uint8_t port, sw_input_s *input_data);
-void switch_commands_future_handle(uint8_t port, uint8_t command_id, const uint8_t *data, uint16_t len);
-void switch_commands_bulkset(uint8_t port, uint8_t start_idx, uint8_t* data, uint8_t len);
+void switch_commands_process(uint8_t itf, sw_input_s *input_data);
+void switch_commands_future_handle(uint8_t itf, uint8_t command_id, const uint8_t *data, uint16_t len);
+void switch_commands_bulkset(uint8_t itf, uint8_t start_idx, uint8_t* data, uint8_t len);
 
 #endif

@@ -54,20 +54,14 @@ bool adapter_usb_start(input_mode_t mode)
 
 uint8_t buf = 0;
 
-bool adapter_usb_ready(uint8_t port)
+bool adapter_usb_ready(uint8_t itf)
 {
-  if(_usb_ready_cb == NULL) return false;
-  return _usb_ready_cb(port);
+  return _usb_ready_cb(itf);
 }
 
-void adapter_usb_report(uint8_t port, joybus_input_s *input)
+void adapter_usb_report(uint8_t itf, joybus_input_s *input)
 {
-  _usb_hid_cb(port, input);
-}
-
-void adapter_usb_task(uint32_t timestamp)
-{
-  
+  _usb_hid_cb(itf, input);
 }
 
 /********* TinyUSB HID callbacks ***************/
@@ -182,11 +176,11 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
       {
         if ((buffer[3] > 0) || (buffer[4] > 0))
         {
-          // cb_hoja_rumble_enable(true);
+          adapter_enable_rumble(instance, true);
         }
         else
         {
-          // cb_hoja_rumble_enable(false);
+          adapter_enable_rumble(instance, false);
         }
       }
     }
@@ -213,11 +207,8 @@ uint8_t const *tud_hid_descriptor_report_cb(uint8_t instance)
 // Sets up custom TinyUSB Device Driver
 usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
 {
-  if(_usb_mode == INPUT_MODE_XINPUT)
-  {
-    *driver_count += 1;
-  }
-  
+
+  *driver_count += 1;
   return &tud_xinput_driver;
 }
 

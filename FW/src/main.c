@@ -64,6 +64,7 @@ int main()
         else
         {
             adapter_init();
+            sleep_ms(100);
             did=true;
         }
     }

@@ -189,39 +189,39 @@ bool blank_sent = false;
 
 uint32_t _timeout = 0;
 
-void swpro_hid_report(uint8_t port, joybus_input_s *joybus_data)
+void swpro_hid_report(uint8_t itf, joybus_input_s *joybus_data)
 {
   static sw_input_s data[4] = {0};
 
-  data[port].d_down = joybus_data->dpad_down;
-  data[port].d_right = joybus_data->dpad_right;
-  data[port].d_left = joybus_data->dpad_left;
-  data[port].d_up = joybus_data->dpad_up;
+  data[itf].d_down = joybus_data->dpad_down;
+  data[itf].d_right = joybus_data->dpad_right;
+  data[itf].d_left = joybus_data->dpad_left;
+  data[itf].d_up = joybus_data->dpad_up;
 
-  data[port].b_y = joybus_data->button_y;
-  data[port].b_x = joybus_data->button_x;
-  data[port].b_a = joybus_data->button_a;
-  data[port].b_b = joybus_data->button_b;
+  data[itf].b_y = joybus_data->button_y;
+  data[itf].b_x = joybus_data->button_x;
+  data[itf].b_a = joybus_data->button_a;
+  data[itf].b_b = joybus_data->button_b;
 
   //data[port].b_minus = joybus_data->button_minus;
-  data[port].b_plus = joybus_data->button_start;
+  data[itf].b_plus = joybus_data->button_start;
   //data[port].b_home = joybus_data->button_home;
   //data[port].b_capture = joybus_data->button_capture;
 
   //data[port].sb_right = joybus_data->button_stick_right;
   //data[port].sb_left = joybus_data->button_stick_left;
 
-  data[port].t_r = joybus_data->button_z;
+  data[itf].t_r = joybus_data->button_z;
   //data[port].t_l = joybus_data->trigger_l;
-  data[port].t_zl = joybus_data->button_l;
-  data[port].t_zr = joybus_data->button_r;
+  data[itf].t_zl = joybus_data->button_l;
+  data[itf].t_zr = joybus_data->button_r;
 
-  data[port].ls_x = joybus_data->stick_left_x<<4;
-  data[port].ls_y = joybus_data->stick_left_y<<4;
-  data[port].rs_x = joybus_data->stick_right_x<<4;
-  data[port].rs_y = joybus_data->stick_right_y<<4;
+  data[itf].ls_x = joybus_data->stick_left_x<<4;
+  data[itf].ls_y = joybus_data->stick_left_y<<4;
+  data[itf].rs_x = joybus_data->stick_right_x<<4;
+  data[itf].rs_y = joybus_data->stick_right_y<<4;
 
-  switch_commands_process(port, &(data[port]));
+  switch_commands_process(itf, &(data[itf]));
 }
 
 const tusb_desc_webusb_url_t desc_url =

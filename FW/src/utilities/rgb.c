@@ -96,6 +96,19 @@ void rgb_set_dirty()
     #endif
 }
 
+void rgb_set_instant(uint32_t color)
+{
+    #ifdef UTIL_RGB_PIN
+    for(uint8_t i = 0; i < UTIL_RGB_COUNT; i++)
+    {
+        _rgb_last[i].color = color;
+        _rgb_current[i].color = color;
+        _rgb_next[i].color = color;
+    }
+    _rgb_update_all();
+    #endif
+}
+
 // Set all RGBs to one color
 void rgb_set_all(uint32_t color)
 {

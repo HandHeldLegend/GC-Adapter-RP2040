@@ -6,6 +6,8 @@
         "adapter.h": "c",
         "stdio_usb.h": "c",
         "serial_cdc.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "xinput_device.h": "c",
+        "rgb.h": "c"
     }
 }
