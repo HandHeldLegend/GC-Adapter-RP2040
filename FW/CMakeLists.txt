@@ -34,6 +34,7 @@ add_executable(${PROJECT_NAME}
   src/adapter_settings.c 
 
   src/usb/xinput_device.c 
+  src/usb/ginput_device.c
 
   src/switch/switch_analog.c 
   src/switch/switch_commands.c 

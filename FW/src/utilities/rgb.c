@@ -120,6 +120,13 @@ void rgb_set_all(uint32_t color)
     #endif
 }
 
+void rgb_set_single(uint32_t color, uint8_t idx)
+{
+    #ifdef UTIL_RGB_PIN
+    _rgb_next[idx].color = color;
+    #endif
+}
+
 void rgb_init()
 {
     #ifdef UTIL_RGB_PIN

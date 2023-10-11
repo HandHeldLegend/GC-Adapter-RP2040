@@ -20,9 +20,10 @@ short sign_axis(uint8_t input_axis)
     return (short) start;
 }
 
-void xinput_hid_report(uint8_t itf, joybus_input_s *joybus_data)
+void xinput_hid_report(joybus_input_s *joybus_data)
 {
   static xid_input_s data[4] = {0};
+  uint itf = 0;
   data[itf].stick_left_x     = sign_axis((joybus_data->stick_left_x));
   data[itf].stick_left_y     = sign_axis((joybus_data->stick_left_y));
   data[itf].stick_right_x    = sign_axis((joybus_data->stick_right_x));

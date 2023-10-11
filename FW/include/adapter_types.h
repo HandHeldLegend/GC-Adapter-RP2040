@@ -30,7 +30,9 @@ typedef enum
 {
     INPUT_MODE_SWPRO,
     INPUT_MODE_XINPUT,
-    INPUT_MODE_GAMECUBE,
+    INPUT_MODE_GCADAPTER,
+    INPUT_MODE_SLIPPI,
+    INPUT_MODE_MAX,
     INPUT_MODE_CDC,
 } input_mode_t;
 
@@ -101,6 +103,8 @@ typedef struct
         };
         uint32_t byte_2;
     };
+
+    int port_itf;
 } joybus_input_s;
 
 typedef struct
@@ -182,7 +186,5 @@ typedef struct
     int lt;
     int rt;
 } a_data_s;
-
-
 
 #endif

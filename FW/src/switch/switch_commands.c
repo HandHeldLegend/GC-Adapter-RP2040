@@ -234,11 +234,6 @@ void command_handler(uint8_t itf, uint8_t command, const uint8_t *data, uint16_t
     case SW_CMD_SET_INPUTMODE:
       printf("Input mode change: %X\n", data[11]);
       set_ack(itf, 0x80);
-      if(itf==0 && data[11] == 0x30)
-      {
-        rgb_set_all(COLOR_GREEN.color);
-        rgb_set_dirty();
-      }
       _switch_reporting_mode[itf] = data[11];
       break;
 

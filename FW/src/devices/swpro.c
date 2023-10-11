@@ -189,101 +189,46 @@ bool blank_sent = false;
 
 uint32_t _timeout = 0;
 
-void swpro_hid_report(uint8_t itf, joybus_input_s *joybus_data)
+void swpro_hid_report(joybus_input_s *joybus_data)
 {
   static sw_input_s data[4] = {0};
-
-  data[itf].d_down = joybus_data->dpad_down;
-  data[itf].d_right = joybus_data->dpad_right;
-  data[itf].d_left = joybus_data->dpad_left;
-  data[itf].d_up = joybus_data->dpad_up;
-
-  data[itf].b_y = joybus_data->button_y;
-  data[itf].b_x = joybus_data->button_x;
-  data[itf].b_a = joybus_data->button_a;
-  data[itf].b_b = joybus_data->button_b;
-
-  //data[port].b_minus = joybus_data->button_minus;
-  data[itf].b_plus = joybus_data->button_start;
-  //data[port].b_home = joybus_data->button_home;
-  //data[port].b_capture = joybus_data->button_capture;
-
-  //data[port].sb_right = joybus_data->button_stick_right;
-  //data[port].sb_left = joybus_data->button_stick_left;
-
-  data[itf].t_r = joybus_data->button_z;
-  //data[port].t_l = joybus_data->trigger_l;
-  data[itf].t_zl = joybus_data->button_l;
-  data[itf].t_zr = joybus_data->button_r;
-
-  data[itf].ls_x = joybus_data->stick_left_x<<4;
-  data[itf].ls_y = joybus_data->stick_left_y<<4;
-  data[itf].rs_x = joybus_data->stick_right_x<<4;
-  data[itf].rs_y = joybus_data->stick_right_y<<4;
-
-  switch_commands_process(itf, &(data[itf]));
-}
-
-const tusb_desc_webusb_url_t desc_url =
-    {
-        .bLength = 3 + sizeof(ADAPTER_WEBUSB_URL) - 1,
-        .bDescriptorType = 3, // WEBUSB URL type
-        .bScheme = 1,         // 0: http, 1: https
-        .url = ADAPTER_WEBUSB_URL};
-
-//--------------------------------------------------------------------+
-// WebUSB use vendor class
-//--------------------------------------------------------------------+
-
-// Invoked when a control transfer occurred on an interface of this class
-// Driver response accordingly to the request and the transfer stage (setup/data/ack)
-// return false to stall control endpoint (e.g unsupported request)
-bool tud_vendor_control_xfer_cb(uint8_t rhport, uint8_t stage, tusb_control_request_t const *request)
-{
-  // nothing to with DATA & ACK stage
-  if (stage != CONTROL_STAGE_SETUP)
-    return true;
-
-  switch (request->bmRequestType_bit.type)
+  
+  for(uint i = 0; i < 4; i++)
   {
-  case TUSB_REQ_TYPE_VENDOR:
-    switch (request->bRequest)
-    {
-    case VENDOR_REQUEST_WEBUSB:
-      // match vendor request in BOS descriptor
-      // Get landing page url
-      return tud_control_xfer(rhport, request, (void *)(uintptr_t)&desc_url, desc_url.bLength);
 
-    case VENDOR_REQUEST_MICROSOFT:
-      if (request->wIndex == 7)
-      {
-        // Get Microsoft OS 2.0 compatible descriptor
-        uint16_t total_len;
-        memcpy(&total_len, desc_ms_os_20 + 8, 2);
 
-        return tud_control_xfer(rhport, request, (void *)(uintptr_t)desc_ms_os_20, total_len);
-      }
-      else
-      {
-        return false;
-      }
 
-    default:
-      break;
-    }
-    break;
+    uint itf = 0;
+    data[itf].d_down = joybus_data->dpad_down;
+    data[itf].d_right = joybus_data->dpad_right;
+    data[itf].d_left = joybus_data->dpad_left;
+    data[itf].d_up = joybus_data->dpad_up;
 
-  case TUSB_REQ_TYPE_CLASS:
-    printf("Vendor Request: %x", request->bRequest);
+    data[itf].b_y = joybus_data->button_y;
+    data[itf].b_x = joybus_data->button_x;
+    data[itf].b_a = joybus_data->button_a;
+    data[itf].b_b = joybus_data->button_b;
 
-    // response with status OK
-    return tud_control_status(rhport, request);
-    break;
+    //data[port].b_minus = joybus_data->button_minus;
+    data[itf].b_plus = joybus_data->button_start;
+    //data[port].b_home = joybus_data->button_home;
+    //data[port].b_capture = joybus_data->button_capture;
 
-  default:
-    break;
+    //data[port].sb_right = joybus_data->button_stick_right;
+    //data[port].sb_left = joybus_data->button_stick_left;
+
+    data[itf].t_r = joybus_data->button_z;
+    //data[port].t_l = joybus_data->trigger_l;
+    data[itf].t_zl = joybus_data->button_l;
+    data[itf].t_zr = joybus_data->button_r;
+
+    data[itf].ls_x = joybus_data->stick_left_x<<4;
+    data[itf].ls_y = joybus_data->stick_left_y<<4;
+    data[itf].rs_x = joybus_data->stick_right_x<<4;
+    data[itf].rs_y = joybus_data->stick_right_y<<4;
+
+    switch_commands_process(itf, &(data[itf]));
   }
 
-  // stall unknown request
-  return false;
+  
 }

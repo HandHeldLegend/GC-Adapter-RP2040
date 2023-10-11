@@ -48,6 +48,6 @@ typedef struct
 	uint8_t reserved_1[6];
 } __attribute__ ((packed)) xid_input_s;
 
-void xinput_hid_report(uint8_t itf, joybus_input_s *joybus_data);
+void xinput_hid_report(joybus_input_s *joybus_data);
 
 #endif

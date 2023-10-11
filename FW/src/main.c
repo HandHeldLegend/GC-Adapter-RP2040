@@ -26,15 +26,15 @@ int main()
         reset_usb_boot(0, 0);
     }
 
-    rgb_set_all(COLOR_RED.color);
+    rgb_set_all(COLOR_YELLOW.color);
     if (settings_load())
     {
-        rgb_set_all(COLOR_BLUE.color);
+        rgb_set_all(COLOR_RED.color);
     }
 
     settings_core0_save_check();
 
-    input_mode_t mode = INPUT_MODE_SWPRO;
+    input_mode_t mode = INPUT_MODE_GCADAPTER;
 
     adapter_usb_start(mode);
     stdio_init_all();

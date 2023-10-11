@@ -8,6 +8,8 @@ uint _adapter_input_irq;
 uint _gamecube_offset;
 pio_sm_config _gamecube_c[4];
 
+const uint8_t _led_defs[4] = {0, 1, 2, 3};
+
 volatile bool _gc_tx_done = false;
 bool _gc_running = false;
 
@@ -20,7 +22,6 @@ joybus_input_s _port_joybus[4] = {0, 0, 0, 0};
 
 bool _itf_ready[4] = {false};
 bool _port_rumble[4] = {false, false, false, false};
-int _port_interface[4] = {-1,-1,-1,-1};
 
 typedef struct
 {
@@ -64,7 +65,7 @@ void _gc_port_data(uint port)
             }
             else 
             {
-                _port_interface[port] = -1;
+                _port_joybus[port].port_itf = -1;
                 _port_phases[port] = 0;
                 return;
             }
@@ -87,12 +88,17 @@ void _gc_port_data(uint port)
         uint8_t tmp_itf = 0;
         for(uint8_t i = 0; i < 4; i++)
         {
-            if (_port_interface[i] == tmp_itf)
+            if (_port_joybus[port].port_itf == tmp_itf)
             {
                 tmp_itf += 1;
             }
         }
-        _port_interface[port] = tmp_itf;
+
+        _port_joybus[port].port_itf = tmp_itf;
+
+        // Set the LED color
+        rgb_set_single(COLOR_BLUE.color, _led_defs[port]);
+        rgb_set_dirty();
     }
     else if (_port_phases[port]==2)
     {
@@ -104,8 +110,10 @@ void _gc_port_data(uint port)
             }
             else 
             {
-                _port_interface[port] = -1;
+                _port_joybus[port].port_itf = -1;
                 _port_phases[port] = 0;
+                rgb_set_single(COLOR_RED.color, _led_defs[port]);
+                rgb_set_dirty();
                 return;
             }
         }
@@ -177,37 +185,11 @@ void _gamecube_send_probe()
     pio_set_sm_mask_enabled(JOYBUS_PIO, 0b1111, true);
 }
 
-void _adapter_report(uint8_t itf)
-{
-    joybus_input_s zero_report = {
-        .stick_left_x = 128,
-        .stick_right_x = 128,
-        .stick_left_y = 128,
-        .stick_right_y = 128,
-    };
-
-    bool reported = false;
-
-    for(uint i = 0; i < 4; i++)
-    {
-        if(_port_interface[i] == itf)
-        {
-            if(_itf_ready[itf])
-            {
-                adapter_usb_report(itf, &(_port_joybus[i]));
-                _itf_ready[itf] = false;
-                reported = true;
-                break;
-            }
-        }
-    }
-}
-
 void adapter_enable_rumble(uint8_t itf, bool enable)
 {
     for(uint i = 0; i < 4; i++)
     {
-        if(_port_interface[i] == itf)
+        if(_port_joybus[i].port_itf == itf)
         {
             _port_rumble[i] = enable;
             break;
@@ -217,24 +199,14 @@ void adapter_enable_rumble(uint8_t itf, bool enable)
 
 void adapter_comms_task(uint32_t timestamp)
 {
-    if (interval_run(timestamp, 7000))
+    if (interval_run(timestamp, 5000))
     {
         
         _gamecube_send_probe();
         sleep_us(500);
         _gamecube_get_data();
 
-        _adapter_report(0);
-        _adapter_report(1);
-        _adapter_report(2);
-        _adapter_report(3);
-    }
-    else
-    {
-        _itf_ready[0] = adapter_usb_ready(0);
-        _itf_ready[1] = adapter_usb_ready(1);
-        _itf_ready[2] = adapter_usb_ready(2);
-        _itf_ready[3] = adapter_usb_ready(3);
+        //adapter_usb_report(_port_joybus);
     }
 }
 

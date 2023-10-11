@@ -26,5 +26,8 @@ extern const char* global_string_descriptor[];
 #define ADAPTER_SETTINGS_VERSION 0x0002
 #define ADAPTER_WEBUSB_URL "handheldlegend.com"
 
+#define VENDOR_REQUEST_GET_MS_OS_DESCRIPTOR 7
+
+
 
 #endif

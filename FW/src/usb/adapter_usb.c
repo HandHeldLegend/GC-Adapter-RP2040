@@ -15,15 +15,19 @@ bool _usb_clear = false;
 // Default 8ms (8000us)
 uint32_t _usb_rate = 0;
 
-typedef void (*usb_cb_t)(uint8_t, joybus_input_s *);
+typedef void (*usb_cb_t)(joybus_input_s *);
 typedef bool (*usb_ready_cb_t)(uint8_t);
 
 usb_cb_t _usb_hid_cb = NULL;
-usb_ready_cb_t _usb_ready_cb = NULL;
 
 void _adapter_usb_set_interval(usb_rate_t rate)
 {
   _usb_rate = rate;
+}
+
+input_mode_t adapter_usb_currentmode()
+{
+  return _usb_mode;
 }
 
 bool adapter_usb_start(input_mode_t mode)
@@ -32,18 +36,24 @@ bool adapter_usb_start(input_mode_t mode)
   {
   default:
     _usb_hid_cb = NULL;
-    _usb_ready_cb = NULL;
     break;
+
+  case INPUT_MODE_GCADAPTER:
+    _usb_hid_cb = gcinput_hid_report;
+    break;
+
+  case INPUT_MODE_SLIPPI:
+    _usb_hid_cb = gcinput_hid_report;
+    break;
+
   case INPUT_MODE_SWPRO:
     //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = swpro_hid_report;
-    _usb_ready_cb = tud_hid_n_ready;
     break;
 
   case INPUT_MODE_XINPUT:
     //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = xinput_hid_report;
-    _usb_ready_cb = tud_xinput_n_ready;
     break;
   }
 
@@ -54,14 +64,9 @@ bool adapter_usb_start(input_mode_t mode)
 
 uint8_t buf = 0;
 
-bool adapter_usb_ready(uint8_t itf)
+void adapter_usb_report(joybus_input_s *input)
 {
-  return _usb_ready_cb(itf);
-}
-
-void adapter_usb_report(uint8_t itf, joybus_input_s *input)
-{
-  _usb_hid_cb(itf, input);
+  _usb_hid_cb(input);
 }
 
 /********* TinyUSB HID callbacks ***************/
@@ -72,18 +77,22 @@ uint8_t const *tud_descriptor_device_cb(void)
 {
   switch (_usb_mode)
   {
-  default:
-  case INPUT_MODE_SWPRO:
-    return (uint8_t const *)&swpro_device_descriptor;
-    break;
+    default:
+    case INPUT_MODE_SWPRO:
+      return (uint8_t const *)&swpro_device_descriptor;
+      break;
 
-  case INPUT_MODE_XINPUT:
-    return (uint8_t const *)&xid_device_descriptor;
-    break;
+    case INPUT_MODE_GCADAPTER:
+      return (uint8_t const *)&ginput_device_descriptor;
+      break;
 
-  case INPUT_MODE_CDC:
-    return (uint8_t const *)&serial_device_descriptor;
-  }
+    case INPUT_MODE_XINPUT:
+      return (uint8_t const *)&xid_device_descriptor;
+      break;
+
+    case INPUT_MODE_CDC:
+      return (uint8_t const *)&serial_device_descriptor;
+    }
 }
 
 
@@ -99,6 +108,10 @@ uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
 
   case INPUT_MODE_SWPRO:
     return (uint8_t const *)&swpro_configuration_descriptor;
+    break;
+
+  case INPUT_MODE_GCADAPTER:
+    return (uint8_t const *)&ginput_configuration_descriptor;
     break;
 
   case INPUT_MODE_XINPUT:
@@ -196,8 +209,14 @@ uint8_t const *tud_hid_descriptor_report_cb(uint8_t instance)
   switch (_usb_mode)
   {
   default:
+
   case INPUT_MODE_SWPRO:
     return swpro_hid_report_descriptor;
+    break;
+
+  case INPUT_MODE_SLIPPI:
+  case INPUT_MODE_GCADAPTER:
+    return gc_hid_report_descriptor;
     break;
   }
   return NULL;
@@ -209,8 +228,29 @@ usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
 {
 
   *driver_count += 1;
+  if (_usb_mode == INPUT_MODE_XINPUT)
   return &tud_xinput_driver;
+  else return &tud_ginput_driver;
 }
+
+/** 
+ * This section is for MS OS Descriptor for legacy type
+*/
+
+// Note: the 0xEE index string is a Microsoft OS 1.0 Descriptors.
+// Define the MS OS 1.0 Descriptor
+static const uint8_t MS_OS_Descriptor[] = {
+    0x12,                                                                               // Descriptor length (18 bytes)
+    0x03,                                                                               // Descriptor type (3 = String)
+    0x4D, 0x00, 0x53, 0x00, 0x46, 0x00, 0x54, 0x00, 0x31, 0x00, 0x30, 0x00, 0x30, 0x00, // Signature: "MSFT100"
+    VENDOR_REQUEST_GET_MS_OS_DESCRIPTOR,                                                // Vendor Code
+    0x00                                                                                // Padding
+};
+
+// Size of the uint16_t array
+#define SIZE_UINT16_ARRAY (sizeof(MS_OS_Descriptor) / 2)
+
+static uint16_t MS_OS_Descriptor_LE_UINT16[SIZE_UINT16_ARRAY];
 
 // String Descriptor Index
 enum
@@ -230,18 +270,26 @@ uint16_t const *tud_descriptor_string_cb(uint8_t index, uint16_t langid)
   (void)langid;
 
   uint8_t chr_count;
-  const char *str = global_string_descriptor[index];
 
-  switch (index)
+  if (index == 0xEE)
   {
-  case STRID_LANGID:
+    for (int i = 0, j = 0; i < sizeof(MS_OS_Descriptor); i += 2, j++)
+    {
+      MS_OS_Descriptor_LE_UINT16[j] = (MS_OS_Descriptor[i + 1] << 8) | MS_OS_Descriptor[i];
+    }
+
+    memcpy(&_desc_str[0], &MS_OS_Descriptor_LE_UINT16[0], sizeof(MS_OS_Descriptor_LE_UINT16));
+    return _desc_str;
+  }
+  else if (index == 0)
+  {
     memcpy(&_desc_str[1], global_string_descriptor[0], 2);
     chr_count = 1;
-    break;
+  }
+  else
+  {
 
-  default:
-    // Note: the 0xEE index string is a Microsoft OS 1.0 Descriptors.
-    // https://docs.microsoft.com/en-us/windows-hardware/drivers/usbcon/microsoft-defined-usb-descriptors
+    const char *str = global_string_descriptor[index];
 
     // Cap at max char... WHY?
     chr_count = strlen(str);
@@ -253,7 +301,6 @@ uint16_t const *tud_descriptor_string_cb(uint8_t index, uint16_t langid)
     {
       _desc_str[1 + i] = str[i];
     }
-    break;
   }
 
   // first byte is length (including header), second byte is string type
@@ -318,4 +365,152 @@ uint8_t dir_to_hat(uint8_t leftRight, uint8_t upDown)
   }
 
   return ret;
+}
+
+
+const tusb_desc_webusb_url_t desc_url =
+    {
+        .bLength = 3 + sizeof(ADAPTER_WEBUSB_URL) - 1,
+        .bDescriptorType = 3, // WEBUSB URL type
+        .bScheme = 1,         // 0: http, 1: https
+        .url = ADAPTER_WEBUSB_URL};
+
+uint8_t MS_OS_10_CompatibleID_Descriptor[] = {
+    0x28, 0x00, 0x00, 0x00,                         // DWORD (LE)	 Descriptor length (40 bytes)
+    0x00, 0x01,                                     // BCD WORD (LE)	 Version ('1.0')
+    0x04, 0x00,                                     // WORD (LE)	 Compatibility ID Descriptor index (0x0004)
+    0x01,                                           // BYTE	 Number of sections (1)
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,       // 7 BYTES	 Reserved
+    0x00,                                           //	 BYTE	 Interface Number (Interface #0)
+    0x01,                                           //	 BYTE	 Reserved
+    0x57, 0x49, 0x4E, 0x55, 0x53, 0x42, 0x00, 0x00, // 8 BYTES ASCII String Compatible ID ("WINUSB\0\0")
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // 8 BYTES ASCII String	 Sub-Compatible ID (unused)
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00              // 6 BYTES Reserved
+};
+
+uint8_t MS_Extended_Feature_Descriptor[] =
+    {
+        0x92, 0x00, 0x00, 0x00, // DWORD (LE)	 Descriptor length (146 bytes)
+        0x00, 0x01,             // BCD WORD (LE) Version ('1.0')
+        0x05, 0x00,             // WORD (LE)	 Extended Property Descriptor index (0x0005)
+        0x01, 0x00,             // WORD          Number of sections (1)
+        0x88, 0x00, 0x00, 0x00, // DWORD (LE)	 Size of the property section (136 bytes)
+        0x07, 0x00, 0x00, 0x00, // DWORD (LE)	 Property data type (7 = Unicode REG_MULTI_SZ)
+        0x2A, 0x00,             // WORD (LE)	 Property name length (42 bytes)
+                                // NULL-terminated Unicode String (LE)	 Property Name (L"DeviceInterfaceGUIDs")
+        'D', 0, 'e', 0, 'v', 0, 'i', 0, 'c', 0, 'e', 0,
+        'I', 0, 'n', 0, 't', 0, 'e', 0, 'r', 0, 'f', 0, 'a', 0, 'c', 0, 'e', 0,
+        'G', 0, 'U', 0, 'I', 0, 'D', 0, 's', 0, 0x00, 0x00,
+        0x50, 0x00, 0x00, 0x00, // DWORD (LE)	 Property data length (80 bytes)
+
+        // NULL-terminated Unicode String (LE), followed by another Unicode NULL
+        // Property Name ("{6E45736A-2B1B-4078-B772-B3AF2B6FDE1C}")
+        '{', 0, '6', 0, 'E', 0, '4', 0, '5', 0, '7', 0, '3', 0, '6', 0, 'A', 0, '-', 0,
+        '2', 0, 'B', 0, '1', 0, 'B', 0, '-', 0, '4', 0, '0', 0, '7', 0, '8', 0, '-', 0,
+        'B', 0, '7', 0, '7', 0, '2', 0, '-', 0, 'B', 0, '3', 0, 'A', 0, 'F', 0, '2', 0,
+        'B', 0, '6', 0, 'F', 0, 'D', 0, 'E', 0, '1', 0, 'C', 0, '}', 0,
+        0x00, 0x00, 0x00, 0x00};
+
+//--------------------------------------------------------------------+
+// WebUSB use vendor class
+//--------------------------------------------------------------------+
+
+// Invoked when a control transfer occurred on an interface of this class
+// Driver response accordingly to the request and the transfer stage (setup/data/ack)
+// return false to stall control endpoint (e.g unsupported request)
+bool tud_vendor_control_xfer_cb(uint8_t rhport, uint8_t stage, tusb_control_request_t const *request)
+{
+  // nothing to with DATA & ACK stage
+  if (stage != CONTROL_STAGE_SETUP)
+    return true;
+
+  uint8_t const desc_type  = tu_u16_high(request->wValue);
+  uint8_t const itf = 0;
+
+  switch (request->bmRequestType_bit.type)
+  {
+  case TUSB_REQ_TYPE_STANDARD:
+    // Unused for vendor control transfer
+    // TinyUSB hooks in and forces this for Vendor requests only
+
+  case TUSB_REQ_TYPE_VENDOR:
+    switch (request->bRequest)
+    {
+
+      // MS OS 1.0 Descriptor
+      case VENDOR_REQUEST_GET_MS_OS_DESCRIPTOR:
+      {
+        if (request->wIndex == 4)
+        {
+          if (tud_control_xfer(rhport, request, MS_OS_10_CompatibleID_Descriptor, sizeof(MS_OS_10_CompatibleID_Descriptor)))
+          {
+            return true;
+          }
+
+          return false;
+        }
+        else if (request->wIndex == 5)
+        {
+          // MS descriptor 1.0 stuff
+
+          if (tud_control_xfer(rhport, request, MS_Extended_Feature_Descriptor, sizeof(MS_Extended_Feature_Descriptor)))
+          {
+            return true;
+          }
+        }
+      }
+      break;
+
+      // Web USB Descriptor
+      case VENDOR_REQUEST_WEBUSB:
+      {
+        // match vendor request in BOS descriptor
+        // Get landing page url
+        return tud_control_xfer(rhport, request, (void *)(uintptr_t)&desc_url, desc_url.bLength);
+      }
+
+      // MS OS 2.0 Descriptor
+      case VENDOR_REQUEST_MICROSOFT:
+      {
+        if (request->wIndex == 7)
+        {
+          // Get Microsoft OS 2.0 compatible descriptor
+          uint16_t total_len;
+
+          //if(_usb_mode==INPUT_MODE_GCUSB)
+          //{
+          //  memcpy(&total_len, gc_desc_ms_os_20 + 8, 2);
+          //  return tud_control_xfer(rhport, request, (void *)(uintptr_t)gc_desc_ms_os_20, total_len);
+          //}
+          //else
+          //{
+            memcpy(&total_len, desc_ms_os_20 + 8, 2);
+            return tud_control_xfer(rhport, request, (void *)(uintptr_t)desc_ms_os_20, total_len);
+          //}
+          
+        }
+        else
+        {
+          return false;
+        }
+      }
+
+      default:
+        break;
+    }
+    break;
+
+  case TUSB_REQ_TYPE_CLASS:
+    printf("Vendor Request: %x", request->bRequest);
+
+    // response with status OK
+    return tud_control_status(rhport, request);
+    break;
+
+  default:
+    break;
+  }
+
+  // stall unknown request
+  return false;
 }
