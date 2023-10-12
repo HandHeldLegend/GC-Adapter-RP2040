@@ -88,7 +88,7 @@ void _gc_port_data(uint port)
         uint8_t tmp_itf = 0;
         for(uint8_t i = 0; i < 4; i++)
         {
-            if (_port_joybus[port].port_itf == tmp_itf)
+            if (_port_joybus[i].port_itf == tmp_itf)
             {
                 tmp_itf += 1;
             }
@@ -206,8 +206,9 @@ void adapter_comms_task(uint32_t timestamp)
         sleep_us(500);
         _gamecube_get_data();
 
-        //adapter_usb_report(_port_joybus);
+        adapter_usb_report(_port_joybus);
     }
+    else adapter_usb_idle(_port_joybus);
 }
 
 void adapter_init()
@@ -220,6 +221,7 @@ void adapter_init()
         _port_joybus[i].stick_left_y = 128;
         _port_joybus[i].stick_right_x = 128;
         _port_joybus[i].stick_right_y = 128;
+        _port_joybus[i].port_itf = -1;
     }
 
     joybus_program_init(JOYBUS_PIO, _gamecube_offset + joybus_offset_joybusout, JOYBUS_PORT_1, _gamecube_c);

@@ -16,9 +16,10 @@ bool _usb_clear = false;
 uint32_t _usb_rate = 0;
 
 typedef void (*usb_cb_t)(joybus_input_s *);
-typedef bool (*usb_ready_cb_t)(uint8_t);
+typedef void (*usb_idle_cb_t)(joybus_input_s *);
 
-usb_cb_t _usb_hid_cb = NULL;
+usb_cb_t      _usb_hid_cb = NULL;
+usb_idle_cb_t _usb_idle_cb = NULL;
 
 void _adapter_usb_set_interval(usb_rate_t rate)
 {
@@ -28,6 +29,23 @@ void _adapter_usb_set_interval(usb_rate_t rate)
 input_mode_t adapter_usb_currentmode()
 {
   return _usb_mode;
+}
+
+void adapter_usb_mode_cycle(bool forwards)
+{
+
+  if(forwards)
+  {
+    if(_usb_mode + 1 >= INPUT_MODE_MAX) _usb_mode = 0;
+    else _usb_mode += 1;
+  }
+  else
+  {
+    if(!_usb_mode) _usb_mode = (INPUT_MODE_MAX-1);
+    else _usb_mode -= 1;
+  }
+
+  adapter_usb_start(_usb_mode);
 }
 
 bool adapter_usb_start(input_mode_t mode)
@@ -40,20 +58,24 @@ bool adapter_usb_start(input_mode_t mode)
 
   case INPUT_MODE_GCADAPTER:
     _usb_hid_cb = gcinput_hid_report;
+    _usb_idle_cb = gcinput_hid_idle;
     break;
 
   case INPUT_MODE_SLIPPI:
     _usb_hid_cb = gcinput_hid_report;
+    _usb_idle_cb = gcinput_hid_idle;
     break;
 
   case INPUT_MODE_SWPRO:
     //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = swpro_hid_report;
+    _usb_idle_cb = swpro_hid_idle;
     break;
 
   case INPUT_MODE_XINPUT:
     //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = xinput_hid_report;
+    _usb_idle_cb = xinput_hid_idle;
     break;
   }
 
@@ -67,6 +89,11 @@ uint8_t buf = 0;
 void adapter_usb_report(joybus_input_s *input)
 {
   _usb_hid_cb(input);
+}
+
+void adapter_usb_idle(joybus_input_s *input)
+{
+  _usb_idle_cb(input);
 }
 
 /********* TinyUSB HID callbacks ***************/
@@ -167,6 +194,21 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
   switch (_usb_mode)
   {
   default:
+
+  case INPUT_MODE_GCADAPTER:
+  case INPUT_MODE_SLIPPI:
+    if (!report_id && !report_type)
+    {
+      if((buffer[0] == 0x11))
+      {
+        adapter_enable_rumble(0, (buffer[1]>0));
+        adapter_enable_rumble(1, (buffer[2]>0));
+        adapter_enable_rumble(2, (buffer[3]>0));
+        adapter_enable_rumble(3, (buffer[4]>0));
+      }
+      
+    }
+    break;
 
   case INPUT_MODE_SWPRO:
     if (!report_id && !report_type)
