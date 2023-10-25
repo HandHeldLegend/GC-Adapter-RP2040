@@ -7,6 +7,7 @@
 extern bool gc_connected;
 
 extern const tusb_desc_device_t ginput_device_descriptor;
+extern const uint8_t ginputslippi_configuration_descriptor[];
 extern const uint8_t ginput_configuration_descriptor[];
 extern const char *ginput_string_descriptor[];
 extern const uint8_t gc_hid_report_descriptor[];

@@ -16,7 +16,7 @@ void adapter_usb_report(joybus_input_s *input);
 void adapter_usb_idle(joybus_input_s *input);
 
 input_mode_t adapter_usb_currentmode();
-
+bool adapter_usb_sent_ok();
 void adapter_usb_mode_cycle(bool forwards);
 bool adapter_usb_start(input_mode_t mode);
 uint8_t dir_to_hat(uint8_t leftRight, uint8_t upDown);

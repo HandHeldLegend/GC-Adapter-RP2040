@@ -10,6 +10,7 @@
         "xinput_device.h": "c",
         "rgb.h": "c",
         "gcinput.h": "c",
-        "ginput_device.h": "c"
+        "ginput_device.h": "c",
+        "main.h": "c"
     }
 }

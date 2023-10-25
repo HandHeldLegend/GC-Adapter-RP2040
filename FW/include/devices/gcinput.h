@@ -48,6 +48,7 @@ typedef struct
 
 } __attribute__ ((packed)) gc_input_s;
 
+void gcinput_set_ready(bool ready);
 void gcinput_hid_idle(joybus_input_s *joybus_data);
 void gcinput_hid_report(joybus_input_s *joybus_data);
 

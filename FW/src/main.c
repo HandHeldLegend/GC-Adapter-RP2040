@@ -17,7 +17,7 @@ void adapter_hardware_setup()
 
 int main()
 {
-    
+
     adapter_hardware_setup();
 
     // Handle bootloader stuff
@@ -26,65 +26,71 @@ int main()
         reset_usb_boot(0, 0);
     }
 
+    input_mode_t mode = INPUT_MODE_SWPRO;
+
     if (settings_load())
     {
-        switch(global_loaded_settings.input_mode)
+        wd_scratch_readout_u wd = {0};
+
+        wd.value = scratch_get(WD_READOUT_IDX);
+
+        if (wd.reboot_reason == WD_REBOOT_REASON_MODECHANGE)
         {
-            default:
-            case INPUT_MODE_SWPRO:
-                rgb_set_all(COLOR_YELLOW.color);
-                break;
-
-            case INPUT_MODE_SLIPPI:
-                rgb_set_all(COLOR_PINK.color);
-                break;
-
-            case INPUT_MODE_XINPUT:
-                rgb_set_all(COLOR_GREEN.color);
-                break;
-
-            case INPUT_MODE_GCADAPTER:
-                rgb_set_all(COLOR_PURPLE.color);
-                break;
+            mode = wd.adapter_mode;
         }
-        
+        else
+        {
+            mode = global_loaded_settings.input_mode;
+        }
+
+        switch (mode)
+        {
+        default:
+        case INPUT_MODE_SWPRO:
+            rgb_set_all(COLOR_YELLOW.color);
+            break;
+
+        case INPUT_MODE_SLIPPI:
+            rgb_set_all(COLOR_PINK.color);
+            break;
+
+        case INPUT_MODE_XINPUT:
+            rgb_set_all(COLOR_GREEN.color);
+            break;
+
+        case INPUT_MODE_GCADAPTER:
+            rgb_set_all(COLOR_PURPLE.color);
+            break;
+        }
     }
 
     settings_core0_save_check();
 
-    input_mode_t mode = INPUT_MODE_XINPUT;
-
     adapter_usb_start(mode);
     stdio_init_all();
 
-    
     rgb_set_dirty();
 
     bool did = false;
     bool sent = false;
 
-    for(;;)
+    for (;;)
     {
         uint32_t t = time_us_32();
         settings_core0_save_check();
         rgb_task(t);
         tud_task();
-        
-        if (!gpio_get(ADAPTER_BUTTON_1))
-        {
-            adapter_usb_mode_cycle(true);
-        }
 
-        if(did)
+        if (did)
         {
             adapter_comms_task(t);
+            wd_mode_task(t);
         }
         else
         {
             adapter_init();
             sleep_ms(100);
-            did=true;
+            did = true;
         }
     }
-
 }

@@ -36,6 +36,7 @@
 #include "ws2812.pio.h"
 #include "joybus.pio.h"
 #include "rgb.h"
+#include "wd_scratch.h"
 
 #include "bsp/board.h"
 #include "tusb.h"

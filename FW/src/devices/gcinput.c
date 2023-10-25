@@ -6,9 +6,9 @@ bool _gc_first = false;
 bool _gc_enable = false;
 static bool _gc_ready = false;
 
-void gcinput_enable(bool enable)
+void gcinput_set_ready(bool ready)
 {
-    _gc_enable = enable;
+    _gc_ready = ready;
 }
 
 void gcinput_hid_idle(joybus_input_s *joybus_data)
@@ -76,9 +76,8 @@ void gcinput_hid_report(joybus_input_s *joybus_data)
         memcpy(&buffer[29], &data[3], 8);
     }
 
-    if (_gc_ready)
+    if (tud_ginput_ready())
     {
         tud_ginput_report(0, buffer, 37);
-        _gc_ready = false;
     }
 }

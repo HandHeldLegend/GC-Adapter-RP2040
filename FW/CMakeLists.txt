@@ -24,6 +24,7 @@ add_executable(${PROJECT_NAME}
   src/main.c 
 
   src/utilities/rgb.c 
+  src/utilities/wd_scratch.c
 
   src/usb/desc_bos.c 
   src/usb/adapter_usb.c 

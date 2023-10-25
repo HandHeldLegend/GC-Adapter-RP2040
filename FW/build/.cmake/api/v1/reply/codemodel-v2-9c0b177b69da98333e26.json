@@ -1170,21 +1170,21 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "gc_adapter_rp2040::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gc_adapter_rp2040-Debug-a6ff640f8ba5bd6cfe8a.json",
+					"jsonFile" : "target-gc_adapter_rp2040-Debug-96a45039b90c3b240e99.json",
 					"name" : "gc_adapter_rp2040",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "gc_adapter_rp2040_joybus_pio_h::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gc_adapter_rp2040_joybus_pio_h-Debug-08c5b9978ec16c85b22a.json",
+					"jsonFile" : "target-gc_adapter_rp2040_joybus_pio_h-Debug-e0fc719f683e56f2ace8.json",
 					"name" : "gc_adapter_rp2040_joybus_pio_h",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "gc_adapter_rp2040_ws2812_pio_h::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-gc_adapter_rp2040_ws2812_pio_h-Debug-cab89f0e155ba3930536.json",
+					"jsonFile" : "target-gc_adapter_rp2040_ws2812_pio_h-Debug-73e36b5de616ef3b9359.json",
 					"name" : "gc_adapter_rp2040_ws2812_pio_h",
 					"projectIndex" : 0
 				},

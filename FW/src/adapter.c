@@ -3,6 +3,8 @@
 
 #define CLAMP_0_255(value) ((value) < 0 ? 0 : ((value) > 255 ? 255 : (value)))
 
+uint32_t _usb_interval = 7000;
+
 uint _adapter_output_irq;
 uint _adapter_input_irq;
 uint _gamecube_offset;
@@ -37,6 +39,15 @@ analog_offset_s _port_offsets[4] = {0};
 
 uint read_count = 0;
 
+void _joybus_reset_default(joybus_input_s *input)
+{
+    memset(input, 0, sizeof(joybus_input_s));
+    input->stick_left_x = 128;
+    input->stick_left_y = 128;
+    input->stick_right_x = 128;
+    input->stick_right_y = 128;
+}
+
 void _gc_port_data(uint port)
 {
     if(!_port_phases[port])
@@ -48,7 +59,6 @@ void _gc_port_data(uint port)
 
         if (_port_probes[port] == 0x09)
         {
-            
             _port_phases[port] = 1;
         }
 
@@ -56,6 +66,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port]==1)
     {
+        _joybus_reset_default(&_port_joybus[port]);
         // Collect data for analog offset creation
         for(uint i = 0; i < 2; i++)
         {
@@ -102,6 +113,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port]==2)
     {
+        _joybus_reset_default(&_port_joybus[port]);
         for(uint i = 0; i < 2; i++)
         {
             if(!pio_sm_is_rx_fifo_empty(JOYBUS_PIO, port))
@@ -185,6 +197,11 @@ void _gamecube_send_probe()
     pio_set_sm_mask_enabled(JOYBUS_PIO, 0b1111, true);
 }
 
+void adapter_set_interval(uint32_t interval)
+{
+    _usb_interval = interval;
+}
+
 void adapter_enable_rumble(uint8_t itf, bool enable)
 {
     for(uint i = 0; i < 4; i++)
@@ -199,9 +216,8 @@ void adapter_enable_rumble(uint8_t itf, bool enable)
 
 void adapter_comms_task(uint32_t timestamp)
 {
-    if (interval_run(timestamp, 5000))
+    if (interval_run(timestamp, _usb_interval))
     {
-        
         _gamecube_send_probe();
         sleep_us(500);
         _gamecube_get_data();
@@ -217,10 +233,7 @@ void adapter_init()
     for(uint i = 0; i < 4; i++)
     {
         memset(&_port_joybus[i], 0, sizeof(joybus_input_s));
-        _port_joybus[i].stick_left_x = 128;
-        _port_joybus[i].stick_left_y = 128;
-        _port_joybus[i].stick_right_x = 128;
-        _port_joybus[i].stick_right_y = 128;
+        _joybus_reset_default(&_port_joybus[i]);
         _port_joybus[i].port_itf = -1;
     }
 

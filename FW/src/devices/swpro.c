@@ -305,16 +305,16 @@ uint32_t _timeout = 0;
 void swpro_hid_idle(joybus_input_s *joybus_data)
 {
     if (!joybus_data[0].port_ready && (joybus_data[0].port_itf > -1))
-        joybus_data[0].port_ready = tud_xinput_n_ready(joybus_data[0].port_itf);
+        joybus_data[0].port_ready = tud_hid_n_ready(joybus_data[0].port_itf);
 
     if (!joybus_data[1].port_ready && (joybus_data[1].port_itf > -1))
-        joybus_data[1].port_ready = tud_xinput_n_ready(joybus_data[1].port_itf);
+        joybus_data[1].port_ready = tud_hid_n_ready(joybus_data[1].port_itf);
 
     if (!joybus_data[2].port_ready && (joybus_data[2].port_itf > -1))
-        joybus_data[2].port_ready = tud_xinput_n_ready(joybus_data[2].port_itf);
+        joybus_data[2].port_ready = tud_hid_n_ready(joybus_data[2].port_itf);
 
     if (!joybus_data[3].port_ready && (joybus_data[3].port_itf > -1))
-        joybus_data[3].port_ready = tud_xinput_n_ready(joybus_data[3].port_itf);
+        joybus_data[3].port_ready = tud_hid_n_ready(joybus_data[3].port_itf);
 }
 
 void swpro_hid_report(joybus_input_s *joybus_data)
@@ -347,8 +347,8 @@ void swpro_hid_report(joybus_input_s *joybus_data)
 
     data[itf].t_r = joybus_data[i].button_z;
     // data[port].t_l = joybus_data[i].trigger_l;
-    data[itf].t_zl = joybus_data[i].button_l;
-    data[itf].t_zr = joybus_data[i].button_r;
+    data[itf].t_zl = (joybus_data[i].analog_trigger_l > 60) ? 1 : joybus_data[i].button_l;
+    data[itf].t_zr = (joybus_data[i].analog_trigger_r > 60) ? 1 : joybus_data[i].button_r;
 
     data[itf].ls_x = joybus_data[i].stick_left_x << 4;
     data[itf].ls_y = joybus_data[i].stick_left_y << 4;

@@ -12,18 +12,25 @@
 input_mode_t _usb_mode = INPUT_MODE_XINPUT;
 bool _usb_clear = false;
 
-// Default 8ms (8000us)
-uint32_t _usb_rate = 0;
-
 typedef void (*usb_cb_t)(joybus_input_s *);
 typedef void (*usb_idle_cb_t)(joybus_input_s *);
 
-usb_cb_t      _usb_hid_cb = NULL;
+usb_cb_t _usb_hid_cb = NULL;
 usb_idle_cb_t _usb_idle_cb = NULL;
 
-void _adapter_usb_set_interval(usb_rate_t rate)
+// This gets set true when we successfully sent an input
+// report.
+bool _usb_sent_ok = false;
+
+// This is used to get the sent state, and reset it
+bool adapter_usb_sent_ok()
 {
-  _usb_rate = rate;
+  if (_usb_sent_ok)
+  {
+    _usb_sent_ok = false;
+    return true;
+  }
+  return false;
 }
 
 input_mode_t adapter_usb_currentmode()
@@ -31,21 +38,34 @@ input_mode_t adapter_usb_currentmode()
   return _usb_mode;
 }
 
+void _software_reset()
+{
+  rgb_set_instant(0x00);
+  // Configure the watchdog to reset the chip after a short delay
+  watchdog_reboot(0, 0, 0);
+  ; // Loop forever, waiting for the watchdog to reset the chip
+}
+
 void adapter_usb_mode_cycle(bool forwards)
 {
-
-  if(forwards)
+  if (forwards)
   {
-    if(_usb_mode + 1 >= INPUT_MODE_MAX) _usb_mode = 0;
-    else _usb_mode += 1;
+    if (_usb_mode + 1 >= INPUT_MODE_MAX)
+      _usb_mode = 0;
+    else
+      _usb_mode += 1;
   }
   else
   {
-    if(!_usb_mode) _usb_mode = (INPUT_MODE_MAX-1);
-    else _usb_mode -= 1;
+    if (!_usb_mode)
+      _usb_mode = (INPUT_MODE_MAX - 1);
+    else
+      _usb_mode -= 1;
   }
 
-  adapter_usb_start(_usb_mode);
+  wd_scratch_readout_u wd = {.adapter_mode = _usb_mode, .reboot_reason = WD_REBOOT_REASON_MODECHANGE};
+  scratch_set(WD_READOUT_IDX, wd.value);
+  _software_reset();
 }
 
 bool adapter_usb_start(input_mode_t mode)
@@ -54,33 +74,36 @@ bool adapter_usb_start(input_mode_t mode)
   {
   default:
     _usb_hid_cb = NULL;
+    _usb_idle_cb = NULL;
     break;
 
   case INPUT_MODE_GCADAPTER:
     _usb_hid_cb = gcinput_hid_report;
     _usb_idle_cb = gcinput_hid_idle;
+    adapter_set_interval(7000);
     break;
 
   case INPUT_MODE_SLIPPI:
     _usb_hid_cb = gcinput_hid_report;
-    _usb_idle_cb = gcinput_hid_idle;
+    //_usb_idle_cb = gcinput_hid_idle;
+    adapter_set_interval(500);
     break;
 
   case INPUT_MODE_SWPRO:
-    //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = swpro_hid_report;
     _usb_idle_cb = swpro_hid_idle;
+    adapter_set_interval(7000);
     break;
 
   case INPUT_MODE_XINPUT:
-    //_adapter_usb_set_interval(USBRATE_8);
     _usb_hid_cb = xinput_hid_report;
     _usb_idle_cb = xinput_hid_idle;
+    adapter_set_interval(4000);
     break;
   }
 
   _usb_mode = mode;
-  
+
   return tusb_init();
 }
 
@@ -88,11 +111,15 @@ uint8_t buf = 0;
 
 void adapter_usb_report(joybus_input_s *input)
 {
+  if(!_usb_hid_cb) return;
+
   _usb_hid_cb(input);
 }
 
 void adapter_usb_idle(joybus_input_s *input)
 {
+  if(!_usb_idle_cb) return;
+
   _usb_idle_cb(input);
 }
 
@@ -104,24 +131,24 @@ uint8_t const *tud_descriptor_device_cb(void)
 {
   switch (_usb_mode)
   {
-    default:
-    case INPUT_MODE_SWPRO:
-      return (uint8_t const *)&swpro_device_descriptor;
-      break;
+  default:
+  case INPUT_MODE_SWPRO:
+    return (uint8_t const *)&swpro_device_descriptor;
+    break;
 
-    case INPUT_MODE_GCADAPTER:
-      return (uint8_t const *)&ginput_device_descriptor;
-      break;
+  case INPUT_MODE_SLIPPI:
+  case INPUT_MODE_GCADAPTER:
+    return (uint8_t const *)&ginput_device_descriptor;
+    break;
 
-    case INPUT_MODE_XINPUT:
-      return (uint8_t const *)&xid_device_descriptor;
-      break;
+  case INPUT_MODE_XINPUT:
+    return (uint8_t const *)&xid_device_descriptor;
+    break;
 
-    case INPUT_MODE_CDC:
-      return (uint8_t const *)&serial_device_descriptor;
-    }
+  case INPUT_MODE_CDC:
+    return (uint8_t const *)&serial_device_descriptor;
+  }
 }
-
 
 // Invoked when received GET CONFIGURATION DESCRIPTOR
 // Application return pointer to descriptor
@@ -137,6 +164,10 @@ uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
     return (uint8_t const *)&swpro_configuration_descriptor;
     break;
 
+  case INPUT_MODE_SLIPPI:
+    return (uint8_t const *)&ginputslippi_configuration_descriptor;
+    break;
+
   case INPUT_MODE_GCADAPTER:
     return (uint8_t const *)&ginput_configuration_descriptor;
     break;
@@ -146,7 +177,7 @@ uint8_t const *tud_descriptor_configuration_cb(uint8_t index)
     break;
 
   case INPUT_MODE_CDC:
-    return (uint8_t const *) &serial_configuration_descriptor;
+    return (uint8_t const *)&serial_configuration_descriptor;
     break;
   }
 }
@@ -169,9 +200,19 @@ void tud_hid_report_complete_cb(uint8_t instance, uint8_t const *report, uint16_
   _usb_clear = true;
   switch (_usb_mode)
   {
+
+  case INPUT_MODE_GCADAPTER:
+  case INPUT_MODE_SLIPPI:
+    if (report[0] == 0x21)
+    {
+      _usb_sent_ok = true;
+    }
+    break;
+
   case INPUT_MODE_SWPRO:
     if ((report[0] == 0x30))
     {
+      _usb_sent_ok = true;
     }
     break;
 
@@ -180,6 +221,7 @@ void tud_hid_report_complete_cb(uint8_t instance, uint8_t const *report, uint16_
   case INPUT_MODE_XINPUT:
     if ((report[0] == 0x00) && (report[1] == XID_REPORT_LEN))
     {
+      _usb_sent_ok = true;
     }
 
     break;
@@ -194,19 +236,19 @@ void tud_hid_set_report_cb(uint8_t instance, uint8_t report_id,
   switch (_usb_mode)
   {
   default:
+  break;
 
   case INPUT_MODE_GCADAPTER:
   case INPUT_MODE_SLIPPI:
     if (!report_id && !report_type)
     {
-      if((buffer[0] == 0x11))
+      if ((buffer[0] == 0x11))
       {
-        adapter_enable_rumble(0, (buffer[1]>0));
-        adapter_enable_rumble(1, (buffer[2]>0));
-        adapter_enable_rumble(2, (buffer[3]>0));
-        adapter_enable_rumble(3, (buffer[4]>0));
+        adapter_enable_rumble(0, (buffer[1] > 0));
+        adapter_enable_rumble(1, (buffer[2] > 0));
+        adapter_enable_rumble(2, (buffer[3] > 0));
+        adapter_enable_rumble(3, (buffer[4] > 0));
       }
-      
     }
     break;
 
@@ -251,6 +293,8 @@ uint8_t const *tud_hid_descriptor_report_cb(uint8_t instance)
   switch (_usb_mode)
   {
   default:
+  return 0;
+  break;
 
   case INPUT_MODE_SWPRO:
     return swpro_hid_report_descriptor;
@@ -271,13 +315,14 @@ usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
 
   *driver_count += 1;
   if (_usb_mode == INPUT_MODE_XINPUT)
-  return &tud_xinput_driver;
-  else return &tud_ginput_driver;
+    return &tud_xinput_driver;
+  else
+    return &tud_ginput_driver;
 }
 
-/** 
+/**
  * This section is for MS OS Descriptor for legacy type
-*/
+ */
 
 // Note: the 0xEE index string is a Microsoft OS 1.0 Descriptors.
 // Define the MS OS 1.0 Descriptor
@@ -409,7 +454,6 @@ uint8_t dir_to_hat(uint8_t leftRight, uint8_t upDown)
   return ret;
 }
 
-
 const tusb_desc_webusb_url_t desc_url =
     {
         .bLength = 3 + sizeof(ADAPTER_WEBUSB_URL) - 1,
@@ -466,7 +510,7 @@ bool tud_vendor_control_xfer_cb(uint8_t rhport, uint8_t stage, tusb_control_requ
   if (stage != CONTROL_STAGE_SETUP)
     return true;
 
-  uint8_t const desc_type  = tu_u16_high(request->wValue);
+  uint8_t const desc_type = tu_u16_high(request->wValue);
   uint8_t const itf = 0;
 
   switch (request->bmRequestType_bit.type)
@@ -479,66 +523,65 @@ bool tud_vendor_control_xfer_cb(uint8_t rhport, uint8_t stage, tusb_control_requ
     switch (request->bRequest)
     {
 
-      // MS OS 1.0 Descriptor
-      case VENDOR_REQUEST_GET_MS_OS_DESCRIPTOR:
+    // MS OS 1.0 Descriptor
+    case VENDOR_REQUEST_GET_MS_OS_DESCRIPTOR:
+    {
+      if (request->wIndex == 4)
       {
-        if (request->wIndex == 4)
+        if (tud_control_xfer(rhport, request, MS_OS_10_CompatibleID_Descriptor, sizeof(MS_OS_10_CompatibleID_Descriptor)))
         {
-          if (tud_control_xfer(rhport, request, MS_OS_10_CompatibleID_Descriptor, sizeof(MS_OS_10_CompatibleID_Descriptor)))
-          {
-            return true;
-          }
-
-          return false;
+          return true;
         }
-        else if (request->wIndex == 5)
-        {
-          // MS descriptor 1.0 stuff
 
-          if (tud_control_xfer(rhport, request, MS_Extended_Feature_Descriptor, sizeof(MS_Extended_Feature_Descriptor)))
-          {
-            return true;
-          }
+        return false;
+      }
+      else if (request->wIndex == 5)
+      {
+        // MS descriptor 1.0 stuff
+
+        if (tud_control_xfer(rhport, request, MS_Extended_Feature_Descriptor, sizeof(MS_Extended_Feature_Descriptor)))
+        {
+          return true;
         }
       }
+    }
+    break;
+
+    // Web USB Descriptor
+    case VENDOR_REQUEST_WEBUSB:
+    {
+      // match vendor request in BOS descriptor
+      // Get landing page url
+      return tud_control_xfer(rhport, request, (void *)(uintptr_t)&desc_url, desc_url.bLength);
+    }
+
+    // MS OS 2.0 Descriptor
+    case VENDOR_REQUEST_MICROSOFT:
+    {
+      if (request->wIndex == 7)
+      {
+        // Get Microsoft OS 2.0 compatible descriptor
+        uint16_t total_len;
+
+        // if(_usb_mode==INPUT_MODE_GCUSB)
+        //{
+        //   memcpy(&total_len, gc_desc_ms_os_20 + 8, 2);
+        //   return tud_control_xfer(rhport, request, (void *)(uintptr_t)gc_desc_ms_os_20, total_len);
+        // }
+        // else
+        //{
+        memcpy(&total_len, desc_ms_os_20 + 8, 2);
+        return tud_control_xfer(rhport, request, (void *)(uintptr_t)desc_ms_os_20, total_len);
+        //}
+      }
+      else
+      {
+        return false;
+      }
+    }
+
+    default:
       break;
-
-      // Web USB Descriptor
-      case VENDOR_REQUEST_WEBUSB:
-      {
-        // match vendor request in BOS descriptor
-        // Get landing page url
-        return tud_control_xfer(rhport, request, (void *)(uintptr_t)&desc_url, desc_url.bLength);
-      }
-
-      // MS OS 2.0 Descriptor
-      case VENDOR_REQUEST_MICROSOFT:
-      {
-        if (request->wIndex == 7)
-        {
-          // Get Microsoft OS 2.0 compatible descriptor
-          uint16_t total_len;
-
-          //if(_usb_mode==INPUT_MODE_GCUSB)
-          //{
-          //  memcpy(&total_len, gc_desc_ms_os_20 + 8, 2);
-          //  return tud_control_xfer(rhport, request, (void *)(uintptr_t)gc_desc_ms_os_20, total_len);
-          //}
-          //else
-          //{
-            memcpy(&total_len, desc_ms_os_20 + 8, 2);
-            return tud_control_xfer(rhport, request, (void *)(uintptr_t)desc_ms_os_20, total_len);
-          //}
-          
-        }
-        else
-        {
-          return false;
-        }
-      }
-
-      default:
-        break;
     }
     break;
 
