@@ -16,7 +16,7 @@ All of our guides
 are listed on [our Wiki linked here](https://wiki.handheldlegend.com).
 
 ## 3D Parts
-All 3D parts are in the [/3d directory](https://github.com/HandHeldLegend/GC-Adapter-RP2040/tree/main/Production/3D) on this Github repo in STEP format. A 3D STEP file is provided for accurate reference on the PCB dimensions.
+All 3D parts are in the [/3d directory](https://github.com/HandHeldLegend/GC-Adapter-RP2040/tree/master/Production/3D) on this Github repo in STEP format. A 3D STEP file is provided for accurate reference on the PCB dimensions.
 
 ## Features
 - 4 USB Input modes.
