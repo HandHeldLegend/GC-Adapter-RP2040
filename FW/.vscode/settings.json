@@ -8,6 +8,9 @@
         "serial_cdc.h": "c",
         "stdio.h": "c",
         "xinput_device.h": "c",
-        "rgb.h": "c"
+        "rgb.h": "c",
+        "gcinput.h": "c",
+        "ginput_device.h": "c",
+        "main.h": "c"
     }
 }

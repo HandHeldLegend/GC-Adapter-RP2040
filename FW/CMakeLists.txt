@@ -24,6 +24,7 @@ add_executable(${PROJECT_NAME}
   src/main.c 
 
   src/utilities/rgb.c 
+  src/utilities/wd_scratch.c
 
   src/usb/desc_bos.c 
   src/usb/adapter_usb.c 
@@ -34,6 +35,7 @@ add_executable(${PROJECT_NAME}
   src/adapter_settings.c 
 
   src/usb/xinput_device.c 
+  src/usb/ginput_device.c
 
   src/switch/switch_analog.c 
   src/switch/switch_commands.c 

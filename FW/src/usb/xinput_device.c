@@ -69,14 +69,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x81,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 4 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x01,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 8 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     // ITF 1
     0x09, // bLength
@@ -107,14 +107,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x82,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 4 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x02,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 8 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     // ITF 2
     0x09, // bLength
@@ -145,14 +145,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x83,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 4 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x03,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 8 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     // ITF 3
     0x09, // bLength
@@ -183,14 +183,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x84,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 4 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x04,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x01,       // bInterval 8 (unit depends on device speed)
+    0x04,       // bInterval 4 (unit depends on device speed)
 };
 
 // string descriptor table

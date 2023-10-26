@@ -101,6 +101,12 @@
 #define CFG_TUD_MIDI              0
 #define CFG_TUD_VENDOR            4
 
+// Custom GameCube device
+#define CFG_TUD_GC                1
+
+#define CFG_TUD_GC_TX_BUFSIZE 37
+#define CFG_TUD_GC_RX_BUFSIZE 6
+
 // HID buffer size Should be sufficient to hold ID (if any) + Data
 #define CFG_TUD_HID_EP_BUFSIZE    64
 #define CFG_TUD_VENDOR_EPSIZE     64

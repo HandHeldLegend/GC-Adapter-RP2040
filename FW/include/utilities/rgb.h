@@ -39,6 +39,8 @@ void rgb_set_group(rgb_group_t group, uint32_t color);
 
 void rgb_set_instant(uint32_t color);
 
+void rgb_set_single(uint32_t color, uint8_t idx);
+
 void rgb_set_all(uint32_t color);
 
 void rgb_init();

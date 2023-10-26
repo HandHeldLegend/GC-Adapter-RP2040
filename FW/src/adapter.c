@@ -3,10 +3,14 @@
 
 #define CLAMP_0_255(value) ((value) < 0 ? 0 : ((value) > 255 ? 255 : (value)))
 
+uint32_t _usb_interval = 7000;
+
 uint _adapter_output_irq;
 uint _adapter_input_irq;
 uint _gamecube_offset;
 pio_sm_config _gamecube_c[4];
+
+const uint8_t _led_defs[4] = {0, 1, 2, 3};
 
 volatile bool _gc_tx_done = false;
 bool _gc_running = false;
@@ -20,7 +24,6 @@ joybus_input_s _port_joybus[4] = {0, 0, 0, 0};
 
 bool _itf_ready[4] = {false};
 bool _port_rumble[4] = {false, false, false, false};
-int _port_interface[4] = {-1,-1,-1,-1};
 
 typedef struct
 {
@@ -36,6 +39,15 @@ analog_offset_s _port_offsets[4] = {0};
 
 uint read_count = 0;
 
+void _joybus_reset_default(joybus_input_s *input)
+{
+    memset(input, 0, sizeof(joybus_input_s));
+    input->stick_left_x = 128;
+    input->stick_left_y = 128;
+    input->stick_right_x = 128;
+    input->stick_right_y = 128;
+}
+
 void _gc_port_data(uint port)
 {
     if(!_port_phases[port])
@@ -47,7 +59,6 @@ void _gc_port_data(uint port)
 
         if (_port_probes[port] == 0x09)
         {
-            
             _port_phases[port] = 1;
         }
 
@@ -55,6 +66,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port]==1)
     {
+        _joybus_reset_default(&_port_joybus[port]);
         // Collect data for analog offset creation
         for(uint i = 0; i < 2; i++)
         {
@@ -64,7 +76,7 @@ void _gc_port_data(uint port)
             }
             else 
             {
-                _port_interface[port] = -1;
+                _port_joybus[port].port_itf = -1;
                 _port_phases[port] = 0;
                 return;
             }
@@ -87,15 +99,21 @@ void _gc_port_data(uint port)
         uint8_t tmp_itf = 0;
         for(uint8_t i = 0; i < 4; i++)
         {
-            if (_port_interface[i] == tmp_itf)
+            if (_port_joybus[i].port_itf == tmp_itf)
             {
                 tmp_itf += 1;
             }
         }
-        _port_interface[port] = tmp_itf;
+
+        _port_joybus[port].port_itf = tmp_itf;
+
+        // Set the LED color
+        rgb_set_single(COLOR_BLUE.color, _led_defs[port]);
+        rgb_set_dirty();
     }
     else if (_port_phases[port]==2)
     {
+        _joybus_reset_default(&_port_joybus[port]);
         for(uint i = 0; i < 2; i++)
         {
             if(!pio_sm_is_rx_fifo_empty(JOYBUS_PIO, port))
@@ -104,8 +122,10 @@ void _gc_port_data(uint port)
             }
             else 
             {
-                _port_interface[port] = -1;
+                _port_joybus[port].port_itf = -1;
                 _port_phases[port] = 0;
+                rgb_set_single(COLOR_RED.color, _led_defs[port]);
+                rgb_set_dirty();
                 return;
             }
         }
@@ -177,37 +197,16 @@ void _gamecube_send_probe()
     pio_set_sm_mask_enabled(JOYBUS_PIO, 0b1111, true);
 }
 
-void _adapter_report(uint8_t itf)
+void adapter_set_interval(uint32_t interval)
 {
-    joybus_input_s zero_report = {
-        .stick_left_x = 128,
-        .stick_right_x = 128,
-        .stick_left_y = 128,
-        .stick_right_y = 128,
-    };
-
-    bool reported = false;
-
-    for(uint i = 0; i < 4; i++)
-    {
-        if(_port_interface[i] == itf)
-        {
-            if(_itf_ready[itf])
-            {
-                adapter_usb_report(itf, &(_port_joybus[i]));
-                _itf_ready[itf] = false;
-                reported = true;
-                break;
-            }
-        }
-    }
+    _usb_interval = interval;
 }
 
 void adapter_enable_rumble(uint8_t itf, bool enable)
 {
     for(uint i = 0; i < 4; i++)
     {
-        if(_port_interface[i] == itf)
+        if(_port_joybus[i].port_itf == itf)
         {
             _port_rumble[i] = enable;
             break;
@@ -217,25 +216,15 @@ void adapter_enable_rumble(uint8_t itf, bool enable)
 
 void adapter_comms_task(uint32_t timestamp)
 {
-    if (interval_run(timestamp, 7000))
+    if (interval_run(timestamp, _usb_interval))
     {
-        
         _gamecube_send_probe();
         sleep_us(500);
         _gamecube_get_data();
 
-        _adapter_report(0);
-        _adapter_report(1);
-        _adapter_report(2);
-        _adapter_report(3);
+        adapter_usb_report(_port_joybus);
     }
-    else
-    {
-        _itf_ready[0] = adapter_usb_ready(0);
-        _itf_ready[1] = adapter_usb_ready(1);
-        _itf_ready[2] = adapter_usb_ready(2);
-        _itf_ready[3] = adapter_usb_ready(3);
-    }
+    else adapter_usb_idle(_port_joybus);
 }
 
 void adapter_init()
@@ -244,10 +233,8 @@ void adapter_init()
     for(uint i = 0; i < 4; i++)
     {
         memset(&_port_joybus[i], 0, sizeof(joybus_input_s));
-        _port_joybus[i].stick_left_x = 128;
-        _port_joybus[i].stick_left_y = 128;
-        _port_joybus[i].stick_right_x = 128;
-        _port_joybus[i].stick_right_y = 128;
+        _joybus_reset_default(&_port_joybus[i]);
+        _port_joybus[i].port_itf = -1;
     }
 
     joybus_program_init(JOYBUS_PIO, _gamecube_offset + joybus_offset_joybusout, JOYBUS_PORT_1, _gamecube_c);

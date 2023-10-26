@@ -36,12 +36,14 @@
 #include "ws2812.pio.h"
 #include "joybus.pio.h"
 #include "rgb.h"
+#include "wd_scratch.h"
 
 #include "bsp/board.h"
 #include "tusb.h"
 #include "desc_bos.h"
 // XInput TinyUSB Driver
 #include "xinput_device.h"
+#include "ginput_device.h"
 
 #include "gcinput.h"
 #include "xinput.h"

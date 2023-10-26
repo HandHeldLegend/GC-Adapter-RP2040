@@ -40,7 +40,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 57,
+				"line" : 59,
 				"parent" : 0
 			},
 			{
@@ -61,7 +61,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 53,
+				"line" : 55,
 				"parent" : 0
 			},
 			{
@@ -73,7 +73,7 @@
 			{
 				"command" : 4,
 				"file" : 0,
-				"line" : 54,
+				"line" : 56,
 				"parent" : 0
 			},
 			{
@@ -91,13 +91,13 @@
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 82,
+				"line" : 84,
 				"parent" : 0
 			},
 			{
 				"command" : 6,
 				"file" : 0,
-				"line" : 94,
+				"line" : 96,
 				"parent" : 0
 			},
 			{
@@ -603,8 +603,8 @@
 				21,
 				22,
 				23,
+				24,
 				25,
-				26,
 				27,
 				28,
 				29,
@@ -619,16 +619,16 @@
 				38,
 				39,
 				40,
+				41,
 				42,
-				43,
+				44,
 				45,
-				48,
-				49,
-				53,
-				54,
+				47,
+				50,
+				51,
+				55,
 				56,
-				60,
-				61,
+				58,
 				62,
 				63,
 				64,
@@ -660,7 +660,9 @@
 				90,
 				91,
 				92,
-				93
+				93,
+				94,
+				95
 			]
 		},
 		{
@@ -1115,17 +1117,17 @@
 			"language" : "ASM",
 			"sourceIndexes" : 
 			[
-				24,
-				41,
-				44,
+				26,
+				43,
 				46,
-				47,
-				50,
-				51,
+				48,
+				49,
 				52,
-				55,
+				53,
+				54,
 				57,
-				58
+				59,
+				60
 			]
 		},
 		{
@@ -1607,7 +1609,7 @@
 			},
 			"sourceIndexes" : 
 			[
-				59
+				61
 			]
 		}
 	],
@@ -2499,8 +2501,8 @@
 				21,
 				22,
 				23,
+				24,
 				25,
-				26,
 				27,
 				28,
 				29,
@@ -2515,16 +2517,16 @@
 				38,
 				39,
 				40,
+				41,
 				42,
-				43,
+				44,
 				45,
-				48,
-				49,
-				53,
-				54,
+				47,
+				50,
+				51,
+				55,
 				56,
-				59,
-				60,
+				58,
 				61,
 				62,
 				63,
@@ -2557,24 +2559,26 @@
 				90,
 				91,
 				92,
-				93
+				93,
+				94,
+				95
 			]
 		},
 		{
 			"name" : "",
 			"sourceIndexes" : 
 			[
-				24,
-				41,
-				44,
+				26,
+				43,
 				46,
-				47,
-				50,
-				51,
+				48,
+				49,
 				52,
-				55,
+				53,
+				54,
 				57,
-				58
+				59,
+				60
 			]
 		}
 	],
@@ -2590,6 +2594,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/utilities/rgb.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/utilities/wd_scratch.c",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -2632,6 +2642,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/usb/xinput_device.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/usb/ginput_device.c",
 			"sourceGroupIndex" : 0
 		},
 		{

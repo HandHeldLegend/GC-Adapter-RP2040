@@ -112,18 +112,24 @@ void set_shipmode(uint8_t ship_mode)
   // Unhandled.
 }
 
-// Translate and handle rumble
-void rumble_translate(uint8_t port, const uint8_t *data)
-{
-    float amp_range_inc    = 100.0f/0x7F;
+bool shouldControllerRumble(const uint8_t *data) {
+
+    bool lbd = data[3] & 0x80;
+    bool hbd = data[1] & 0x8;
 
     // Get High band amplitude
-    uint8_t hba = (data[1] & 0xFE)/2;
+    uint8_t hba = (data[1] & 0xFE);
+    uint8_t lba = (data[3] & 0x7F);
+    
+    return ( (hba>1) && !hbd) || ((lba>0x40) && !lbd);
+}
 
-    float ha = (float) hba*amp_range_inc;
-    //cb_hoja_rumble_enable((ha>10.0f)?true:false);
+// Translate and handle rumble
+void rumble_translate(uint8_t itf, const uint8_t *data)
+{
 
-    //printf("Amplitude: %.2f\n", ha);
+  adapter_enable_rumble(itf, shouldControllerRumble(data));
+
 }
 
 // Sends mac address with 0x81 command (unknown?)
@@ -234,11 +240,6 @@ void command_handler(uint8_t itf, uint8_t command, const uint8_t *data, uint16_t
     case SW_CMD_SET_INPUTMODE:
       printf("Input mode change: %X\n", data[11]);
       set_ack(itf, 0x80);
-      if(itf==0 && data[11] == 0x30)
-      {
-        rgb_set_all(COLOR_GREEN.color);
-        rgb_set_dirty();
-      }
       _switch_reporting_mode[itf] = data[11];
       break;
 

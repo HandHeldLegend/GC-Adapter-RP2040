@@ -1,5 +1,4 @@
 
 
-#define ADAPTER_BUTTON_1  11
-#define ADAPTER_BUTTON_2  12
+
   

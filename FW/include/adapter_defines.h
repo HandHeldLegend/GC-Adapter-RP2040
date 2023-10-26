@@ -5,6 +5,9 @@
 
 extern const char* global_string_descriptor[];
 
+#define ADAPTER_BUTTON_1  11
+#define ADAPTER_BUTTON_2  12
+
 #define RGB_PIO pio1
 #define RGB_SM 0
 
@@ -25,6 +28,9 @@ extern const char* global_string_descriptor[];
 #define ADAPTER_FIRMWARE_VERSION 0x0000
 #define ADAPTER_SETTINGS_VERSION 0x0002
 #define ADAPTER_WEBUSB_URL "handheldlegend.com"
+
+#define VENDOR_REQUEST_GET_MS_OS_DESCRIPTOR 7
+
 
 
 #endif
