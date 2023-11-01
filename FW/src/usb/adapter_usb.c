@@ -314,7 +314,7 @@ usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
 {
 
   *driver_count += 1;
-  if (_usb_mode == INPUT_MODE_XINPUT)
+  if ((adapter_usb_currentmode() == INPUT_MODE_XINPUT))
     return &tud_xinput_driver;
   else
     return &tud_ginput_driver;

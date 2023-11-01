@@ -252,7 +252,7 @@ uint16_t xinputd_open(uint8_t rhport, tusb_desc_interface_t const * desc_itf, ui
 {
     const char* TAG = "xinputd_open";
     // Verify our descriptor is the correct class
-    TU_VERIFY(TUSB_CLASS_VENDOR_SPECIFIC == desc_itf->bInterfaceClass, 0);
+    TU_VERIFY((adapter_usb_currentmode() == INPUT_MODE_XINPUT));
 
     // len = interface + n*endpoints
     uint16_t const drv_len = (uint16_t) (sizeof(tusb_desc_interface_t) +
@@ -365,7 +365,7 @@ bool tud_xinput_n_report(uint8_t instance, void const * report, uint16_t len)
     bool out = usbd_edpt_xfer(rhport, ep_addr, _xinputd_itf[instance].epin_buf, len);
     usbd_edpt_release(0, ep_addr);
 
-    tud_xinput_n_getout(instance);
+    //tud_xinput_n_getout(instance);
 }
 
 bool tud_xinput_n_ready(uint8_t instance)
