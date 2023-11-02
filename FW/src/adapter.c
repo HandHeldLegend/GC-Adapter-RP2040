@@ -39,15 +39,6 @@ analog_offset_s _port_offsets[4] = {0};
 
 uint read_count = 0;
 
-void _joybus_reset_default(joybus_input_s *input)
-{
-    memset(input, 0, sizeof(joybus_input_s));
-    input->stick_left_x = 128;
-    input->stick_left_y = 128;
-    input->stick_right_x = 128;
-    input->stick_right_y = 128;
-}
-
 void _gc_port_data(uint port)
 {
     if(!_port_phases[port])
@@ -66,7 +57,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port]==1)
     {
-        _joybus_reset_default(&_port_joybus[port]);
+
         // Collect data for analog offset creation
         for(uint i = 0; i < 2; i++)
         {
@@ -81,6 +72,7 @@ void _gc_port_data(uint port)
                 return;
             }
         }
+
         _port_joybus[port].byte_1 = _port_inputs[port][0];
         _port_joybus[port].byte_2 = _port_inputs[port][1];
 
@@ -96,7 +88,7 @@ void _gc_port_data(uint port)
         _port_phases[port] = 2;
         
         // Set the port USB Interface
-        uint8_t tmp_itf = 0;
+        int tmp_itf = -1;
         for(uint8_t i = 0; i < 4; i++)
         {
             if (_port_joybus[i].port_itf == tmp_itf)
@@ -113,7 +105,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port]==2)
     {
-        _joybus_reset_default(&_port_joybus[port]);
+
         for(uint i = 0; i < 2; i++)
         {
             if(!pio_sm_is_rx_fifo_empty(JOYBUS_PIO, port))
@@ -233,7 +225,6 @@ void adapter_init()
     for(uint i = 0; i < 4; i++)
     {
         memset(&_port_joybus[i], 0, sizeof(joybus_input_s));
-        _joybus_reset_default(&_port_joybus[i]);
         _port_joybus[i].port_itf = -1;
     }
 

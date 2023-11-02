@@ -69,14 +69,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x81,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x01,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 8 (unit depends on device speed)
 
     // ITF 1
     0x09, // bLength
@@ -107,14 +107,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x82,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x02,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 8 (unit depends on device speed)
 
     // ITF 2
     0x09, // bLength
@@ -145,14 +145,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x83,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x03,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 8 (unit depends on device speed)
 
     // ITF 3
     0x09, // bLength
@@ -183,14 +183,14 @@ const uint8_t xid_configuration_descriptor[] = {
     0x84,       // bEndpointAddress (IN/D2H)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 4 (unit depends on device speed)
 
     0x07,       // bLength
     0x05,       // bDescriptorType (Endpoint)
     0x04,       // bEndpointAddress (OUT/H2D)
     0x03,       // bmAttributes (Interrupt)
     0x20, 0x00, // wMaxPacketSize 32
-    0x04,       // bInterval 4 (unit depends on device speed)
+    0x01,       // bInterval 8 (unit depends on device speed)
 };
 
 // string descriptor table
@@ -224,12 +224,12 @@ typedef struct
   //tusb_hid_descriptor_hid_t const * hid_descriptor;
 } xinputd_interface_t;
 
-CFG_TUSB_MEM_SECTION static xinputd_interface_t _xinputd_itf[CFG_TUD_VENDOR];
+CFG_TUSB_MEM_SECTION static xinputd_interface_t _xinputd_itf[CFG_TUD_XINPUT];
 
 /*------------- Helpers -------------*/
 static inline uint8_t get_index_by_itfnum(uint8_t itf_num)
 {
-	for (uint8_t i=0; i < CFG_TUD_VENDOR; i++ )
+	for (uint8_t i=0; i < CFG_TUD_XINPUT; i++ )
 	{
 		if ( itf_num == _xinputd_itf[i].itf_num ) return i;
 	}
@@ -264,7 +264,7 @@ uint16_t xinputd_open(uint8_t rhport, tusb_desc_interface_t const * desc_itf, ui
     xinputd_interface_t * p_xid = NULL;
     uint8_t xid_id;
 
-    for(xid_id=0; xid_id<CFG_TUD_VENDOR; xid_id++)
+    for(xid_id=0; xid_id<CFG_TUD_XINPUT; xid_id++)
     {
         if(_xinputd_itf[xid_id].ep_in == 0)
         {
@@ -308,12 +308,12 @@ bool xinputd_xfer_cb(uint8_t rhport, uint8_t ep_addr, xfer_result_t result, uint
   xinputd_interface_t * p_xid = _xinputd_itf;
 
   // Identify which interface to use
-  for (instance = 0; instance < CFG_TUD_VENDOR; instance++)
+  for (instance = 0; instance < CFG_TUD_XINPUT; instance++)
   {
     p_xid = &_xinputd_itf[instance];
     if ( (ep_addr == p_xid->ep_out) || (ep_addr == p_xid->ep_in) ) break;
   }
-  TU_ASSERT(instance < CFG_TUD_VENDOR);
+  TU_ASSERT(instance < CFG_TUD_XINPUT);
 
   // Sent report successfully
   if (ep_addr == _xinputd_itf[instance].ep_in)

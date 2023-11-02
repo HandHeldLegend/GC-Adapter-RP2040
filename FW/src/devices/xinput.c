@@ -43,7 +43,7 @@ void xinput_hid_report(joybus_input_s *joybus_data)
     {
         if(joybus_data[i].port_itf<0) continue;
 
-        uint itf = (uint) joybus_data[i].port_itf;
+        uint8_t itf = (uint8_t) joybus_data[i].port_itf;
 
         data[itf].stick_left_x  = sign_axis((joybus_data[i].stick_left_x));
         data[itf].stick_left_y  = sign_axis((joybus_data[i].stick_left_y));
@@ -75,7 +75,7 @@ void xinput_hid_report(joybus_input_s *joybus_data)
 
         if(joybus_data[i].port_ready)
         {
-            tud_xinput_n_report(itf, &(data[itf]), XID_REPORT_LEN);
+            tud_xinput_n_report(itf, &data[itf], XID_REPORT_LEN);
             joybus_data[i].port_ready = false;
         }
     }

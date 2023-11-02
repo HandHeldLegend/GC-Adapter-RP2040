@@ -98,7 +98,7 @@ bool adapter_usb_start(input_mode_t mode)
   case INPUT_MODE_XINPUT:
     _usb_hid_cb = xinput_hid_report;
     _usb_idle_cb = xinput_hid_idle;
-    adapter_set_interval(4000);
+    adapter_set_interval(7000);
     break;
   }
 
@@ -205,14 +205,14 @@ void tud_hid_report_complete_cb(uint8_t instance, uint8_t const *report, uint16_
   case INPUT_MODE_SLIPPI:
     if (report[0] == 0x21)
     {
-      _usb_sent_ok = true;
+      //_usb_sent_ok = true;
     }
     break;
 
   case INPUT_MODE_SWPRO:
     if ((report[0] == 0x30))
     {
-      _usb_sent_ok = true;
+      //_usb_sent_ok = true;
     }
     break;
 
@@ -221,7 +221,7 @@ void tud_hid_report_complete_cb(uint8_t instance, uint8_t const *report, uint16_
   case INPUT_MODE_XINPUT:
     if ((report[0] == 0x00) && (report[1] == XID_REPORT_LEN))
     {
-      _usb_sent_ok = true;
+      //_usb_sent_ok = true;
     }
 
     break;
@@ -314,6 +314,7 @@ usbd_class_driver_t const *usbd_app_driver_get_cb(uint8_t *driver_count)
 {
 
   *driver_count += 1;
+  
   if ((adapter_usb_currentmode() == INPUT_MODE_XINPUT))
     return &tud_xinput_driver;
   else

@@ -99,10 +99,12 @@
 #define CFG_TUD_CDC               2
 #define CFG_TUD_MSC               0
 #define CFG_TUD_MIDI              0
-#define CFG_TUD_VENDOR            4
+#define CFG_TUD_VENDOR            2
 
 // Custom GameCube device
 #define CFG_TUD_GC                1
+// Custom XInput device
+#define CFG_TUD_XINPUT 4
 
 #define CFG_TUD_GC_TX_BUFSIZE 37
 #define CFG_TUD_GC_RX_BUFSIZE 6
