@@ -39,6 +39,13 @@ analog_offset_s _port_offsets[4] = {0};
 
 uint read_count = 0;
 
+void _gc_port_reset(uint port)
+{
+    _port_joybus[port].port_itf = -1;
+    _port_phases[port] = 0;
+    _port_joybus[port].port_ready = false;
+}
+
 void _gc_port_data(uint port)
 {
     if(!_port_phases[port])
@@ -67,8 +74,7 @@ void _gc_port_data(uint port)
             }
             else 
             {
-                _port_joybus[port].port_itf = -1;
-                _port_phases[port] = 0;
+                _gc_port_reset(port);
                 return;
             }
         }
@@ -88,12 +94,25 @@ void _gc_port_data(uint port)
         _port_phases[port] = 2;
         
         // Set the port USB Interface
-        int tmp_itf = -1;
+        int tmp_itf = 0;
+
         for(uint8_t i = 0; i < 4; i++)
         {
-            if (_port_joybus[i].port_itf == tmp_itf)
+            bool itfInUse = false;
+
+            for (uint8_t j = 0; j < 4; j++)
             {
-                tmp_itf += 1;
+                if (_port_joybus[j].port_itf == i)
+                {
+                    itfInUse = true;
+                    break;
+                }
+            }
+
+            if (!itfInUse)
+            {
+                tmp_itf = i;
+                break; // Exit the loop once an available port number is found
             }
         }
 
@@ -114,8 +133,7 @@ void _gc_port_data(uint port)
             }
             else 
             {
-                _port_joybus[port].port_itf = -1;
-                _port_phases[port] = 0;
+                _gc_port_reset(port);
                 rgb_set_single(COLOR_RED.color, _led_defs[port]);
                 rgb_set_dirty();
                 return;
