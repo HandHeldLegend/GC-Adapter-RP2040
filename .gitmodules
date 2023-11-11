@@ -1,0 +1,3 @@
+[submodule "FW/common"]
+	path = FW/common
+	url = https://github.com/mitchellcairns/HHL-GC-Common
