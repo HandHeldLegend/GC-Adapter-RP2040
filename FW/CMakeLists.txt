@@ -8,48 +8,50 @@ include($ENV{PICO_SDK_PATH}/pico_sdk_init.cmake)
 
 project(gc_adapter_rp2040 C CXX ASM)
 
-
 pico_sdk_init()
 
 include_directories(
-	include
-  include/devices
-  include/generated
-  include/switch
-  include/usb
-  include/utilities
+  include
+	common/include
+  common/include/devices
+  common/include/generated
+  common/include/switch
+  common/include/usb
+  common/include/utilities
+  common/include/ll
 )
 
 add_executable(${PROJECT_NAME}
   src/main.c 
+  src/joybus_itf.c 
+  src/rgb_itf.c 
 
-  src/utilities/rgb.c 
-  src/utilities/wd_scratch.c
+  common/utilities/rgb.c 
+  common/utilities/joybus.c 
+  common/utilities/interval.c
 
-  src/usb/desc_bos.c 
-  src/usb/adapter_usb.c 
+  common/ll/adapter_ll_rp2040.c 
 
-  src/adapter.c
-  src/adapter_defines.c 
-  src/adapter_rumble.c 
-  src/adapter_settings.c 
+  common/usb/desc_bos.c 
+  
+  common/adapter.c
+  common/adapter_tusb.c 
 
-  src/usb/xinput_device.c 
-  src/usb/ginput_device.c
+  common/adapter_defines.c 
+  common/adapter_settings.c 
 
-  src/switch/switch_analog.c 
-  src/switch/switch_commands.c 
-  src/switch/switch_spi.c 
+  common/usb/xinput_driver.c 
+  common/usb/ginput_driver.c
 
-  src/devices/gcinput.c 
-  src/devices/gamecube.c 
-  src/devices/swpro.c 
-  src/devices/webusb.c 
-  src/devices/xinput.c
-  src/devices/serial_cdc.c
+  common/switch/switch_analog.c 
+  common/switch/switch_commands.c 
+  common/switch/switch_spi.c 
+
+  common/devices/gcinput.c 
+  common/devices/swpro.c 
+  common/devices/webusb.c 
+  common/devices/xinput.c
 )
-
-
 
 file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/ws2812.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/include/generated)
@@ -59,7 +61,6 @@ pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/joybus.pi
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
   pico_stdlib
-  pico_stdio_usb
   pico_bootrom
   pico_multicore
   pico_platform
