@@ -11,6 +11,22 @@
         "rgb.h": "c",
         "gcinput.h": "c",
         "ginput_device.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "adapter_ll_rp2040.h": "c",
+        "adapter_config.h": "c",
+        "ws2812.pio.h": "c",
+        "joybus.pio.h": "c",
+        "adapter_defines.h": "c",
+        "adapter_ll.h": "c",
+        "webusb.h": "c",
+        "adapter_settings.h": "c",
+        "desc_bos.h": "c",
+        "xinput_driver.h": "c",
+        "adapter_types.h": "c",
+        "joybus.h": "c",
+        "switch_commands.h": "c",
+        "stdbool.h": "c",
+        "tusb.h": "c",
+        "stdlib.h": "c"
     }
 }

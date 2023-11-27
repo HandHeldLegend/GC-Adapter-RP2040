@@ -1,96 +1,51 @@
-#include "adapter_includes.h"
 #include "main.h"
-#include "interval.h"
 
-void adapter_hardware_setup()
+bool cb_adapter_hardware_test()
 {
-    gpio_init(ADAPTER_BUTTON_1);
-    gpio_pull_up(ADAPTER_BUTTON_1);
-    gpio_set_dir(ADAPTER_BUTTON_1, GPIO_IN);
-
-    gpio_init(ADAPTER_BUTTON_2);
-    gpio_pull_up(ADAPTER_BUTTON_2);
-    gpio_set_dir(ADAPTER_BUTTON_2, GPIO_IN);
-
+    adapter_ll_hardware_setup();
     rgb_init();
+
+    // Check GPIO levels if they are all HIGH indicating pull-ups are working
+    bool gpio_fail = false;
+    if(!gpio_get(JOYBUS_PORT_1))
+    {
+        gpio_fail=true;
+    }
+
+    if(!gpio_get(JOYBUS_PORT_2))
+    {
+        gpio_fail=true;
+    }
+
+    if(!gpio_get(JOYBUS_PORT_3))
+    {
+        gpio_fail=true;
+    }
+
+    if(!gpio_get(JOYBUS_PORT_4))
+    {
+        gpio_fail=true;
+    }
+
+    // If the test has failed, we can return a fail
+    if(gpio_fail) return false;
+
+    // Flash all three rgb colors then we can return our test value
+    rgb_set_instant(COLOR_RED.color);
+    sleep_ms(1000);
+    rgb_set_instant(COLOR_GREEN.color);
+    sleep_ms(1000);
+    rgb_set_instant(COLOR_BLUE.color);
+    sleep_ms(1000);
+    rgb_set_instant(COLOR_WHITE.color);
+    sleep_ms(1000);
+    rgb_set_instant(0x00);
+    sleep_ms(1000);
+    return true;
 }
 
 int main()
 {
-
-    adapter_hardware_setup();
-
-    // Handle bootloader stuff
-    if (!gpio_get(ADAPTER_BUTTON_1) && !gpio_get(ADAPTER_BUTTON_2))
-    {
-        reset_usb_boot(0, 0);
-    }
-
-    input_mode_t mode = INPUT_MODE_SWPRO;
-
-    if (settings_load())
-    {
-        wd_scratch_readout_u wd = {0};
-
-        wd.value = scratch_get(WD_READOUT_IDX);
-
-        if (wd.reboot_reason == WD_REBOOT_REASON_MODECHANGE)
-        {
-            mode = wd.adapter_mode;
-        }
-        else
-        {
-            mode = global_loaded_settings.input_mode;
-        }
-
-        switch (mode)
-        {
-        default:
-        case INPUT_MODE_SWPRO:
-            rgb_set_all(COLOR_YELLOW.color);
-            break;
-
-        case INPUT_MODE_SLIPPI:
-            rgb_set_all(COLOR_PINK.color);
-            break;
-
-        case INPUT_MODE_XINPUT:
-            rgb_set_all(COLOR_GREEN.color);
-            break;
-
-        case INPUT_MODE_GCADAPTER:
-            rgb_set_all(COLOR_PURPLE.color);
-            break;
-        }
-    }
-
-    settings_core0_save_check();
-
-    adapter_usb_start(mode);
-    stdio_init_all();
-
-    rgb_set_dirty();
-
-    bool did = false;
-    bool sent = false;
-
-    for (;;)
-    {
-        uint32_t t = time_us_32();
-        settings_core0_save_check();
-        rgb_task(t);
-        tud_task();
-
-        if (did)
-        {
-            adapter_comms_task(t);
-            wd_mode_task(t);
-        }
-        else
-        {
-            adapter_init();
-            sleep_ms(100);
-            did = true;
-        }
-    }
+    adapter_main_init();
+    adapter_main_loop();
 }
