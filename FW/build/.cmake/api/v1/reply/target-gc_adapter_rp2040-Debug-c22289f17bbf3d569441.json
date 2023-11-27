@@ -41,7 +41,7 @@
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 61,
+				"line" : 71,
 				"parent" : 0
 			},
 			{
@@ -92,13 +92,13 @@
 			{
 				"command" : 5,
 				"file" : 0,
-				"line" : 85,
+				"line" : 60,
 				"parent" : 0
 			},
 			{
 				"command" : 6,
 				"file" : 0,
-				"line" : 97,
+				"line" : 100,
 				"parent" : 0
 			},
 			{
@@ -143,6 +143,10 @@
 			],
 			"defines" : 
 			[
+				{
+					"backtrace" : 11,
+					"define" : "ADAPTER_MCU_TYPE=MCU_TYPE_RP2040"
+				},
 				{
 					"backtrace" : 2,
 					"define" : "CFG_TUSB_MCU=OPT_MCU_RP2040"
@@ -688,6 +692,10 @@
 			"defines" : 
 			[
 				{
+					"backtrace" : 11,
+					"define" : "ADAPTER_MCU_TYPE=MCU_TYPE_RP2040"
+				},
+				{
 					"backtrace" : 2,
 					"define" : "CFG_TUSB_MCU=OPT_MCU_RP2040"
 				},
@@ -1171,6 +1179,10 @@
 			],
 			"defines" : 
 			[
+				{
+					"backtrace" : 11,
+					"define" : "ADAPTER_MCU_TYPE=MCU_TYPE_RP2040"
+				},
 				{
 					"backtrace" : 2,
 					"define" : "CFG_TUSB_MCU=OPT_MCU_RP2040"

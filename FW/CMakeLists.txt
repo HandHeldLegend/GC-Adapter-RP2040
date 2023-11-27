@@ -57,6 +57,16 @@ file(MAKE_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/ws2812.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 pico_generate_pio_header(${PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/pio/joybus.pio OUTPUT_DIR ${CMAKE_CURRENT_LIST_DIR}/include/generated)
 
+target_compile_definitions(${PROJECT_NAME}
+	PRIVATE
+	PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
+	PICO_DEFAULT_UART_TX_PIN=12
+	PICO_DEFAULT_UART_RX_PIN=13
+  ADAPTER_MCU_TYPE=MCU_TYPE_RP2040
+	#PICO_DEFAULT_BOOT_STAGE2=boot2_generic_03h
+	#PICO_FLASH_SPI_CLKDIV=8
+	)
+
 # Pull in pico libraries that we need
 target_link_libraries(${PROJECT_NAME}
   PRIVATE
@@ -82,14 +92,7 @@ target_link_libraries(${PROJECT_NAME}
 
 )
 
-target_compile_definitions(${PROJECT_NAME}
-	PRIVATE
-	PICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
-	PICO_DEFAULT_UART_TX_PIN=12
-	PICO_DEFAULT_UART_RX_PIN=13
-	#PICO_DEFAULT_BOOT_STAGE2=boot2_generic_03h
-	#PICO_FLASH_SPI_CLKDIV=8
-	)
+
 
 pico_enable_stdio_usb(${PROJECT_NAME} 0)
 pico_enable_stdio_uart(${PROJECT_NAME} 0)

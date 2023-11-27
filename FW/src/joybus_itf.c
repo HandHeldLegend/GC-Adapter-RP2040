@@ -21,7 +21,6 @@ uint32_t _port_probes[4] = {0};
 uint32_t _port_inputs[4][4] = {{0}};
 joybus_input_s _port_joybus[4] = {0, 0, 0, 0};
 
-bool _itf_ready[4] = {false};
 bool _port_rumble[4] = {false, false, false, false};
 
 typedef struct

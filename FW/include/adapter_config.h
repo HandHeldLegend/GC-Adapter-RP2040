@@ -1,8 +1,3 @@
-#ifndef ADAPTER_CONFIG_H
-#define ADAPTER_CONFIG_H
-
-#define ADAPTER_MCU_TYPE MCU_TYPE_RP2040
-
 #define ADAPTER_BUTTON_1  11
 #define ADAPTER_BUTTON_2  12
 #define ADAPTER_RGB_COUNT 4
@@ -10,9 +5,8 @@
 
 #define ADAPTER_MANUFACTURER "HHL"
 #define ADAPTER_PRODUCT "GC Pocket+"
+#define ADAPTER_STRING "GCP+"
 
 #define ADAPTER_FIRMWARE_VERSION 0x0002
 #define ADAPTER_SETTINGS_VERSION 0x0002
 #define ADAPTER_WEBUSB_URL "handheldlegend.github.io/gcp"
-
-#endif
