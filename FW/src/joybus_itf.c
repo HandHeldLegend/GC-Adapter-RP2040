@@ -115,10 +115,6 @@ void _gc_port_data(uint port)
         }
 
         _port_joybus[port].port_itf = tmp_itf;
-
-        // Set the LED color
-        rgb_set_single(COLOR_BLUE.color, _led_defs[port]);
-        rgb_set_dirty();
     }
     else if (_port_phases[port] == 2)
     {
@@ -132,8 +128,6 @@ void _gc_port_data(uint port)
             else
             {
                 _gc_port_reset(port);
-                rgb_set_single(COLOR_RED.color, _led_defs[port]);
-                rgb_set_dirty();
                 return;
             }
         }

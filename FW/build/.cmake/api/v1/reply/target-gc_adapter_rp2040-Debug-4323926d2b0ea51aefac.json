@@ -145,7 +145,7 @@
 			[
 				{
 					"backtrace" : 11,
-					"define" : "ADAPTER_MCU_TYPE=MCU_TYPE_RP2040"
+					"define" : "ADAPTER_MCU_TYPE=1"
 				},
 				{
 					"backtrace" : 2,
@@ -693,7 +693,7 @@
 			[
 				{
 					"backtrace" : 11,
-					"define" : "ADAPTER_MCU_TYPE=MCU_TYPE_RP2040"
+					"define" : "ADAPTER_MCU_TYPE=1"
 				},
 				{
 					"backtrace" : 2,
@@ -1181,7 +1181,7 @@
 			[
 				{
 					"backtrace" : 11,
-					"define" : "ADAPTER_MCU_TYPE=MCU_TYPE_RP2040"
+					"define" : "ADAPTER_MCU_TYPE=1"
 				},
 				{
 					"backtrace" : 2,
