@@ -99,3 +99,12 @@ pico_enable_stdio_uart(${PROJECT_NAME} 0)
 
 pico_add_extra_outputs(${PROJECT_NAME})
 
+add_custom_command(TARGET ${PROJECT_NAME}
+ 					POST_BUILD
+					COMMAND ${CMAKE_COMMAND} 
+					-DTARGET_NAME=${PROJECT_NAME}
+					-DTARGET_PATH=${CMAKE_CURRENT_SOURCE_DIR}
+					-P ${CMAKE_SOURCE_DIR}/manifest.cmake
+					COMMENT "Updating version in manifest.json"
+					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+					)
