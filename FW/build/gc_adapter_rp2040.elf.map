@@ -1722,9 +1722,9 @@ Discarded input sections
                 0x00000000       0x6c CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
  .text.board_getchar
                 0x00000000        0xa CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
- .text          0x00000000        0x0 C:\Users\Mitch\AppData\Local\Temp\ccQ4DHlE.o
- .data          0x00000000        0x0 C:\Users\Mitch\AppData\Local\Temp\ccQ4DHlE.o
- .bss           0x00000000        0x0 C:\Users\Mitch\AppData\Local\Temp\ccQ4DHlE.o
+ .text          0x00000000        0x0 C:\Users\Mitch\AppData\Local\Temp\cci4FB1g.o
+ .data          0x00000000        0x0 C:\Users\Mitch\AppData\Local\Temp\cci4FB1g.o
+ .bss           0x00000000        0x0 C:\Users\Mitch\AppData\Local\Temp\cci4FB1g.o
  .data          0x00000000        0x0 c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
  .bss           0x00000000        0x0 c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
  .text          0x00000000        0x0 c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp\libg.a(lib_a-calloc.o)
@@ -1940,7 +1940,7 @@ LOAD c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.
 .boot2          0x10000000      0x100
                 0x10000000                __boot2_start__ = .
  *(.boot2)
- .boot2         0x10000000      0x100 C:\Users\Mitch\AppData\Local\Temp\ccQ4DHlE.o
+ .boot2         0x10000000      0x100 C:\Users\Mitch\AppData\Local\Temp\cci4FB1g.o
                 0x10000100                __boot2_end__ = .
                 0x00000001                ASSERT (((__boot2_end__ - __boot2_start__) == 0x100), ERROR: Pico second stage bootloader must be 256 bytes in size)
 
@@ -3749,7 +3749,7 @@ LOAD c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.
                 0x20041000                __scratch_y_end__ = .
                 0x1000d498                __scratch_y_source__ = LOADADDR (.scratch_y)
 
-.bss            0x20000f30     0x17e0
+.bss            0x20000f30     0x1984
                 0x20000f30                . = ALIGN (0x4)
                 0x20000f30                __bss_start__ = .
  *(SORT_BY_ALIGNMENT(SORT_BY_NAME(.bss*)))
@@ -3781,189 +3781,189 @@ LOAD c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.
  .bss._ginputd_itf
                 0x200013d8       0x3c CMakeFiles/gc_adapter_rp2040.dir/common/usb/ginput_driver.c.obj
  .bss._hidd_itf
-                0x20001414       0x8c CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
+                0x20001414      0x230 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
  .bss._i_state.0
-                0x200014a0        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
+                0x20001644        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
  .bss._i_state.0
-                0x200014a8        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x2000164c        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
  .bss._i_state.2
-                0x200014b0        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x20001654        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
  .bss._i_state.5
-                0x200014b8        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x2000165c        0x8 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
  .bss._mem_settings_ptr
-                0x200014c0        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/ll/adapter_ll_rp2040.c.obj
-                0x200014c0                _mem_settings_ptr
+                0x20001664        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/ll/adapter_ll_rp2040.c.obj
+                0x20001664                _mem_settings_ptr
  .bss._port_inputs
-                0x200014c4       0x40 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
-                0x200014c4                _port_inputs
+                0x20001668       0x40 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
+                0x20001668                _port_inputs
  .bss._port_joybus
-                0x20001504       0x40 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
-                0x20001504                _port_joybus
+                0x200016a8       0x40 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
+                0x200016a8                _port_joybus
  .bss._port_offsets
-                0x20001544       0x60 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
-                0x20001544                _port_offsets
+                0x200016e8       0x60 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
+                0x200016e8                _port_offsets
  .bss._port_phases
-                0x200015a4        0x4 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
-                0x200015a4                _port_phases
+                0x20001748        0x4 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
+                0x20001748                _port_phases
  .bss._port_plug.1
-                0x200015a8        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x2000174c        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
  .bss._port_probes
-                0x200015ac       0x10 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
-                0x200015ac                _port_probes
+                0x20001750       0x10 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
+                0x20001750                _port_probes
  .bss._port_rumble
-                0x200015bc        0x4 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
-                0x200015bc                _port_rumble
+                0x20001760        0x4 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
+                0x20001760                _port_rumble
  .bss._rgb_current
-                0x200015c0       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
-                0x200015c0                _rgb_current
+                0x20001764       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
+                0x20001764                _rgb_current
  .bss._rgb_last
-                0x200015d0       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
-                0x200015d0                _rgb_last
+                0x20001774       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
+                0x20001774                _rgb_last
  .bss._rgb_next
-                0x200015e0       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
-                0x200015e0                _rgb_next
+                0x20001784       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
+                0x20001784                _rgb_next
  .bss._switch_command_buffer
-                0x200015f0      0x100 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
-                0x200015f0                _switch_command_buffer
+                0x20001794      0x100 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x20001794                _switch_command_buffer
  .bss._switch_command_report_id
-                0x200016f0        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
-                0x200016f0                _switch_command_report_id
+                0x20001894        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x20001894                _switch_command_report_id
  .bss._switch_in_command_buffer
-                0x200016f4      0x100 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x20001898      0x100 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
  .bss._switch_in_command_got
-                0x200017f4        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x20001998        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
  .bss._switch_in_report_id
-                0x200017f8        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x2000199c        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
  .bss._switch_ltk
-                0x200017fc       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
-                0x200017fc                _switch_ltk
+                0x200019a0       0x10 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x200019a0                _switch_ltk
  .bss._ubsd_mutexdef
-                0x2000180c        0x8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x200019b0        0x8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .bss._usb_hid_cb
-                0x20001814        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
-                0x20001814                _usb_hid_cb
+                0x200019b8        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x200019b8                _usb_hid_cb
  .bss._usb_idle_cb
-                0x20001818        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
-                0x20001818                _usb_idle_cb
+                0x200019bc        0x4 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x200019bc                _usb_idle_cb
  .bss._usbd_ctrl_buf
-                0x2000181c       0x40 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
+                0x200019c0       0x40 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
  .bss._usbd_dev
-                0x2000185c       0x53 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
- *fill*         0x200018af        0x1 
+                0x20001a00       0x53 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+ *fill*         0x20001a53        0x1 
  .bss._usbd_mutex
-                0x200018b0        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
- .bss._usbd_q   0x200018b4        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x20001a54        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+ .bss._usbd_q   0x20001a58        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .bss._usbd_qdef_buf
-                0x200018b8       0xc0 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
-                0x200018b8                _usbd_qdef_buf
+                0x20001a5c       0xc0 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x20001a5c                _usbd_qdef_buf
  .bss._used_instruction_space
-                0x20001978        0x8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
+                0x20001b1c        0x8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_pio/pio.c.obj
  .bss._vendord_itf
-                0x20001980      0x278 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+                0x20001b24      0x278 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
  .bss._webusb_out_buffer
-                0x20001bf8       0x40 CMakeFiles/gc_adapter_rp2040.dir/common/devices/webusb.c.obj
-                0x20001bf8                _webusb_out_buffer
+                0x20001d9c       0x40 CMakeFiles/gc_adapter_rp2040.dir/common/devices/webusb.c.obj
+                0x20001d9c                _webusb_out_buffer
  .bss._xinputd_itf
-                0x20001c38      0x210 CMakeFiles/gc_adapter_rp2040.dir/common/usb/xinput_driver.c.obj
+                0x20001ddc      0x210 CMakeFiles/gc_adapter_rp2040.dir/common/usb/xinput_driver.c.obj
  .bss.alarm_callbacks
-                0x20001e48       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x20001fec       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
  .bss.boot2_copyout
-                0x20001e58      0x100 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
- .bss.buffer.1  0x20001f58       0x25 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
- *fill*         0x20001f7d        0x3 
- .bss.claimed   0x20001f80        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
+                0x20001ffc      0x100 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
+ .bss.buffer.1  0x200020fc       0x25 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
+ *fill*         0x20002121        0x3 
+ .bss.claimed   0x20002124        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_sync/sync.c.obj
  .bss.configured_freq
-                0x20001f84       0x28 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
- .bss.data.0    0x20001fac       0x20 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
- .bss.data.0    0x20001fcc       0x2c CMakeFiles/gc_adapter_rp2040.dir/common/devices/swpro.c.obj
- .bss.data.0    0x20001ff8       0x50 CMakeFiles/gc_adapter_rp2040.dir/common/devices/xinput.c.obj
+                0x20002128       0x28 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_clocks/clocks.c.obj
+ .bss.data.0    0x20002150       0x20 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
+ .bss.data.0    0x20002170       0x2c CMakeFiles/gc_adapter_rp2040.dir/common/devices/swpro.c.obj
+ .bss.data.0    0x2000219c       0x50 CMakeFiles/gc_adapter_rp2040.dir/common/devices/xinput.c.obj
  .bss.default_alarm_pool_entry_ids_high
-                0x20002048       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
+                0x200021ec       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
  .bss.default_alarm_pool_heap_nodes
-                0x20002058       0x30 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
- .bss.drivers   0x20002088        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x200021fc       0x30 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
+ .bss.drivers   0x2000222c        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .bss.e15_last_sof
-                0x2000208c        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
-                0x2000208c                e15_last_sof
- .bss.filter    0x20002090        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
+                0x20002230        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/rp2040_usb.c.obj
+                0x20002230                e15_last_sof
+ .bss.filter    0x20002234        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_stdio/stdio.c.obj
  .bss.global_loaded_settings
-                0x20002094       0x1c CMakeFiles/gc_adapter_rp2040.dir/common/adapter_settings.c.obj
-                0x20002094                global_loaded_settings
+                0x20002238       0x1c CMakeFiles/gc_adapter_rp2040.dir/common/adapter_settings.c.obj
+                0x20002238                global_loaded_settings
  .bss.hw_endpoints
-                0x200020b0      0x400 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x20002254      0x400 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
  .bss.load_value
-                0x200024b0        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
+                0x20002654        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_watchdog/watchdog.c.obj
  .bss.next_buffer_ptr
-                0x200024b4        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
- .bss.pools     0x200024b8       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
+                0x20002658        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+ .bss.pools     0x2000265c       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
  .bss.retrieved_id
-                0x200024c8        0x8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
- .bss.sd_table  0x200024d0      0x100 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
-                0x200024d0                sd_table
+                0x2000266c        0x8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_unique_id/unique_id.c.obj
+ .bss.sd_table  0x20002674      0x100 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+                0x20002674                sd_table
  .bss.sf_clz_func
-                0x200025d0        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
-                0x200025d0                sf_clz_func
- .bss.sf_table  0x200025d4      0x100 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
-                0x200025d4                sf_table
+                0x20002774        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_double/double_init_rom.c.obj
+                0x20002774                sf_clz_func
+ .bss.sf_table  0x20002778      0x100 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_float/float_init_rom.c.obj
+                0x20002778                sf_table
  .bss.sleep_notifier
-                0x200026d4        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
+                0x20002878        0x4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/common/pico_time/time.c.obj
  .bss.switch_analog_calibration_data
-                0x200026d8       0x12 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_analog.c.obj
-                0x200026d8                switch_analog_calibration_data
- *fill*         0x200026ea        0x2 
+                0x2000287c       0x12 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_analog.c.obj
+                0x2000287c                switch_analog_calibration_data
+ *fill*         0x2000288e        0x2 
  .bss.target_hi
-                0x200026ec       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x20002890       0x10 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
  .bss._switch_timer.1
-                0x200026fc        0x2 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
+                0x200028a0        0x2 CMakeFiles/gc_adapter_rp2040.dir/common/switch/switch_commands.c.obj
  .bss._adapter_input_mode
-                0x200026fe        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
-                0x200026fe                _adapter_input_mode
+                0x200028a2        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x200028a2                _adapter_input_mode
  .bss._app_driver_count
-                0x200026ff        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
+                0x200028a3        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .bss._gc_first
-                0x20002700        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
-                0x20002700                _gc_first
+                0x200028a4        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
+                0x200028a4                _gc_first
  .bss._gc_ready
-                0x20002701        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
+                0x200028a5        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/devices/gcinput.c.obj
  .bss._rgb_out_dirty
-                0x20002702        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
-                0x20002702                _rgb_out_dirty
+                0x200028a6        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/utilities/rgb.c.obj
+                0x200028a6                _rgb_out_dirty
  .bss._save_flag
-                0x20002703        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/ll/adapter_ll_rp2040.c.obj
-                0x20002703                _save_flag
+                0x200028a7        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/ll/adapter_ll_rp2040.c.obj
+                0x200028a7                _save_flag
  .bss._sof_enable
-                0x20002704        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
+                0x200028a8        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/portable/raspberrypi/rp2040/dcd_rp2040.c.obj
  .bss._web_usb_indicate
-                0x20002705        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/devices/webusb.c.obj
-                0x20002705                _web_usb_indicate
+                0x200028a9        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/devices/webusb.c.obj
+                0x200028a9                _web_usb_indicate
  .bss.back_press.4
-                0x20002706        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x200028aa        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
  .bss.boot2_copyout_valid
-                0x20002707        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
+                0x200028ab        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_flash/flash.c.obj
  .bss.bus_counter_idx
-                0x20002708        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_rand/rand.c.obj
+                0x200028ac        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_rand/rand.c.obj
  .bss.check_byte.4
-                0x20002709        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_rand/rand.c.obj
- .bss.claimed   0x2000270a        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x200028ad        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_rand/rand.c.obj
+ .bss.claimed   0x200028ae        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
  .bss.fwd_press.3
-                0x2000270b        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
+                0x200028af        0x1 CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj
  .bss.irq_hander_chain_free_slot_head
-                0x2000270c        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
+                0x200028b0        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_irq/irq.c.obj
  .bss.rng_initialised
-                0x2000270d        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_rand/rand.c.obj
+                0x200028b1        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_rand/rand.c.obj
  .bss.timer_callbacks_pending
-                0x2000270e        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
+                0x200028b2        0x1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/hardware_timer/timer.c.obj
  *(COMMON)
-                0x20002710                . = ALIGN (0x4)
- *fill*         0x2000270f        0x1 
-                0x20002710                __bss_end__ = .
+                0x200028b4                . = ALIGN (0x4)
+ *fill*         0x200028b3        0x1 
+                0x200028b4                __bss_end__ = .
 
-.heap           0x20002710      0x800
-                0x20002710                __end__ = .
-                0x20002710                end = __end__
+.heap           0x200028b4      0x800
+                0x200028b4                __end__ = .
+                0x200028b4                end = __end__
  *(.heap*)
- .heap          0x20002710      0x800 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
-                0x20002f10                __HeapLimit = .
+ .heap          0x200028b4      0x800 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj
+                0x200030b4                __HeapLimit = .
 
 .stack1_dummy   0x20040000      0x800
  *(.stack1*)
@@ -4077,7 +4077,7 @@ LOAD CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.
 LOAD CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
 LOAD CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/src/rp2_common/pico_fix/rp2040_usb_device_enumeration/rp2040_usb_device_enumeration.c.obj
 LOAD CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
-LOAD C:\Users\Mitch\AppData\Local\Temp\ccQ4DHlE.o
+LOAD C:\Users\Mitch\AppData\Local\Temp\cci4FB1g.o
 LOAD c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp\libstdc++.a
 LOAD c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v6-m/nofp\libm.a
 START GROUP
@@ -4240,7 +4240,7 @@ LOAD linker stubs
  .ARM.attributes
                 0x00000b96       0x2c CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
  .ARM.attributes
-                0x00000bc2       0x22 C:\Users\Mitch\AppData\Local\Temp\ccQ4DHlE.o
+                0x00000bc2       0x22 C:\Users\Mitch\AppData\Local\Temp\cci4FB1g.o
  .ARM.attributes
                 0x00000be4       0x1e c:/progra~1/raspbe~1/picosd~1.1/gcc-ar~1/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v6-m/nofp\libgcc.a(_dvmd_tls.o)
  .ARM.attributes
@@ -4308,7 +4308,7 @@ LOAD linker stubs
  .comment       0x00000049       0x4a CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
  .comment       0x00000049       0x4a CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
-.debug_info     0x00000000    0x375f9
+.debug_info     0x00000000    0x375fb
  .debug_info    0x00000000      0x41d CMakeFiles/gc_adapter_rp2040.dir/src/main.c.obj
  .debug_info    0x0000041d     0x26d0 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
  .debug_info    0x00002aed     0x11db CMakeFiles/gc_adapter_rp2040.dir/src/rgb_itf.c.obj
@@ -4372,13 +4372,13 @@ LOAD linker stubs
  .debug_info    0x0002a3be     0x3c25 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .debug_info    0x0002dfe3      0x8be CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
  .debug_info    0x0002e8a1     0x19f3 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
- .debug_info    0x00030294     0x160b CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
- .debug_info    0x0003189f     0x1021 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
- .debug_info    0x000328c0     0x14db CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
- .debug_info    0x00033d9b     0x2851 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
- .debug_info    0x000365ec     0x100d CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
+ .debug_info    0x00030294     0x160d CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
+ .debug_info    0x000318a1     0x1021 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+ .debug_info    0x000328c2     0x14db CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
+ .debug_info    0x00033d9d     0x2851 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+ .debug_info    0x000365ee     0x100d CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
-.debug_abbrev   0x00000000     0xa809
+.debug_abbrev   0x00000000     0xa80b
  .debug_abbrev  0x00000000      0x17a CMakeFiles/gc_adapter_rp2040.dir/src/main.c.obj
  .debug_abbrev  0x0000017a      0x4bc CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
  .debug_abbrev  0x00000636      0x42a CMakeFiles/gc_adapter_rp2040.dir/src/rgb_itf.c.obj
@@ -4442,13 +4442,13 @@ LOAD linker stubs
  .debug_abbrev  0x00008814      0x561 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .debug_abbrev  0x00008d75      0x309 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
  .debug_abbrev  0x0000907e      0x45f CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
- .debug_abbrev  0x000094dd      0x3d1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
- .debug_abbrev  0x000098ae      0x354 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
- .debug_abbrev  0x00009c02      0x41c CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
- .debug_abbrev  0x0000a01e      0x437 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
- .debug_abbrev  0x0000a455      0x3b4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
+ .debug_abbrev  0x000094dd      0x3d3 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
+ .debug_abbrev  0x000098b0      0x354 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+ .debug_abbrev  0x00009c04      0x41c CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
+ .debug_abbrev  0x0000a020      0x437 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+ .debug_abbrev  0x0000a457      0x3b4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
-.debug_loc      0x00000000    0x22049
+.debug_loc      0x00000000    0x21fc3
  .debug_loc     0x00000000       0x3e CMakeFiles/gc_adapter_rp2040.dir/src/main.c.obj
  .debug_loc     0x0000003e     0x13b3 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
  .debug_loc     0x000013f1      0x664 CMakeFiles/gc_adapter_rp2040.dir/src/rgb_itf.c.obj
@@ -4499,11 +4499,11 @@ LOAD linker stubs
  .debug_loc     0x00018a05     0x2456 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .debug_loc     0x0001ae5b      0x4de CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
  .debug_loc     0x0001b339     0x11d4 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
- .debug_loc     0x0001c50d     0x1252 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
- .debug_loc     0x0001d75f      0x8eb CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
- .debug_loc     0x0001e04a      0xe2f CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
- .debug_loc     0x0001ee79     0x2b8e CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
- .debug_loc     0x00021a07      0x642 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
+ .debug_loc     0x0001c50d     0x11cc CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
+ .debug_loc     0x0001d6d9      0x8eb CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+ .debug_loc     0x0001dfc4      0xe2f CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
+ .debug_loc     0x0001edf3     0x2b8e CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+ .debug_loc     0x00021981      0x642 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
 .debug_aranges  0x00000000     0x1c90
  .debug_aranges
@@ -4643,7 +4643,7 @@ LOAD linker stubs
  .debug_aranges
                 0x00001c40       0x50 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
-.debug_ranges   0x00000000     0x6600
+.debug_ranges   0x00000000     0x65d0
  .debug_ranges  0x00000000       0x18 CMakeFiles/gc_adapter_rp2040.dir/src/main.c.obj
  .debug_ranges  0x00000018      0xb18 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
  .debug_ranges  0x00000b30      0x150 CMakeFiles/gc_adapter_rp2040.dir/src/rgb_itf.c.obj
@@ -4704,13 +4704,13 @@ LOAD linker stubs
  .debug_ranges  0x00005080      0xb78 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .debug_ranges  0x00005bf8       0x88 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
  .debug_ranges  0x00005c80       0xe0 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
- .debug_ranges  0x00005d60       0xe8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
- .debug_ranges  0x00005e48       0x78 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
- .debug_ranges  0x00005ec0      0x170 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
- .debug_ranges  0x00006030      0x370 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
- .debug_ranges  0x000063a0      0x260 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
+ .debug_ranges  0x00005d60       0xb8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
+ .debug_ranges  0x00005e18       0x78 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+ .debug_ranges  0x00005e90      0x170 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
+ .debug_ranges  0x00006000      0x370 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+ .debug_ranges  0x00006370      0x260 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
-.debug_line     0x00000000    0x23064
+.debug_line     0x00000000    0x2305f
  .debug_line    0x00000000      0x3b7 CMakeFiles/gc_adapter_rp2040.dir/src/main.c.obj
  .debug_line    0x000003b7     0x1556 CMakeFiles/gc_adapter_rp2040.dir/src/joybus_itf.c.obj
  .debug_line    0x0000190d      0x797 CMakeFiles/gc_adapter_rp2040.dir/src/rgb_itf.c.obj
@@ -4774,11 +4774,11 @@ LOAD linker stubs
  .debug_line    0x0001bbd9     0x20a6 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd.c.obj
  .debug_line    0x0001dc7f      0x4bf CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/device/usbd_control.c.obj
  .debug_line    0x0001e13e      0xeb8 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/cdc/cdc_device.c.obj
- .debug_line    0x0001eff6      0xb29 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
- .debug_line    0x0001fb1f      0x962 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
- .debug_line    0x00020481      0xc5b CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
- .debug_line    0x000210dc     0x15a1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
- .debug_line    0x0002267d      0x9e7 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
+ .debug_line    0x0001eff6      0xb24 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/hid/hid_device.c.obj
+ .debug_line    0x0001fb1a      0x962 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/class/vendor/vendor_device.c.obj
+ .debug_line    0x0002047c      0xc5b CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/tusb.c.obj
+ .debug_line    0x000210d7     0x15a1 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj
+ .debug_line    0x00022678      0x9e7 CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj
 
 .debug_str      0x00000000     0xa359
  .debug_str     0x00000000      0x2a7 CMakeFiles/gc_adapter_rp2040.dir/src/main.c.obj
