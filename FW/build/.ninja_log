@@ -144,3 +144,6 @@
 1912	2253	7228357899534776	CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/hw/bsp/rp2040/family.c.obj	afec6171cf778c07
 1902	2285	7228357899874775	CMakeFiles/gc_adapter_rp2040.dir/C_/Program_Files/Raspberry_Pi/Pico_SDK_v1.5.1/pico-sdk/lib/tinyusb/src/common/tusb_fifo.c.obj	a1d0c75ce247af13
 2285	2651	7228357902094769	gc_adapter_rp2040.elf	b7d8160fe3c4f442
+31	340	7228399253279758	CMakeFiles/gc_adapter_rp2040.dir/common/adapter_tusb.c.obj	e800e9a0a34ebea0
+37	341	7228399253299483	CMakeFiles/gc_adapter_rp2040.dir/common/usb/xinput_driver.c.obj	d522a71bbff05feb
+341	682	7228399255259732	gc_adapter_rp2040.elf	b7d8160fe3c4f442
