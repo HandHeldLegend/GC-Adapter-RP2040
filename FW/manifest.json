@@ -1,4 +1,4 @@
 {
-    "changelog": "11.27.2023",
-    "fw_version": 4
+    "changelog": "1.27.2024\n -More consistent 1khz Slippi/XInput.\n -Save mode by pressing both buttons at the same time.",
+    "fw_version": 5
 }
