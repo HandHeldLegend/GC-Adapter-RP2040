@@ -1,4 +1,4 @@
 {
-    "changelog": "1.27.2024\n -More consistent 1khz Slippi/XInput.\n -Save mode by pressing both buttons at the same time.",
-    "fw_version": 5
+    "changelog": "2.6.2024\n -Fix scaling on Switch mode (Yellow)",
+    "fw_version": 6
 }
