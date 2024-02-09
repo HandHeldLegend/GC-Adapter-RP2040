@@ -118,6 +118,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port] == 2)
     {
+        static uint8_t port_reset_timer[4] = {0};
 
         for (uint i = 0; i < 2; i++)
         {
@@ -126,8 +127,14 @@ void _gc_port_data(uint port)
                 _port_inputs[port][i] = pio_sm_get(JOYBUS_PIO, port);
             }
             else
-            {
-                _gc_port_reset(port);
+            {   
+                port_reset_timer[port] += 1;
+                if(port_reset_timer[port]>=10)
+                {
+                    _gc_port_reset(port);
+                    port_reset_timer[port] = 0;
+                }
+                
                 return;
             }
         }

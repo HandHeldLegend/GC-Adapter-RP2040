@@ -19,21 +19,24 @@ PUBLIC joybusdelay:
     nop [6]
     jmp y-- joybusdelay
 PUBLIC joybusout:
-    ;set pins 1
-    set pindirs 1 side 1
 output:
-    out x, 1        side 1 [4] ;Side-set still takes place when instruction stalls
-    jmp !x do_zero   side 0 [4]; Branch on the bit we shifted out. low pulse
+    set pindirs 0 ; Set input (high)
+    out x, 1        [3] ; Delay wait high
+    set pindirs 1 side 0 ; Set pin low
+    jmp !x do_zero   side 0 [3]; Branch on the bit we shifted out. low pulse
 do_one:
-    nop side 1 [2]
+    set pindirs 0 ; Set input (high)
+    nop [2]
     jmp !osre output side 1 [5] ; Drive high extended
     jmp do_end
 do_zero:
     nop side 0 [1]
     jmp !osre output side 0 [7]
 do_end:
-    nop side 1 [4]
-    nop side 0 [2]
+    set pindirs 0
+    nop [3]
+    set pindirs 1 side 0
+    nop side 0 [1]
     set pindirs 0 side 1
     mov isr, null
     ;irq nowait 0

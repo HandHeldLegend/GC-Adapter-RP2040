@@ -13,7 +13,7 @@
 // ------ //
 
 #define joybus_wrap_target 0
-#define joybus_wrap 21
+#define joybus_wrap 25
 
 #define joybus_offset_joybusdelay 0u
 #define joybus_offset_joybusout 6u
@@ -26,29 +26,33 @@ static const uint16_t joybus_program_instructions[] = {
     0xa742, //  3: nop                           [7] 
     0xa642, //  4: nop                           [6] 
     0x0080, //  5: jmp    y--, 0                     
-    0xf881, //  6: set    pindirs, 1      side 1     
-    0x7c21, //  7: out    x, 1            side 1 [4] 
-    0x142c, //  8: jmp    !x, 12          side 0 [4] 
-    0xba42, //  9: nop                    side 1 [2] 
-    0x1de7, // 10: jmp    !osre, 7        side 1 [5] 
-    0x000e, // 11: jmp    14                         
-    0xb142, // 12: nop                    side 0 [1] 
-    0x17e7, // 13: jmp    !osre, 7        side 0 [7] 
-    0xbc42, // 14: nop                    side 1 [4] 
-    0xb242, // 15: nop                    side 0 [2] 
-    0xf880, // 16: set    pindirs, 0      side 1     
-    0xa0c3, // 17: mov    isr, null                  
-    0x2720, // 18: wait   0 pin, 0               [7] 
-    0x4001, // 19: in     pins, 1                    
-    0x20a0, // 20: wait   1 pin, 0                   
-    0x0012, // 21: jmp    18                         
+    0xe080, //  6: set    pindirs, 0                 
+    0x6321, //  7: out    x, 1                   [3] 
+    0xf081, //  8: set    pindirs, 1      side 0     
+    0x132e, //  9: jmp    !x, 14          side 0 [3] 
+    0xe080, // 10: set    pindirs, 0                 
+    0xa242, // 11: nop                           [2] 
+    0x1de6, // 12: jmp    !osre, 6        side 1 [5] 
+    0x0010, // 13: jmp    16                         
+    0xb142, // 14: nop                    side 0 [1] 
+    0x17e6, // 15: jmp    !osre, 6        side 0 [7] 
+    0xe080, // 16: set    pindirs, 0                 
+    0xa342, // 17: nop                           [3] 
+    0xf081, // 18: set    pindirs, 1      side 0     
+    0xb142, // 19: nop                    side 0 [1] 
+    0xf880, // 20: set    pindirs, 0      side 1     
+    0xa0c3, // 21: mov    isr, null                  
+    0x2720, // 22: wait   0 pin, 0               [7] 
+    0x4001, // 23: in     pins, 1                    
+    0x20a0, // 24: wait   1 pin, 0                   
+    0x0016, // 25: jmp    22                         
             //     .wrap
 };
 
 #if !PICO_NO_HARDWARE
 static const struct pio_program joybus_program = {
     .instructions = joybus_program_instructions,
-    .length = 22,
+    .length = 26,
     .origin = -1,
 };
 
