@@ -1,4 +1,4 @@
 {
-    "changelog": "2.6.2024\n -Fix scaling on Switch mode (Yellow)",
-    "fw_version": 6
+    "changelog": "2.28.2024\n -Fix compatibility with Phob 1.x",
+    "fw_version": 7
 }

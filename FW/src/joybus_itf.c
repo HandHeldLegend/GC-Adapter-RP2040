@@ -118,6 +118,7 @@ void _gc_port_data(uint port)
     }
     else if (_port_phases[port] == 2)
     {
+        static uint8_t port_reset_timer[4] = {0};
 
         for (uint i = 0; i < 2; i++)
         {
@@ -126,8 +127,14 @@ void _gc_port_data(uint port)
                 _port_inputs[port][i] = pio_sm_get(JOYBUS_PIO, port);
             }
             else
-            {
-                _gc_port_reset(port);
+            {   
+                port_reset_timer[port] += 1;
+                if(port_reset_timer[port]>=10)
+                {
+                    _gc_port_reset(port);
+                    port_reset_timer[port] = 0;
+                }
+                
                 return;
             }
         }
@@ -180,6 +187,7 @@ void _gamecube_send_probe()
         break;
 
         case 1:
+            sleep_ms(100); // Sleep on probe collect to allow voltage stabilization
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_set(pio_y, 0));
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_jmp(_gamecube_offset));
             pio_sm_put_blocking(JOYBUS_PIO, i, ALIGNED_JOYBUS_8(0x41));
