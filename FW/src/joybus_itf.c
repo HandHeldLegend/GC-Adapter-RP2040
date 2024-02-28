@@ -187,6 +187,7 @@ void _gamecube_send_probe()
         break;
 
         case 1:
+            sleep_ms(100); // Sleep on probe collect to allow voltage stabilization
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_set(pio_y, 0));
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_jmp(_gamecube_offset));
             pio_sm_put_blocking(JOYBUS_PIO, i, ALIGNED_JOYBUS_8(0x41));
