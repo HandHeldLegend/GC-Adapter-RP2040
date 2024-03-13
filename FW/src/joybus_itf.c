@@ -56,6 +56,8 @@ void _gc_port_data(uint port)
         if (_port_probes[port] == 0x09)
         {
             _port_phases[port] = 1;
+            
+            adapter_timer_reset();
         }
 
         _port_probes[port] = 0;
@@ -90,6 +92,8 @@ void _gc_port_data(uint port)
 
         // Set the port phase
         _port_phases[port] = 2;
+        adapter_timer_reset();
+        sleep_ms(10); // Sleep on probe collect to allow voltage stabilization
 
         // Set the port USB Interface
         int tmp_itf = 0;
@@ -187,7 +191,7 @@ void _gamecube_send_probe()
         break;
 
         case 1:
-            sleep_ms(100); // Sleep on probe collect to allow voltage stabilization
+            sleep_ms(50);
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_set(pio_y, 0));
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_jmp(_gamecube_offset));
             pio_sm_put_blocking(JOYBUS_PIO, i, ALIGNED_JOYBUS_8(0x41));
