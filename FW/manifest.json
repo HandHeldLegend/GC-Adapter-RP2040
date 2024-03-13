@@ -1,4 +1,4 @@
 {
-    "changelog": "2.28.2024\n -Fix compatibility with Phob 1.x",
-    "fw_version": 7
+    "changelog": "3.11.2024\n -Voltage stabilize before probing origin",
+    "fw_version": 8
 }

@@ -60,10 +60,16 @@
 				"parent" : 4
 			},
 			{
+				"command" : 4,
+				"file" : 0,
+				"line" : 58,
+				"parent" : 0
+			},
+			{
 				"command" : 3,
-				"file" : 1,
-				"line" : 75,
-				"parent" : 4
+				"file" : 2,
+				"line" : 45,
+				"parent" : 6
 			},
 			{
 				"command" : 4,
@@ -75,19 +81,13 @@
 				"command" : 3,
 				"file" : 2,
 				"line" : 45,
-				"parent" : 7
-			},
-			{
-				"command" : 4,
-				"file" : 0,
-				"line" : 58,
-				"parent" : 0
+				"parent" : 8
 			},
 			{
 				"command" : 3,
-				"file" : 2,
-				"line" : 45,
-				"parent" : 9
+				"file" : 1,
+				"line" : 75,
+				"parent" : 4
 			},
 			{
 				"command" : 5,
@@ -117,7 +117,7 @@
 				"command" : 8,
 				"file" : 2,
 				"line" : 50,
-				"parent" : 7
+				"parent" : 8
 			}
 		]
 	},
@@ -1633,16 +1633,16 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 6,
-			"id" : "bs2_default_padded_checksummed_asm::@bc554eaed616d198a22d"
+			"backtrace" : 7,
+			"id" : "gc_adapter_rp2040_joybus_pio_h::@6890427a1f51a3e7e1df"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "gc_adapter_rp2040_ws2812_pio_h::@6890427a1f51a3e7e1df"
 		},
 		{
 			"backtrace" : 10,
-			"id" : "gc_adapter_rp2040_joybus_pio_h::@6890427a1f51a3e7e1df"
+			"id" : "bs2_default_padded_checksummed_asm::@bc554eaed616d198a22d"
 		}
 	],
 	"id" : "gc_adapter_rp2040::@6890427a1f51a3e7e1df",
