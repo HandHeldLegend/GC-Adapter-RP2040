@@ -1,4 +1,4 @@
 {
-    "changelog": "3.11.2024\n -Voltage stabilize before probing origin",
+    "changelog": "3.31.2024\n Fix multiple controllers Slippi refresh rate",
     "fw_version": 8
 }
