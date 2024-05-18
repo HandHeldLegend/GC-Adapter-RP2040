@@ -21,6 +21,9 @@ uint32_t _port_probes[4] = {0};
 uint32_t _port_inputs[4][4] = {{0}};
 joybus_input_s _port_joybus[4] = {0, 0, 0, 0};
 
+#define ORIGIN_DELAY_CYCLES 8
+uint8_t delay_cycles = 0;
+
 bool _port_rumble[4] = {false, false, false, false};
 
 typedef struct
@@ -53,8 +56,13 @@ void _gc_port_data(uint port)
         pio_sm_exec(JOYBUS_PIO, port, pio_encode_push(false, false));
         _port_probes[port] = pio_sm_get(JOYBUS_PIO, port) >> 17;
 
-        if (_port_probes[port] == 0x09)
+        if (_port_probes[port] & 0x09 )
         {
+            // Successfully obtained GC info
+            // Set our delay cycles so controllers have
+            // a moment to adjust their voltage and settle
+            // before getting calibration data
+            delay_cycles = ORIGIN_DELAY_CYCLES;
             _port_phases[port] = 1;
             
             adapter_timer_reset();
@@ -191,7 +199,6 @@ void _gamecube_send_probe()
         break;
 
         case 1:
-            sleep_ms(50);
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_set(pio_y, 0));
             pio_sm_exec_wait_blocking(JOYBUS_PIO, i, pio_encode_jmp(_gamecube_offset));
             pio_sm_put_blocking(JOYBUS_PIO, i, ALIGNED_JOYBUS_8(0x41));
@@ -227,6 +234,12 @@ void joybus_itf_poll(joybus_input_s **out)
 {
 
     *out = _port_joybus;
+
+    if(delay_cycles>0)
+    {
+        delay_cycles--;
+        return;
+    }
 
     _gamecube_send_probe();
     sleep_us(500);
