@@ -7,6 +7,6 @@
 #define ADAPTER_PRODUCT "GC Pocket+"
 #define ADAPTER_STRING "GCP+"
 
-#define ADAPTER_FIRMWARE_VERSION 0x0008
+#define ADAPTER_FIRMWARE_VERSION 0x0009
 #define ADAPTER_SETTINGS_VERSION 0x0003
 #define ADAPTER_WEBUSB_URL "handheldlegend.github.io/gcp"
