@@ -150,3 +150,9 @@
 473	1106	7380157127057025	CMakeFiles/gc_adapter_rp2040.dir/common/adapter_defines.c.obj	6d314dd4742e0013
 1004	1268	7380157128707006	CMakeFiles/gc_adapter_rp2040.dir/common/devices/xinput.c.obj	c23343c10774f9fc
 1268	1599	7380157130527308	gc_adapter_rp2040.elf	b7d8160fe3c4f442
+28	282	7380160264029022	CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj	f3756096467fc6df
+24	283	7380160264029022	CMakeFiles/gc_adapter_rp2040.dir/common/ll/adapter_ll_rp2040.c.obj	f2d959d8d7d9a720
+283	611	7380160265950807	gc_adapter_rp2040.elf	b7d8160fe3c4f442
+33	283	7380161892738880	CMakeFiles/gc_adapter_rp2040.dir/common/ll/adapter_ll_rp2040.c.obj	f2d959d8d7d9a720
+37	285	7380161892748577	CMakeFiles/gc_adapter_rp2040.dir/common/adapter.c.obj	f3756096467fc6df
+285	613	7380161894558587	gc_adapter_rp2040.elf	b7d8160fe3c4f442
