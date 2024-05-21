@@ -44,7 +44,6 @@ void _gc_port_reset(uint port)
 {
     _port_joybus[port].port_itf = -1;
     _port_phases[port] = 0;
-    _port_joybus[port].port_ready = false;
 }
 
 void _gc_port_data(uint port)
@@ -64,8 +63,6 @@ void _gc_port_data(uint port)
             // before getting calibration data
             delay_cycles = ORIGIN_DELAY_CYCLES;
             _port_phases[port] = 1;
-            
-            adapter_timer_reset();
         }
 
         _port_probes[port] = 0;
@@ -100,8 +97,6 @@ void _gc_port_data(uint port)
 
         // Set the port phase
         _port_phases[port] = 2;
-        adapter_timer_reset();
-        sleep_ms(10); // Sleep on probe collect to allow voltage stabilization
 
         // Set the port USB Interface
         int tmp_itf = 0;

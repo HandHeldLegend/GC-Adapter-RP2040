@@ -27,7 +27,9 @@
         "switch_commands.h": "c",
         "stdbool.h": "c",
         "tusb.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "xinput.h": "c",
+        "swpro.h": "c"
     },
     "idf.portWin": "COM17",
     "idf.flashType": "UART"
