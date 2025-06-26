@@ -3,3 +3,5 @@ PCB/GCP-2-backups/
 
 /FW/build/*
 !/FW/build/gc_adapter_rp2040.uf2
+
+FW/.vscode/
